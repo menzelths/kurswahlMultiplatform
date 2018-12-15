@@ -109,7 +109,22 @@ class Belegung(val name:String) {
     private fun anzahlLeistungsfächer()= aktuelleBelegung.filter{it.typ==Kursart.LF}.count()
     private fun anzahlMündlichePrüfungen()=aktuelleBelegung.filter{it.attribute.contains(Fachattribute.mündlichePrüfung)}.count()
     private fun fachAlsBasisfachOderWahlfachGewählt(fach:String):Boolean{
+
         return aktuelleBelegung.filter { it.name==fach }.filter{it.typ==Kursart.BF || it.typ==Kursart.WF}.count()>0
+    }
+    private fun alleHalbjahreBelegt(fach:String,typ:Kursart):Boolean {
+        val fach=aktuelleBelegung.filter { it.name == fach && it.typ == typ }.firstOrNull()
+        if (fach!=null){
+
+                if (fach.alternativStunden) {
+                    return fach.stundenAlternativ.filter { it != 0 }.count()==4
+                }else{
+                    return fach.stunden.filter { it != 0 }.count()==4
+                }
+            } else {
+            return false
+        }
+
     }
 
     public fun holeFehler():List<Kommentar>{
@@ -162,7 +177,7 @@ class Belegung(val name:String) {
 
                     if (v.typ==Kursart.BF || v.typ==Kursart.WF){
                         klickbarWahl.add(v.typ)
-                        if (anzahlMündlichePrüfungen()<2 && fachAlsBasisfachOderWahlfachGewählt(v.name) ){
+                        if (anzahlMündlichePrüfungen()<2 && fachAlsBasisfachOderWahlfachGewählt(v.name) && alleHalbjahreBelegt(v.name,v.typ) ){
                             mündlichKlickbar=true
                         }
                         if ( v.attribute.contains(Fachattribute.mündlichePrüfung)){
@@ -426,8 +441,13 @@ class Belegung(val name:String) {
                 val name = parameter[0] as String // Name des Fachs
                 val typ = parameter[1] as Kursart // LF, BF oder WF?
                 val fach=aktuelleBelegung.filter{it.name==name && it.typ==typ}.firstOrNull()
-                fach?.alternativStunden=!(fach!!.alternativStunden)
+               if (fach!=null) {
+                   fach.alternativStunden = !(fach.alternativStunden)
+                   if (fach.alternativStunden && fach.stundenAlternativ.filter{it>0}.count()<4){
+                       fach.attribute.remove(Fachattribute.mündlichePrüfung)
+                   }
 
+               }
 
             }
 
@@ -475,18 +495,36 @@ class Belegung(val name:String) {
 
                 if (fach != null) {
                     with(aktuelleBelegung) {
-                        if (contains(fach)) {
+                        if (contains(fach)) { // Fach selber wird gelöscht
                             fach.attribute.remove(Fachattribute.mündlichePrüfung)
+
                             removeAll { it.name == name }
+
+                            if (fach.name=="Wirtschaft" && fach.typ==Kursart.LF){
+                                val gege=fächerauswahl.filter { it.attribute.contains(Fachattribute.GeGe) }.firstOrNull()
+                                if (gege!=null){
+                                    gege.alternativStunden=false
+                                    gege.attribute.remove(Fachattribute.mündlichePrüfung)
+                                } else {
+
+                                }
+
+                            } else {
+
+                            }
+                            fach.alternativStunden=false
 
                         } else if (map { it -> it.name }.contains(name)) {
                             fächerauswahl.filter{it.name==name}.forEach {
                                 it.attribute.remove(Fachattribute.mündlichePrüfung)
                             }
+
                             removeAll { it.name == name }
+                            fach.alternativStunden=false
                             add(fach)
                         } else {
                             add(fach)
+                            fach.alternativStunden=false
                         }
                     }
                 }
