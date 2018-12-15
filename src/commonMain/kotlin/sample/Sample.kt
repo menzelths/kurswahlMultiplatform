@@ -314,7 +314,9 @@ class Belegung(val name:String) {
         val bereiche=prüfungsfächer.map{it->it.aufgabenfeld}.toSet()
         val fehlendeBereiche=setOf(Aufgabenfeld.I,Aufgabenfeld.II,Aufgabenfeld.III).minus(bereiche)
         if (fehlendeBereiche.size>0){
-            println("Die folgenden Aufgabenfelder sind noch nicht abgedeckt: ${fehlendeBereiche.map{Text[it]}.joinToString ( separator="," )}")
+            println("Die folgenden Aufgabenfelder sind noch nicht in der Abiturprüfung abgedeckt: ${fehlendeBereiche.map{Text[it]}.joinToString ( separator="," )}")
+            fehlerMeldungen.add(Kommentar(Kommentarart.SCHLECHT,"Die folgenden Aufgabenfelder sind noch nicht in der Abiturprüfung abgedeckt: ${fehlendeBereiche.map{Text[it]}.joinToString ( separator="," )}"))
+
         }
 
         return rueckgabe
