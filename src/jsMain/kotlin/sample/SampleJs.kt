@@ -51,6 +51,10 @@ actual class Sample {
         fächer.add(Fach("Problemlösen mit CAS",Aufgabenfeld.III,listOf(0,0,2),listOf(Fachattribute.Orchidee)))
         fächer.add(Fach("Darstellende Geometrie",Aufgabenfeld.III,listOf(0,0,2),listOf(Fachattribute.Orchidee)))
         fächer.add(Fach("Geologie",Aufgabenfeld.III,listOf(0,0,2),listOf(Fachattribute.Orchidee)))
+        fächer.add(Fach("Seminarfach I",Aufgabenfeld.I,listOf(0,3,0),listOf(Fachattribute.Seminarfach)))
+        fächer.add(Fach("Seminarfach II",Aufgabenfeld.II,listOf(0,3,0),listOf(Fachattribute.Seminarfach)))
+        fächer.add(Fach("Seminarfach III",Aufgabenfeld.III,listOf(0,3,0),listOf(Fachattribute.Seminarfach)))
+
 
         Belegung.generiereFächer(fächer)
 
@@ -83,15 +87,35 @@ fun erstelleRaster(aktuelleBelegung:Belegung){
     val fächerauswahl=aktuelleBelegung.getFächer().groupBy { it.aufgabenfeld }
     val myDiv=document.create.div("panel") {
         table {
-            for (zeile in darstellung){
-                if (zeile is Belegung.Überschrift){
-                    tr{
-                        td{
-                            classes=setOf("fett")
-                            + zeile.text
+
+            for (zeile in darstellung) {
+                if (zeile is Belegung.Überschrift) {
+                    tr {
+                        td {
+                            classes = setOf("fett")
+                            +zeile.text
+                        }
+                        for (i in 0..5){
+                            td {} //Leere Felder
                         }
                     }
-                } else if (zeile is Belegung.ZeileDarstellung){
+                } else if (zeile is Belegung.Summe){
+                    tr {
+                        td {
+                            classes = setOf("fett")
+                            +"Wochenstunden"
+                        }
+                        for (i in 0..2){
+                            td {} //Leere Felder
+                        }
+                        for (i in 0..3){
+                            td{
+                                + zeile.stunden[i].toString()
+                                classes = setOf("fett")
+                            }
+                        }
+                    }
+            }else if (zeile is Belegung.ZeileDarstellung){
                     tr {
                         td{
                             + zeile.name

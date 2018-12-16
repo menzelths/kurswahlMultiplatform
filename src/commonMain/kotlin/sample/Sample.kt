@@ -77,7 +77,7 @@ fun main() {
 
 class Belegung(val name:String) {
 
-    abstract open class Zeile
+    abstract class Zeile
 
 
     data class Überschrift(
@@ -87,6 +87,10 @@ class Belegung(val name:String) {
     enum class Kommentarart{
         GUT,SCHLECHT,NEUTRAL
     }
+
+    data class Summe(
+        val stunden:List<Int>
+    ):Zeile()
 
     data class Kommentar(
 
@@ -108,6 +112,13 @@ class Belegung(val name:String) {
 
     private fun anzahlLeistungsfächer()= aktuelleBelegung.filter{it.typ==Kursart.LF}.count()
     private fun anzahlMündlichePrüfungen()=aktuelleBelegung.filter{it.attribute.contains(Fachattribute.mündlichePrüfung)}.count()
+    private fun seminarFachGewählt():Aufgabenfeld?{
+        val sf=aktuelleBelegung.filter{it.attribute.contains(Fachattribute.Seminarfach)}.firstOrNull()
+        if (sf!=null){
+            return sf.aufgabenfeld
+        }
+        return null
+    }
     private fun fachAlsBasisfachOderWahlfachGewählt(fach:String):Boolean{
 
         return aktuelleBelegung.filter { it.name==fach }.filter{it.typ==Kursart.BF || it.typ==Kursart.WF}.count()>0
@@ -126,6 +137,7 @@ class Belegung(val name:String) {
         }
 
     }
+
 
     public fun holeFehler():List<Kommentar>{
         this.action(Aktion.CHECK)
@@ -153,11 +165,17 @@ class Belegung(val name:String) {
                 name=f.key
                 val varianten=f.value
                 for (v in varianten){
-                    if (anzahlLeistungsfächer()<3&&!v.attribute.contains(Fachattribute.Orchidee)){
+                    if (anzahlLeistungsfächer()<3
+                        &&!v.attribute.contains(Fachattribute.Orchidee) // Wahlfach hat kein LF
+                        &&!v.attribute.contains(Fachattribute.Seminarfach) // Seminarfach ist kein LF
+                        &&!v.attribute.contains(Fachattribute.GeGe)){ // GeGe gibt es nicht als LF
                         klickbarWahl.add(Kursart.LF)
                     }
                     if (aktuelleBelegung.contains(v)){
                         gewählt=v.typ
+                        if (v.attribute.contains(Fachattribute.Seminarfach)){
+
+                        }
                         klickbarWahl.add(v.typ)
                         stunden=if (v.alternativStunden==false) v.stunden else v.stundenAlternativ
                         if (v.typ==Kursart.WF){
@@ -176,7 +194,13 @@ class Belegung(val name:String) {
 
 
                     if (v.typ==Kursart.BF || v.typ==Kursart.WF){
-                        klickbarWahl.add(v.typ)
+                        if (v.attribute.contains(Fachattribute.Seminarfach)&&seminarFachGewählt()==v.aufgabenfeld){
+                            klickbarWahl.add(v.typ)
+                        } else if (v.attribute.contains(Fachattribute.Seminarfach)&& seminarFachGewählt()!=null && seminarFachGewählt()!=v.aufgabenfeld){
+                            klickbarWahl.remove(v.typ)
+                        } else {
+                            klickbarWahl.add(v.typ)
+                        }
                         if (anzahlMündlichePrüfungen()<2 && fachAlsBasisfachOderWahlfachGewählt(v.name) && alleHalbjahreBelegt(v.name,v.typ) ){
                             mündlichKlickbar=true
                         }
@@ -195,6 +219,7 @@ class Belegung(val name:String) {
             }
 
         }
+        text.add(Summe(holeWochenStunden()))
         return text.toList()
     }
 
@@ -346,6 +371,8 @@ class Belegung(val name:String) {
         return fehlendeFächer.size==0
     }
 
+
+
     private fun testeMindestens42Kurse():Boolean {
         var kurssumme=0
         for (fach in aktuelleBelegung){
@@ -358,6 +385,19 @@ class Belegung(val name:String) {
             fehlerMeldungen.add(Kommentar(Kommentarart.SCHLECHT,"Es müssen mindestens 42 Kurse gewählt werden"))
         }
         return kurssumme>=42
+    }
+
+    private fun holeWochenStunden():List<Int>{
+        var stundensumme=mutableListOf<Int>(0,0,0,0)
+        var zeilenStunden=mutableListOf<Int>()
+        for (fach in aktuelleBelegung){
+
+            zeilenStunden= if (fach.alternativStunden==false) fach.stunden else fach.stundenAlternativ
+            for (i in 0..3){
+                stundensumme[i] += zeilenStunden[i]
+            }
+        }
+        return stundensumme.toList()
     }
 
     private fun testeMindestens32Wochenstunden():Boolean{
