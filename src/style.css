@@ -1,3 +1,13 @@
+body {
+font-family: Helvetica, Arial, Sans-Serif;
+}
+
+ @media screen and (orientation:portrait) {
+table {
+width: 100%
+}
+}
+
 .klickbar{
     background-color: #ffdddd
 }

@@ -184,7 +184,7 @@ class Belegung(val name:String) {
                         if (v.attribute.contains(Fachattribute.spätbeginnend)){
                             stundenAlternativVorhanden=true
                         }
-                        if (v.name=="Geographie/Gemeinschaftskunde"){
+                        if (v.attribute.contains(Fachattribute.GeGe)){
                         if (aktuelleBelegung.filter { it.name=="Wirtschaft" && it.typ==Kursart.LF }.count()>0) {
                             stundenAlternativVorhanden=true
                         }
@@ -353,7 +353,7 @@ class Belegung(val name:String) {
         val Bereichsnamen=listOf("Geschichte","Geographie und Gemeinschaftskunde","Religion oder Ethik","Bildende Kunst oder Musik","Sport")
         with(aktuelleBelegung) {
             pflichtfächer.add(filter { it.name == "Geschichte" }.count())
-            pflichtfächer.add(filter{it.name=="Geographie/Gemeinschaftskunde"}.count())
+            pflichtfächer.add(filter{it.attribute.contains(Fachattribute.GeGe)}.count())
             pflichtfächer.add(filter{it.name=="Religionslehre"||it.name=="Ethik"}.count())
             pflichtfächer.add(filter{it.name=="Bildende Kunst"||it.name=="Musik"}.count())
             pflichtfächer.add(filter{it.name=="Sport"}.count())
@@ -421,11 +421,11 @@ class Belegung(val name:String) {
         val leistungsfächer = aktuelleBelegung.filter { it.typ == Kursart.LF }
         var rückgabe = false
         if (leistungsfächer.size < 3) {
-            println("zu wenige Leistungsfächer gewählt")
-            fehlerMeldungen.add(Kommentar(Kommentarart.SCHLECHT,"zu wenige Leistungsfächer gewählt"))
+            println("Zu wenige Leistungsfächer gewählt!")
+            fehlerMeldungen.add(Kommentar(Kommentarart.SCHLECHT,"Zu wenige Leistungsfächer gewählt!"))
         } else if (leistungsfächer.size > 3) {
-            println("zu viele Leistungsfächer gewählt")
-            fehlerMeldungen.add(Kommentar(Kommentarart.SCHLECHT,"zu viele Leistungsfächer gewählt"))
+            println("Zu viele Leistungsfächer gewählt!")
+            fehlerMeldungen.add(Kommentar(Kommentarart.SCHLECHT,"Zu viele Leistungsfächer gewählt!"))
         } else { // genau drei Leistungsfächer
             val lfAuswahl = leistungsfächer.groupBy { it.attribute }.keys.flatten().toSet()
 
@@ -521,8 +521,8 @@ class Belegung(val name:String) {
                             if (anzahlPrüfungsfächer < 2) {
                                 add(Fachattribute.mündlichePrüfung)
                             } else {
-                                fehlerMeldungen.add(Kommentar(Kommentarart.SCHLECHT,"maximal drei mündliche Prüfungsfächer erlaubt"))
-                                println("maximal drei mündliche Prüfungsfächer erlaubt")
+                                fehlerMeldungen.add(Kommentar(Kommentarart.SCHLECHT,"Maximal drei mündliche Prüfungsfächer erlaubt."))
+                                println("Maximal drei mündliche Prüfungsfächer erlaubt.")
                             }
                         }
                     }

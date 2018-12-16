@@ -29,7 +29,7 @@ actual class Sample {
         fächer.add(Fach("Geschichte",Aufgabenfeld.II,listOf(5,2,0), listOf()))
         fächer.add(Fach("Geographie",Aufgabenfeld.II,listOf(5,0,0), listOf()))
         fächer.add(Fach("Gemeinschaftskunde",Aufgabenfeld.II,listOf(5,0,0), listOf()))
-        fächer.add(Fach("Geographie/Gemeinschaftskunde",Aufgabenfeld.II,listOf(0,2,0), listOf(Fachattribute.GeGe)))
+        fächer.add(Fach("Geo/Gk",Aufgabenfeld.II,listOf(0,2,0), listOf(Fachattribute.GeGe)))
         fächer.add(Fach("Religionslehre",Aufgabenfeld.II,listOf(5,2,0), listOf()))
         fächer.add(Fach("Ethik",Aufgabenfeld.II,listOf(5,2,0), listOf()))
         fächer.add(Fach("Wirtschaft",Aufgabenfeld.II,listOf(5,2,0), listOf()))
