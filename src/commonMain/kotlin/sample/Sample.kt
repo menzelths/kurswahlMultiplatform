@@ -28,9 +28,10 @@ fun main() {
     fächer.add(Fach("Bildende Kunst",Aufgabenfeld.I,listOf(5,2,0), listOf()))
     fächer.add(Fach("Musik",Aufgabenfeld.I,listOf(5,2,0), listOf()))
     fächer.add(Fach("Geschichte",Aufgabenfeld.II,listOf(5,2,0), listOf()))
+    fächer.add(Fach("Geographie/Gemeinschaftskunde",Aufgabenfeld.II,listOf(0,2,0), listOf(Fachattribute.GeGe)))
     fächer.add(Fach("Geographie",Aufgabenfeld.II,listOf(5,0,0), listOf()))
     fächer.add(Fach("Gemeinschaftskunde",Aufgabenfeld.II,listOf(5,0,0), listOf()))
-    fächer.add(Fach("Geographie/Gemeinschaftskunde",Aufgabenfeld.II,listOf(0,2,0), listOf(Fachattribute.GeGe)))
+
     fächer.add(Fach("Religionslehre",Aufgabenfeld.II,listOf(5,2,0), listOf()))
     fächer.add(Fach("Ethik",Aufgabenfeld.II,listOf(5,2,0), listOf()))
     fächer.add(Fach("Wirtschaft",Aufgabenfeld.II,listOf(5,2,0), listOf()))
@@ -106,7 +107,8 @@ class Belegung(val name:String) {
         val mündlich:Boolean,
         val mündlichKlickbar:Boolean,
         val stunden:List<Int>,
-        val stundenAlternativVorhanden:Boolean
+        val stundenAlternativVorhanden:Boolean,
+        val fachnameOriginal:String
 
     ) : Zeile()
 
@@ -162,9 +164,15 @@ class Belegung(val name:String) {
                 var klickbarWahl=mutableSetOf<Kursart>()
                 var stunden=mutableListOf<Int>()
                 var stundenAlternativVorhanden=false
+
                 name=f.key
+                val fachnameOriginal=f.key
+
+
+
                 val varianten=f.value
                 for (v in varianten){
+
                     if (anzahlLeistungsfächer()<3
                         &&!v.attribute.contains(Fachattribute.Orchidee) // Wahlfach hat kein LF
                         &&!v.attribute.contains(Fachattribute.Seminarfach) // Seminarfach ist kein LF
@@ -185,11 +193,44 @@ class Belegung(val name:String) {
                             stundenAlternativVorhanden=true
                         }
                         if (v.attribute.contains(Fachattribute.GeGe)){
+                            v.stunden= mutableListOf(2,2,2,2)
+
                         if (aktuelleBelegung.filter { it.name=="Wirtschaft" && it.typ==Kursart.LF }.count()>0) {
                             stundenAlternativVorhanden=true
                         }
+                            if (aktuelleBelegung.filter { it.name == "Gemeinschaftskunde" && it.typ == Kursart.LF }.count() > 0) {
+                                stundenAlternativVorhanden = false
+                                v.stunden = mutableListOf(2, 0, 0, 2)
+                                name = "Geographie"
+                                stunden = v.stunden
+
+                            }
+                            if (aktuelleBelegung.filter { it.name == "Geographie" && it.typ == Kursart.LF }.count() > 0) {
+                                stundenAlternativVorhanden = false
+                                v.stunden = mutableListOf(0, 2, 2, 0)
+                                stunden = v.stunden
+                                name = "Gemeinschaftskunde"
+                            }
+
+
+
                         }
 
+                    }
+
+                    // falls Gemeinschaftskunde oder Geographie als LK, dann Geo/Gk zu geo bzw. gk
+                    if (v.attribute.contains(Fachattribute.GeGe)) {
+
+                        if (aktuelleBelegung.filter { it.name == "Gemeinschaftskunde" && it.typ == Kursart.LF }.count() > 0) {
+
+                            name = "Geographie"
+
+
+                        }
+                        if (aktuelleBelegung.filter { it.name == "Geographie" && it.typ == Kursart.LF }.count() > 0) {
+
+                            name = "Gemeinschaftskunde"
+                        }
                     }
 
 
@@ -208,12 +249,16 @@ class Belegung(val name:String) {
                             mündlichKlickbar=true
                             mündlich=true
                         }
+
                     }
+
+
 
 
                 }
 
-                text.add(ZeileDarstellung(name,aufgabenfeld,gewählt,klickbarWahl,mündlich,mündlichKlickbar,stunden,stundenAlternativVorhanden))
+
+                text.add(ZeileDarstellung(name,aufgabenfeld,gewählt,klickbarWahl,mündlich,mündlichKlickbar,stunden,stundenAlternativVorhanden,fachnameOriginal))
 
 
             }
@@ -321,7 +366,7 @@ class Belegung(val name:String) {
         } else {
             print("Mathematik und Deutsch sind in den Prüfungsfächern enthalten. ")
             fehlerMeldungen.add(Kommentar(Kommentarart.GUT,"Mathematik und Deutsch sind in den Prüfungsfächern enthalten. "))
-
+rueckgabe=true
 
         }
         if (prüfungsfächer.count()<5) {
@@ -332,7 +377,7 @@ class Belegung(val name:String) {
         } else {
             println("Es sind drei Leistungsfächer und für die mündliche Prüfung zwei Basisfächer gewählt")
             fehlerMeldungen.add(Kommentar(Kommentarart.GUT,"Es sind drei Leistungsfächer und für die mündliche Prüfung zwei Basisfächer gewählt"))
-
+    rueckgabe=true
 
 
         }
@@ -341,7 +386,7 @@ class Belegung(val name:String) {
         if (fehlendeBereiche.size>0){
             println("Die folgenden Aufgabenfelder sind noch nicht in der Abiturprüfung abgedeckt: ${fehlendeBereiche.map{Text[it]}.joinToString ( separator="," )}")
             fehlerMeldungen.add(Kommentar(Kommentarart.SCHLECHT,"Die folgenden Aufgabenfelder sind noch nicht in der Abiturprüfung abgedeckt: ${fehlendeBereiche.map{Text[it]}.joinToString ( separator="," )}"))
-
+            return false
         }
 
         return rueckgabe
@@ -385,6 +430,62 @@ class Belegung(val name:String) {
             fehlerMeldungen.add(Kommentar(Kommentarart.SCHLECHT,"Es müssen mindestens 42 Kurse gewählt werden"))
         }
         return kurssumme>=42
+    }
+
+    private fun testeAnrechnungspflichtigeStunden():Boolean{
+        var mukuSchonGeprüft=false
+        var kurssumme=0
+        for (f in aktuelleBelegung){
+
+            if (f.typ==Kursart.LF) {
+                kurssumme += 4
+
+            } else if (f.typ== Kursart.BF){
+                if (f.attribute.contains(Fachattribute.Geschichte)){
+                    kurssumme+=4
+                } else if (f.attribute.contains(Fachattribute.MuKu)&& !mukuSchonGeprüft) {
+                    kurssumme += 2
+                    mukuSchonGeprüft = true
+                } else if (f.attribute.contains(Fachattribute.Naturwissenschaft) ||f.attribute.contains(Fachattribute.kannNawiErsetzen)) {
+                    kurssumme += 4
+                } else if (f.attribute.contains(Fachattribute.Fremdsprache)){
+                    if (f.alternativStunden){
+                        kurssumme+=2
+                    } else {
+                        kurssumme+=4
+                    }
+                } else if (f.attribute.contains(Fachattribute.GeGe)){
+                    if (aktuelleBelegung.filter { it.name == "Gemeinschaftskunde" && it.typ == Kursart.LF }.count() > 0) {
+                        kurssumme+=2
+
+                    } else if (aktuelleBelegung.filter { it.name == "Geographie" && it.typ == Kursart.LF }.count() > 0) {
+                        kurssumme+=2
+                    } else if (aktuelleBelegung.filter { it.name=="Wirtschaft" && it.typ==Kursart.LF }.count()>0) {
+                        kurssumme+=2
+                    } else {
+                        kurssumme+=4
+                    }
+                } else if (f.attribute.contains(Fachattribute.mündlichePrüfung)) { // andere Basisfächer als mündliche Prüfung
+                    kurssumme += 4
+                }
+
+            } else if (f.attribute.contains(Fachattribute.mündlichePrüfung)) { //WF in mündlicher Prüfung
+                kurssumme += 4
+            }
+            }
+
+        if (kurssumme==40){
+            fehlerMeldungen.add(Kommentar(Kommentarart.GUT,"Es sind 40 anrechnungspflichtige Kurse in der Belegung vorhanden." ))
+    } else if (kurssumme<40)
+    {
+        fehlerMeldungen.add(Kommentar(Kommentarart.GUT,"Es sind mit $kurssumme weniger als 40 anrechnungspflichtige Kurse in der Belegung vorhanden." ))
+
+    } else if (kurssumme>40){
+            fehlerMeldungen.add(Kommentar(Kommentarart.SCHLECHT,"Es sind mit $kurssumme mehr als 40 anrechnungspflichtige Kurse in der Belegung vorhanden." ))
+
+        }
+
+        return kurssumme==40
     }
 
     private fun holeWochenStunden():List<Int>{
@@ -438,7 +539,90 @@ class Belegung(val name:String) {
                 fehlerMeldungen.add(Kommentar(Kommentarart.SCHLECHT,"Leistungsfachkombination ungültig: zwei der drei Leistungsfächer müssen aus D, M, FS, Nawi sein"))
             }
         }
+
         return rückgabe
+    }
+
+    fun serialisiere(){
+        var kodierung=""
+        var schonErledigt=mutableListOf<Belegfach>()
+        // Bit 1: Mathematik als Basisfach (0) oder Leistungsfach (1)
+        kodierung+=aktuelleBelegung.filter{it.attribute.contains(Fachattribute.Mathematik) && it.typ==Kursart.LF}.count()
+        // Bit 2: Deutsch als Basisfach (0) oder Leistungsfach (1)
+        kodierung+=aktuelleBelegung.filter{it.attribute.contains(Fachattribute.Deutsch) && it.typ==Kursart.LF}.count()
+
+        schonErledigt.add(aktuelleBelegung.filter{it.attribute.contains(Fachattribute.Mathematik)}.first())
+        schonErledigt.add(aktuelleBelegung.filter{it.attribute.contains(Fachattribute.Deutsch)}.first())
+        // Bit 3,4,5: gewählte Sprache
+        var sprache=""
+        for ((index, s) in sprachen.withIndex()){
+            if (aktuelleBelegung.filter{it.name==s}.count()>0){
+                sprache=s
+                kodierung+= binär3[index]
+                break
+            }
+        }
+         // Bit 6: Sprache als Basisfach (0) oder Leistungsfach (1)
+        var fachAktuell=aktuelleBelegung.filter{it.name == sprache}.first()
+        schonErledigt.add(fachAktuell)
+         if (fachAktuell.typ== Kursart.LF){
+             kodierung+="1"
+
+         } else {
+             kodierung+="0"
+             // falls Basisfach: dreistündig (0) oder vierstündig (1)
+             if (fachAktuell.alternativStunden==true){
+                 kodierung+="1"
+             } else {
+                 kodierung+="0"
+             }
+             // mündliche Prüfung: nein (0) oder ja (1)
+             if (fachAktuell.attribute.contains(Fachattribute.mündlichePrüfung)) {
+                 kodierung += "1"
+             } else {
+                 kodierung +="0"
+             }
+         }
+
+        var naturwissenschaft=""
+        for ((index, s) in naturwissenschaften.withIndex()){
+            if (aktuelleBelegung.filter{it.name==s}.count()>0){
+                naturwissenschaft=s
+                kodierung+= binär2[index]
+                break
+            }
+        }
+        // erste Naturwissenschaft
+        fachAktuell=aktuelleBelegung.filter{it.name == naturwissenschaft}.first()
+        schonErledigt.add(fachAktuell)
+        kodierung+=fachBFoderLF(fachAktuell)
+
+        // Geschichte
+        fachAktuell=aktuelleBelegung.filter{it.name=="Geschichte"}.first()
+        schonErledigt.add(fachAktuell)
+        kodierung+=fachBFoderLF(fachAktuell)
+
+
+
+
+
+    }
+
+    private fun fachBFoderLF(fachAktuell:Belegfach):String{
+        var kodierung=""
+        if (fachAktuell.typ== Kursart.LF){
+            kodierung+="1"
+
+        } else {
+            kodierung+="0"
+            // mündliche Prüfung: nein (0) oder ja (1)
+            if (fachAktuell.attribute.contains(Fachattribute.mündlichePrüfung)) {
+                kodierung += "1"
+            } else {
+                kodierung +="0"
+            }
+        }
+        return kodierung
     }
 
     fun MutableList<Belegfach>.mehrfach(): List<String> {
@@ -496,13 +680,21 @@ class Belegung(val name:String) {
             Aktion.CHECK -> {
                 // 2 aus den LF aus Deutsch, Fremdsprache, Mathematik oder klassische Naturwissenschaft
                 fehlerMeldungen= mutableListOf()
-                testeMehrfach()
-                testeLeistungsfächer()
-                testeBereichsabdeckungPrüfung()
-                testeSprachenOderNaturwissenschaft()
-                testePflichtbelegungRest()
-                testeMindestens42Kurse()
-                testeMindestens32Wochenstunden()
+
+                var fehlerListe= mutableListOf<Boolean>()
+                fehlerListe.add(testeMehrfach())
+                fehlerListe.add(testeLeistungsfächer())
+                fehlerListe.add(testeBereichsabdeckungPrüfung())
+                fehlerListe.add(testeSprachenOderNaturwissenschaft())
+                fehlerListe.add(testePflichtbelegungRest())
+                fehlerListe.add(testeMindestens42Kurse())
+                if (fehlerListe.filter{it==false}.count()==0){
+                    testeAnrechnungspflichtigeStunden()
+                }
+                /*testeAnrechnungspflichtigeStunden()
+                println("Fehler: ${fehlerListe.filter{it==false}.count()}")
+                fehlerListe.forEach { println(it) }*/
+                //testeMindestens32Wochenstunden()
 
 
             }
@@ -580,6 +772,13 @@ class Belegung(val name:String) {
 
     companion object {
 
+
+
+        val binär2=listOf<String>("00","01","10","11")
+        val binär3=listOf<String>("000","001","010","011","100","101","110","111")
+        val naturwissenschaften=listOf<String>("Physik", "Chemie", "Biologie")
+        val sprachen=listOf<String>("Englisch","Französisch","Latein", "Griechisch", "Russisch","Spanisch","Italienisch","Portugiesisch")
+        val lfOderBfOderBfMündlich=hashMapOf<String,String>("LF" to "10", "BF" to "01", "BFmündlich" to "11")
         var fehlerMeldungen= mutableListOf<Kommentar>()
         val Text= hashMapOf<Any,String>(
             Kursart.BF to "Basisfach",
@@ -604,7 +803,7 @@ class Belegung(val name:String) {
             val name: String,
             val typ: Kursart,
             var aufgabenfeld: Aufgabenfeld,
-            val stunden: MutableList<Int>,
+            var stunden: MutableList<Int>,
             val stundenAlternativ:MutableList<Int>,
             var alternativStunden:Boolean,
             var attribute: MutableList<Fachattribute>
@@ -666,7 +865,17 @@ class Belegung(val name:String) {
 
 enum class Aufgabenfeld { I, II, III, Sport, Seminarfach }
 
-enum class Fachattribute { Naturwissenschaft, Deutsch, Fremdsprache, Mathematik, kannNawiErsetzen, Seminarfach, GeGe, mündlichePrüfung,spätbeginnend,Orchidee }
+enum class Fachattribute { Naturwissenschaft, NawiFe, Deutsch, Fremdsprache, Mathematik, kannNawiErsetzen, Seminarfach, GeGe, Geschichte, MuKu, mündlichePrüfung,spätbeginnend,Orchidee }
+
+
+val anrechnungspflichtigeKurse=listOf<Fachattribute>(
+    Fachattribute.NawiFe,
+    Fachattribute.Mathematik,
+    Fachattribute.Deutsch,
+    Fachattribute.Geschichte,
+    Fachattribute.GeGe,
+    Fachattribute.MuKu
+)
 
 data class Fach(
     val name: String,

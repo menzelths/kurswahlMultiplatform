@@ -24,15 +24,17 @@ actual class Sample {
         fächer.add(Fach("Spanisch",Aufgabenfeld.I,listOf(5,3,0), listOf(Fachattribute.Fremdsprache)))
         fächer.add(Fach("Italienisch",Aufgabenfeld.I,listOf(5,3,0), listOf(Fachattribute.Fremdsprache)))
         fächer.add(Fach("Portugiesisch",Aufgabenfeld.I,listOf(5,3,0), listOf(Fachattribute.Fremdsprache)))
-        fächer.add(Fach("Bildende Kunst",Aufgabenfeld.I,listOf(5,2,0), listOf()))
-        fächer.add(Fach("Musik",Aufgabenfeld.I,listOf(5,2,0), listOf()))
-        fächer.add(Fach("Geschichte",Aufgabenfeld.II,listOf(5,2,0), listOf()))
+        fächer.add(Fach("Bildende Kunst",Aufgabenfeld.I,listOf(5,2,0), listOf(Fachattribute.MuKu)))
+        fächer.add(Fach("Musik",Aufgabenfeld.I,listOf(5,2,0), listOf(Fachattribute.MuKu)))
+        fächer.add(Fach("Geschichte",Aufgabenfeld.II,listOf(5,2,0), listOf(Fachattribute.Geschichte)))
+
         fächer.add(Fach("Geographie",Aufgabenfeld.II,listOf(5,0,0), listOf()))
         fächer.add(Fach("Gemeinschaftskunde",Aufgabenfeld.II,listOf(5,0,0), listOf()))
         fächer.add(Fach("Geo/Gk",Aufgabenfeld.II,listOf(0,2,0), listOf(Fachattribute.GeGe)))
+        fächer.add(Fach("Geo/Gk",Aufgabenfeld.II,listOf(0,2,0), listOf(Fachattribute.GeGe)))
         fächer.add(Fach("Religionslehre",Aufgabenfeld.II,listOf(5,2,0), listOf()))
         fächer.add(Fach("Ethik",Aufgabenfeld.II,listOf(5,2,0), listOf()))
-        fächer.add(Fach("Wirtschaft",Aufgabenfeld.II,listOf(5,2,0), listOf()))
+        fächer.add(Fach("Wirtschaft",Aufgabenfeld.II,listOf(5,0,0), listOf()))
         fächer.add(Fach("Mathematik",Aufgabenfeld.III,listOf(5,3,0),listOf(Fachattribute.Mathematik)))
         fächer.add(Fach("Biologie",Aufgabenfeld.III,listOf(5,3,0),listOf(Fachattribute.Naturwissenschaft)))
         fächer.add(Fach("Chemie",Aufgabenfeld.III,listOf(5,3,0),listOf(Fachattribute.Naturwissenschaft)))
@@ -125,7 +127,7 @@ fun erstelleRaster(aktuelleBelegung:Belegung){
                             if (zeile.klickbar.contains(Belegung.Companion.Kursart.LF)){
                                 +"LF"
                                 klassen.add("klickbar")
-                                id = zeile.name + "_LF"
+                                id = zeile.fachnameOriginal + "_LF"
                             }
                             if (zeile.gewählt==Belegung.Companion.Kursart.LF){
                                 klassen.add("belegt_LF")
@@ -138,7 +140,7 @@ fun erstelleRaster(aktuelleBelegung:Belegung){
                             if (zeile.klickbar.contains(Belegung.Companion.Kursart.BF)) {
                                 +"BF"
                                 klassen.add("klickbar")
-                                id = zeile.name + "_BF"
+                                id = zeile.fachnameOriginal + "_BF"
 
                                 if (zeile.gewählt == Belegung.Companion.Kursart.BF) {
                                     klassen.add("belegt_BF")
@@ -146,7 +148,7 @@ fun erstelleRaster(aktuelleBelegung:Belegung){
                             } else if (zeile.klickbar.contains(Belegung.Companion.Kursart.WF)) {
                                 +"WF"
                                 klassen.add("klickbar")
-                                id = zeile.name + "_WF"
+                                id = zeile.fachnameOriginal + "_WF"
 
                                 if (zeile.gewählt == Belegung.Companion.Kursart.WF) {
                                     klassen.add("belegt_WF")
@@ -157,15 +159,18 @@ fun erstelleRaster(aktuelleBelegung:Belegung){
                         td {
                             var klassen=mutableSetOf<String>()
                             if (zeile.mündlichKlickbar){
+
                                 klassen.add("klickbar")
                                 val gewählt=zeile.gewählt?:""
                                 if (gewählt is Belegung.Companion.Kursart){
                                     if (gewählt==Belegung.Companion.Kursart.BF){
-                                        id = zeile.name + "_mBF"
+                                        id = zeile.fachnameOriginal + "_mBF"
                                     } else if (gewählt==Belegung.Companion.Kursart.WF){
-                                        id=zeile.name+"_mWF"
+                                        id=zeile.fachnameOriginal+"_mWF"
                                     }
                                 }
+
+                            } else {
 
                             }
                             classes=klassen
@@ -180,7 +185,7 @@ fun erstelleRaster(aktuelleBelegung:Belegung){
                                         if (zeile.stunden[i]!=0) {
                                             +zeile.stunden[i].toString()
 
-                                            println("Stunden $i ${zeile.stunden[i]}")
+                                            //println("Stunden $i ${zeile.stunden[i]}")
                                             if (zeile.stundenAlternativVorhanden == true) {
                                                 klassen.add("klickbar")
                                                 klassen.add("stunden")
@@ -315,7 +320,7 @@ fun visualisiereBelegung(aktuelleBelegung:Belegung){
             document.getElementById(id_mündlich)?.innerHTML="X"
 
         } else {
-            document.getElementById(id_mündlich)?.innerHTML=" "
+            document.getElementById(id_mündlich)?.innerHTML="&nbsp;&nbsp;"
         }
     }
 }
