@@ -7,87 +7,171 @@ import kotlin.browser.document
 import kotlin.browser.window
 import jquery.*
 import org.w3c.dom.*
+import org.w3c.dom.events.EventListener
 import kotlin.dom.addClass
 import kotlin.dom.removeClass
 
 
 actual class Sample {
-    actual fun checkMe():Int {
 
-        val fächer:MutableList<Fach> = mutableListOf()
-        fächer.add(Fach("Deutsch",Aufgabenfeld.I,listOf(5,3,0), listOf(Fachattribute.Deutsch)))
-        fächer.add(Fach("Englisch",Aufgabenfeld.I,listOf(5,3,0), listOf(Fachattribute.Fremdsprache)))
-        fächer.add(Fach("Französisch",Aufgabenfeld.I,listOf(5,3,0), listOf(Fachattribute.Fremdsprache)))
-        fächer.add(Fach("Latein",Aufgabenfeld.I,listOf(5,3,0), listOf(Fachattribute.Fremdsprache)))
-        fächer.add(Fach("Griechisch",Aufgabenfeld.I,listOf(5,3,0), listOf(Fachattribute.Fremdsprache)))
-        fächer.add(Fach("Russisch",Aufgabenfeld.I,listOf(5,3,0), listOf(Fachattribute.Fremdsprache)))
-        fächer.add(Fach("Spanisch",Aufgabenfeld.I,listOf(5,3,0), listOf(Fachattribute.Fremdsprache)))
-        fächer.add(Fach("Italienisch",Aufgabenfeld.I,listOf(5,3,0), listOf(Fachattribute.Fremdsprache)))
-        fächer.add(Fach("Portugiesisch",Aufgabenfeld.I,listOf(5,3,0), listOf(Fachattribute.Fremdsprache)))
-        fächer.add(Fach("Bildende Kunst",Aufgabenfeld.I,listOf(5,2,0), listOf(Fachattribute.MuKu)))
-        fächer.add(Fach("Musik",Aufgabenfeld.I,listOf(5,2,0), listOf(Fachattribute.MuKu)))
-        fächer.add(Fach("Geschichte",Aufgabenfeld.II,listOf(5,2,0), listOf(Fachattribute.Geschichte)))
+    actual fun checkMe(): Int {
+        window.addEventListener("hashchange", { // absichtlich falsch geschrieben
+                event ->
+            run {
+                val parameterSet = Variablen.getParameterSet(window.location.hash)
 
-        fächer.add(Fach("Geographie",Aufgabenfeld.II,listOf(5,0,0), listOf()))
-        fächer.add(Fach("Gemeinschaftskunde",Aufgabenfeld.II,listOf(5,0,0), listOf()))
-        fächer.add(Fach("Geo/Gk",Aufgabenfeld.II,listOf(0,2,0), listOf(Fachattribute.GeGe)))
-        fächer.add(Fach("Geo/Gk",Aufgabenfeld.II,listOf(0,2,0), listOf(Fachattribute.GeGe)))
-        fächer.add(Fach("Religionslehre",Aufgabenfeld.II,listOf(5,2,0), listOf()))
-        fächer.add(Fach("Ethik",Aufgabenfeld.II,listOf(5,2,0), listOf()))
-        fächer.add(Fach("Wirtschaft",Aufgabenfeld.II,listOf(5,0,0), listOf()))
-        fächer.add(Fach("Mathematik",Aufgabenfeld.III,listOf(5,3,0),listOf(Fachattribute.Mathematik)))
-        fächer.add(Fach("Biologie",Aufgabenfeld.III,listOf(5,3,0),listOf(Fachattribute.Naturwissenschaft)))
-        fächer.add(Fach("Chemie",Aufgabenfeld.III,listOf(5,3,0),listOf(Fachattribute.Naturwissenschaft)))
-        fächer.add(Fach("Physik",Aufgabenfeld.III,listOf(5,3,0),listOf(Fachattribute.Naturwissenschaft)))
-        fächer.add(Fach("Schulversuch Informatik",Aufgabenfeld.III,listOf(5,3,0),listOf(Fachattribute.kannNawiErsetzen)))
-        fächer.add(Fach("Schulversuch NwT",Aufgabenfeld.III,listOf(5,3,0),listOf(Fachattribute.kannNawiErsetzen)))
-        fächer.add(Fach("Sport",Aufgabenfeld.Sport,listOf(5,2,0),listOf()))
-        fächer.add(Fach("Literatur und Theater",Aufgabenfeld.I,listOf(0,0,2),listOf(Fachattribute.Orchidee)))
-        fächer.add(Fach("VK Mathematik",Aufgabenfeld.III,listOf(0,0,2),listOf(Fachattribute.Orchidee)))
-        fächer.add(Fach("VK Sprache",Aufgabenfeld.I,listOf(0,0,2),listOf(Fachattribute.Orchidee)))
-        fächer.add(Fach("Wahlfach Informatik",Aufgabenfeld.III,listOf(0,0,2),listOf(Fachattribute.Orchidee)))
-        fächer.add(Fach("Literatur",Aufgabenfeld.I,listOf(0,0,2),listOf(Fachattribute.Orchidee)))
-        fächer.add(Fach("Philosophie",Aufgabenfeld.II,listOf(0,0,2),listOf(Fachattribute.Orchidee)))
-        fächer.add(Fach("Psychologie",Aufgabenfeld.II,listOf(0,0,2),listOf(Fachattribute.Orchidee)))
-        fächer.add(Fach("Astronomie",Aufgabenfeld.III,listOf(0,0,2),listOf(Fachattribute.Orchidee)))
-        fächer.add(Fach("Problemlösen mit CAS",Aufgabenfeld.III,listOf(0,0,2),listOf(Fachattribute.Orchidee)))
-        fächer.add(Fach("Darstellende Geometrie",Aufgabenfeld.III,listOf(0,0,2),listOf(Fachattribute.Orchidee)))
-        fächer.add(Fach("Geologie",Aufgabenfeld.III,listOf(0,0,2),listOf(Fachattribute.Orchidee)))
-        fächer.add(Fach("Seminarfach I",Aufgabenfeld.I,listOf(0,3,0),listOf(Fachattribute.Seminarfach)))
-        fächer.add(Fach("Seminarfach II",Aufgabenfeld.II,listOf(0,3,0),listOf(Fachattribute.Seminarfach)))
-        fächer.add(Fach("Seminarfach III",Aufgabenfeld.III,listOf(0,3,0),listOf(Fachattribute.Seminarfach)))
+                if (parameterSet.containsKey("id") && !parameterSet.getValue("id").equals(Variablen.status)) {
+                    val aktuelleBelegung = Belegung.getBelegungsobjekt()
+                    aktuelleBelegung.deserialisiere(parameterSet.getValue("id"))
+                    Variablen.status = parameterSet.getValue("id")
+                    erstelleRaster(aktuelleBelegung)
+                    visualisiereBelegung(aktuelleBelegung)
+                    eventsAnhängen(aktuelleBelegung)
+
+                } else {
+                    println("Status unverändert")
+                }
+            }
+        })
+
+        var aktuelleBelegung = Belegung.getBelegungsobjekt()
+        val parameterSet = Variablen.getParameterSet(window.location.hash)
+
+        if (parameterSet.containsKey("ansicht")) {
+            if (parameterSet.getValue("ansicht").equals("start")) {
+                erstelleAuswahl()
+            }
+        } else {
+            if (parameterSet.containsKey("ex")){
+                val wert=parameterSet.getValue("ex")
+                Variablen.excluded=wert
+                if (!wert.equals("")){
+                    println("")
+                    Variablen.excludedList=Kodierung.characterstring2Binarystring(wert).cut(6).map{Kodierung.binarystring2Int(it)}.toMutableList()
+                    println("Ausgeschlossene Fächer: ${Variablen.excludedList}")
+                }
+
+            }
+        if (parameterSet.containsKey("id") || parameterSet.isEmpty()) {
+
+            if (parameterSet.containsKey(("id"))) {
+                Belegung.getBelegungsobjekt().deserialisiere(parameterSet.getValue("id"))
+            }
+
+            Variablen.status = "${aktuelleBelegung.serialisiere()}"
+
+            erstelleRaster(aktuelleBelegung)
+            visualisiereBelegung(aktuelleBelegung)
+            eventsAnhängen(aktuelleBelegung)
+        }
+            Variablen.setzeHash()
+        }
 
 
-        Belegung.generiereFächer(fächer)
 
-
-        var aktuelleBelegung=Belegung("Belegung 1")
-        aktuelleBelegung.action(Belegung.Companion.Aktion.NEU,"Mathematik", Belegung.Companion.Kursart.LF)
-        aktuelleBelegung.action(Belegung.Companion.Aktion.NEU,"Englisch", Belegung.Companion.Kursart.LF)
-        aktuelleBelegung.action(Belegung.Companion.Aktion.NEU,"Informatik", Belegung.Companion.Kursart.LF)
-        aktuelleBelegung.action(Belegung.Companion.Aktion.NEU,"Geschichte", Belegung.Companion.Kursart.BF)
-        aktuelleBelegung.action(Belegung.Companion.Aktion.NEU,"Religionslehre", Belegung.Companion.Kursart.BF)
-        aktuelleBelegung.action(Belegung.Companion.Aktion.TOGGLEMÜNDLICH,"Geschichte", Belegung.Companion.Kursart.BF)
-        aktuelleBelegung.action(Belegung.Companion.Aktion.TOGGLEMÜNDLICH,"Religionslehre", Belegung.Companion.Kursart.BF)
-
-        // aktuelleBelegung.action(Belegung.Companion.Aktion.NEU,"Chemie", Belegung.Companion.Kursart.BF)
-        aktuelleBelegung.action(Belegung.Companion.Aktion.NEU,"Deutsch", Belegung.Companion.Kursart.BF)
-
-        println("\n"+aktuelleBelegung)
-        aktuelleBelegung.action(Belegung.Companion.Aktion.CHECK)
-
-        erstelleRaster(aktuelleBelegung)
-        visualisiereBelegung(aktuelleBelegung)
-        eventsAnhängen(aktuelleBelegung)
         return 42
-
     }
 }
 
-fun erstelleRaster(aktuelleBelegung:Belegung){
-    val darstellung=aktuelleBelegung.holeDarstellung()
-    val fächerauswahl=aktuelleBelegung.getFächer().groupBy { it.aufgabenfeld }
-    val myDiv=document.create.div("panel") {
+
+actual object Variablen {
+    enum class Ansichten {
+        START, WAHL
+    }
+
+    fun setzeHash(){
+        window.location.hash="#id=$status|ex=$excluded"
+    }
+
+    public var status = ""
+    public var excluded=""
+    actual var excludedList= mutableListOf<Int>()
+    var ansicht: Ansichten = Ansichten.WAHL
+
+    fun getParameterSet(input: String): HashMap<String, String> {
+        var hm = hashMapOf<String, String>()
+        val parameter = input.substring(1).split("|")
+        for (p in parameter) {
+            val teile = p.split("=")
+            if (teile.size == 2) {
+                hm.put(teile[0], teile[1])
+            }
+        }
+        println("ParameterSet: $hm")
+        return hm
+    }
+
+}
+
+fun erstelleAuswahl() {
+    val myDiv = document.create.div("panel") {
+        +"Bitte die Fächer abwählen, die den Schülerinnen und Schülern bei der Auswahl "
+        span {
+            +"nicht"
+            classes = setOf<String>("rot")
+        }
+        +" angezeigt werden sollen."
+        br
+        +"Danach auf OK drücken. Daraufhin werden nur noch die übrigen Fächer in der Auswahl angezeigt und der Link in der Adresszeile des Browsers kann an die Schülerinnen und Schüler"
+                "weitergegeben werden. Somit sehen die Schülerinnen und Schüler beim Aufruf dieses Links nur noch die verbliebenen Fächer dieser Liste und die Pflichtfächer."
+
+        val fächer = Belegung.holeFächer()
+        ul {
+            for (f in fächer) {
+                val klassen = mutableSetOf<String>()
+                if (f.pflicht == false) {
+                    checkBoxInput {
+                        checked = true
+                        id = "fach_" + f.id
+                        klassen.add("checkbox")
+                        classes = klassen
+                    }
+                    +f.name
+                    br
+                }
+            }
+        }
+        button {
+            text("OK")
+            onClickFunction = {
+                println("Knopf gedrückt")
+                val checkboxes = document.getElementsByClassName("checkbox")
+                val exclude = mutableListOf<Int>()
+                for (i in 0 until checkboxes.length) {
+                    val aktuelleCB = checkboxes[i] as HTMLInputElement
+                    if (!aktuelleCB?.checked ?: false)
+                        exclude.add(aktuelleCB.id.split("_").last().toInt())
+                }
+                var excludedString=""
+                for (e in exclude){
+                    var wert= e.toString(2)
+                    excludedString+="0".repeat(6-wert.length)+wert
+                }
+                val wert=Kodierung.binarystring2Characterstring(excludedString)
+                Variablen.excludedList=exclude
+                Variablen.excluded=wert
+
+                Variablen.setzeHash()
+                val aktuelleBelegung=Belegung.getBelegungsobjekt()
+                erstelleRaster(aktuelleBelegung)
+                visualisiereBelegung(aktuelleBelegung)
+                eventsAnhängen(aktuelleBelegung)
+
+            }
+        }
+    }
+    val con = document.getElementById("container")
+    con!!.innerHTML = ""
+
+    document.getElementById("container")!!.appendChild(myDiv)
+    println("Auswahlansicht")
+}
+
+fun erstelleRaster(aktuelleBelegung: Belegung) {
+    val darstellung = aktuelleBelegung.holeDarstellung()
+    val fächerauswahl = aktuelleBelegung.getFächer().groupBy { it.aufgabenfeld }
+    val myDiv = document.create.div("panel") {
+
         table {
 
             for (zeile in darstellung) {
@@ -97,46 +181,46 @@ fun erstelleRaster(aktuelleBelegung:Belegung){
                             classes = setOf("fett")
                             +zeile.text
                         }
-                        for (i in 0..5){
+                        for (i in 0..5) {
                             td {} //Leere Felder
                         }
                     }
-                } else if (zeile is Belegung.Summe){
+                } else if (zeile is Belegung.Summe) {
                     tr {
                         td {
                             classes = setOf("fett")
                             +"Wochenstunden"
                         }
-                        for (i in 0..2){
+                        for (i in 0..2) {
                             td {} //Leere Felder
                         }
-                        for (i in 0..3){
-                            td{
-                                + zeile.stunden[i].toString()
+                        for (i in 0..3) {
+                            td {
+                                +zeile.stunden[i].toString()
                                 classes = setOf("fett")
                             }
                         }
                     }
-            }else if (zeile is Belegung.ZeileDarstellung){
+                } else if (zeile is Belegung.ZeileDarstellung) {
                     tr {
-                        td{
-                            + zeile.name
+                        td {
+                            +zeile.name
                         }
-                        td{
-                            var klassen=mutableSetOf<String>()
-                            if (zeile.klickbar.contains(Belegung.Companion.Kursart.LF)){
+                        td {
+                            var klassen = mutableSetOf<String>()
+                            if (zeile.klickbar.contains(Belegung.Companion.Kursart.LF)) {
                                 +"LF"
                                 klassen.add("klickbar")
                                 id = zeile.fachnameOriginal + "_LF"
                             }
-                            if (zeile.gewählt==Belegung.Companion.Kursart.LF){
+                            if (zeile.gewählt == Belegung.Companion.Kursart.LF) {
                                 klassen.add("belegt_LF")
                             }
 
-                            classes=klassen
+                            classes = klassen
                         }
-                        td{
-                            var klassen=mutableSetOf<String>()
+                        td {
+                            var klassen = mutableSetOf<String>()
                             if (zeile.klickbar.contains(Belegung.Companion.Kursart.BF)) {
                                 +"BF"
                                 klassen.add("klickbar")
@@ -154,56 +238,56 @@ fun erstelleRaster(aktuelleBelegung:Belegung){
                                     klassen.add("belegt_WF")
                                 }
                             }
-                            classes=klassen
+                            classes = klassen
                         }
                         td {
-                            var klassen=mutableSetOf<String>()
-                            if (zeile.mündlichKlickbar){
+                            var klassen = mutableSetOf<String>()
+                            if (zeile.mündlichKlickbar) {
 
                                 klassen.add("klickbar")
-                                val gewählt=zeile.gewählt?:""
-                                if (gewählt is Belegung.Companion.Kursart){
-                                    if (gewählt==Belegung.Companion.Kursart.BF){
+                                val gewählt = zeile.gewählt ?: ""
+                                if (gewählt is Belegung.Companion.Kursart) {
+                                    if (gewählt == Belegung.Companion.Kursart.BF) {
                                         id = zeile.fachnameOriginal + "_mBF"
-                                    } else if (gewählt==Belegung.Companion.Kursart.WF){
-                                        id=zeile.fachnameOriginal+"_mWF"
+                                    } else if (gewählt == Belegung.Companion.Kursart.WF) {
+                                        id = zeile.fachnameOriginal + "_mWF"
                                     }
                                 }
 
                             } else {
 
                             }
-                            classes=klassen
+                            classes = klassen
                         }
 
-                        val gewählt=zeile.gewählt?:""
+                        val gewählt = zeile.gewählt ?: ""
 
-                           for (i in 0..3) {
-                                td {
-                                    var klassen= mutableSetOf<String>()
-                                    if (gewählt is Belegung.Companion.Kursart) {
-                                        if (zeile.stunden[i]!=0) {
-                                            +zeile.stunden[i].toString()
+                        for (i in 0..3) {
+                            td {
+                                var klassen = mutableSetOf<String>()
+                                if (gewählt is Belegung.Companion.Kursart) {
+                                    if (zeile.stunden[i] != 0) {
+                                        +zeile.stunden[i].toString()
 
-                                            //println("Stunden $i ${zeile.stunden[i]}")
-                                            if (zeile.stundenAlternativVorhanden == true) {
-                                                klassen.add("klickbar")
-                                                klassen.add("stunden")
+                                        //println("Stunden $i ${zeile.stunden[i]}")
+                                        if (zeile.stundenAlternativVorhanden == true) {
+                                            klassen.add("klickbar")
+                                            klassen.add("stunden")
 
-                                                if (gewählt == Belegung.Companion.Kursart.BF) {
-                                                    id = zeile.name + "_stundenBF"
-                                                } else if (gewählt == Belegung.Companion.Kursart.WF) {
-                                                    id = zeile.name + "_stundenWF"
-                                                }
+                                            if (gewählt == Belegung.Companion.Kursart.BF) {
+                                                id = zeile.name + "_stundenBF"
+                                            } else if (gewählt == Belegung.Companion.Kursart.WF) {
+                                                id = zeile.name + "_stundenWF"
                                             }
-                                        } else {
-                                            +" "
                                         }
                                     } else {
-                                        + " "
+                                        +" "
                                     }
-                                    classes=klassen
+                                } else {
+                                    +" "
                                 }
+                                classes = klassen
+                            }
 
                         }
 
@@ -211,65 +295,73 @@ fun erstelleRaster(aktuelleBelegung:Belegung){
                 }
             }
         }
-        div{
-            val meldungen=aktuelleBelegung.holeFehler()
+        div {
+            val meldungen = aktuelleBelegung.holeFehler()
             meldungen.forEach {
                 div {
-                    if (it.kommentarart==Belegung.Kommentarart.SCHLECHT){
-                        classes=setOf("rot")
+                    if (it.kommentarart == Belegung.Kommentarart.SCHLECHT) {
+                        classes = setOf("rot")
 
-                    } else  if (it.kommentarart==Belegung.Kommentarart.GUT){
-                        classes=setOf("grün")
+                    } else if (it.kommentarart == Belegung.Kommentarart.GUT) {
+                        classes = setOf("grün")
 
                     } else {
-                        classes=setOf()
+                        classes = setOf()
                     }
                     +it.text
-
                 }
             }
         }
     }
 
+    val con = document.getElementById("container")
+    con!!.innerHTML = ""
 
-    println("div erstellt")
-
-    val con=document.getElementById("container")
-    con!!.innerHTML=""
-    println("Container: "+con)
     document.getElementById("container")!!.appendChild(myDiv)
 
-    println("div an container angehängt")
-    document.getElementById("container")!!.append {
 
-    }
-
-
+    //document.getElementById("container")!!.append {
+    //}
 }
 
-fun eventsAnhängen(aktuelleBelegung: Belegung){
-    val elemente=document.getElementsByClassName("klickbar")
-    for (i in 0..elemente.length){
-        if (elemente[i]!=null) {
-
+fun eventsAnhängen(aktuelleBelegung: Belegung) {
+    val elemente = document.getElementsByClassName("klickbar")
+    for (i in 0..elemente.length) {
+        if (elemente[i] != null) {
             elemente[i]!!.addEventListener("click",
                 { event ->
-                    val id=elemente[i]?.id?:""
-                    val typEvent=id.split("_")
-                    var refresh=false
-                    if (typEvent.size==2){
-                        if (typEvent[1].startsWith("m")){
-                            aktuelleBelegung.action(Belegung.Companion.Aktion.TOGGLEMÜNDLICH,typEvent[0],if (typEvent[1].substring(1)=="BF") Belegung.Companion.Kursart.BF else Belegung.Companion.Kursart.WF )
-                            refresh=true
-                        } else if (typEvent[1]=="LF"){
-                            aktuelleBelegung.action(Belegung.Companion.Aktion.TOGGLE,typEvent[0],Belegung.Companion.Kursart.LF)
-                            refresh=true
-                        } else if (typEvent[1]=="BF"){
-                            aktuelleBelegung.action(Belegung.Companion.Aktion.TOGGLE,typEvent[0],Belegung.Companion.Kursart.BF)
-                            refresh=true
-                        }else if (typEvent[1]=="WF"){
-                            aktuelleBelegung.action(Belegung.Companion.Aktion.TOGGLE,typEvent[0],Belegung.Companion.Kursart.WF)
-                            refresh=true
+                    val id = elemente[i]?.id ?: ""
+                    val typEvent = id.split("_")
+                    var refresh = false
+                    if (typEvent.size == 2) {
+                        if (typEvent[1].startsWith("m")) {
+                            aktuelleBelegung.action(
+                                Belegung.Companion.Aktion.TOGGLEMÜNDLICH,
+                                typEvent[0],
+                                if (typEvent[1].substring(1) == "BF") Belegung.Companion.Kursart.BF else Belegung.Companion.Kursart.WF
+                            )
+                            refresh = true
+                        } else if (typEvent[1] == "LF") {
+                            aktuelleBelegung.action(
+                                Belegung.Companion.Aktion.TOGGLE,
+                                typEvent[0],
+                                Belegung.Companion.Kursart.LF
+                            )
+                            refresh = true
+                        } else if (typEvent[1] == "BF") {
+                            aktuelleBelegung.action(
+                                Belegung.Companion.Aktion.TOGGLE,
+                                typEvent[0],
+                                Belegung.Companion.Kursart.BF
+                            )
+                            refresh = true
+                        } else if (typEvent[1] == "WF") {
+                            aktuelleBelegung.action(
+                                Belegung.Companion.Aktion.TOGGLE,
+                                typEvent[0],
+                                Belegung.Companion.Kursart.WF
+                            )
+                            refresh = true
                         } else if (typEvent[1].startsWith("stunden")) {
                             aktuelleBelegung.action(
                                 Belegung.Companion.Aktion.TOGGLESTUNDEN,
@@ -279,32 +371,31 @@ fun eventsAnhängen(aktuelleBelegung: Belegung){
                             refresh = true
                         }
                     }
-                    if (refresh==true){
-
+                    if (refresh == true) {
                         erstelleRaster(aktuelleBelegung)
                         visualisiereBelegung(aktuelleBelegung)
                         eventsAnhängen(aktuelleBelegung)
                         aktuelleBelegung.action(Belegung.Companion.Aktion.CHECK)
+                        Variablen.status=aktuelleBelegung.serialisiere()
+                        Variablen.setzeHash()
                     }
-                    //window.alert(elemente[i]?.id?:"")
                 }
-
             )
         }
     }
 }
 
-fun visualisiereBelegung(aktuelleBelegung:Belegung){
-    val belegung=aktuelleBelegung.getBelegung()
+fun visualisiereBelegung(aktuelleBelegung: Belegung) {
+    val belegung = Belegung.getBelegungsobjekt().getBelegung()
     belegung.forEach {
-        val id=it.name+"_"+it.typ
-        val id_mündlich=it.name+"_m"+if (it.typ==Belegung.Companion.Kursart.BF) "BF" else if (it.typ==Belegung.Companion.Kursart.WF) "WF" else ""
-        val typ=it.typ
-        val zelle=document.getElementById(id)
-        if (aktuelleBelegung.getBelegung().filter { it.attribute.contains(Fachattribute.mündlichePrüfung) }.count()<2) {
+        val id = it.name + "_" + it.typ
+        val id_mündlich =
+            it.name + "_m" + if (it.typ == Belegung.Companion.Kursart.BF) "BF" else if (it.typ == Belegung.Companion.Kursart.WF) "WF" else ""
+        val typ = it.typ
+        val zelle = document.getElementById(id)
+        if (aktuelleBelegung.getBelegung().filter { it.attribute.contains(Fachattribute.mündlichePrüfung) }.count() < 2) {
             if (it.typ == Belegung.Companion.Kursart.BF || it.typ == Belegung.Companion.Kursart.WF) {
                 document.getElementById(id_mündlich)?.addClass("klickbar")
-
             }
         } else {
             if (it.attribute.contains(Fachattribute.mündlichePrüfung)) {
@@ -313,14 +404,14 @@ fun visualisiereBelegung(aktuelleBelegung:Belegung){
             }
         }
 
-        zelle?.let{
-            it.addClass("belegt_"+typ)
+        zelle?.let {
+            it.addClass("belegt_" + typ)
         }
-        if (it.attribute.contains(Fachattribute.mündlichePrüfung)){
-            document.getElementById(id_mündlich)?.innerHTML="X"
+        if (it.attribute.contains(Fachattribute.mündlichePrüfung)) {
+            document.getElementById(id_mündlich)?.innerHTML = "X"
 
         } else {
-            document.getElementById(id_mündlich)?.innerHTML="&nbsp;&nbsp;"
+            document.getElementById(id_mündlich)?.innerHTML = "&nbsp;&nbsp;"
         }
     }
 }

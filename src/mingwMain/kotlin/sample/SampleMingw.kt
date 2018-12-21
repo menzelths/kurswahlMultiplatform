@@ -7,3 +7,8 @@ actual class Sample {
 actual object Platform {
     actual val name: String = "Native"
 }
+
+actual object Variablen {
+    actual var excludedList= mutableListOf<Int>()
+
+}
