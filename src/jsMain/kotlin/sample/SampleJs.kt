@@ -112,8 +112,7 @@ fun erstelleAuswahl() {
         }
         +" angezeigt werden sollen."
         br
-        +"Danach auf OK drücken. Daraufhin werden nur noch die übrigen Fächer in der Auswahl angezeigt und der Link in der Adresszeile des Browsers kann an die Schülerinnen und Schüler"
-                "weitergegeben werden. Somit sehen die Schülerinnen und Schüler beim Aufruf dieses Links nur noch die verbliebenen Fächer dieser Liste und die Pflichtfächer."
+        +"Danach auf OK drücken. Daraufhin werden nur noch die übrigen Fächer in der Auswahl angezeigt und der Link in der Adresszeile des Browsers kann an die Schülerinnen und Schüler weitergegeben werden. Somit sehen die Schülerinnen und Schüler beim Aufruf dieses Links nur noch die verbliebenen Fächer dieser Liste und die Pflichtfächer."
 
         val fächer = Belegung.holeFächer()
         ul {
