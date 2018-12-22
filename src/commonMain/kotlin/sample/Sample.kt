@@ -516,13 +516,29 @@ class Belegung(val name: String) {
     private fun testeAnrechnungspflichtigeStunden(): Boolean {
         var mukuSchonGeprüft = false
         var kurssumme = 0
+        var nawiSprZähler=0
         Belegung.anrechnungspflichtig= mutableListOf()
+
+        if (aktuelleBelegung.filter{it.attribute.contains(Fachattribute.MuKu) && it.typ==Kursart.LF}.count()>0){
+            mukuSchonGeprüft=true
+        }
+        if (aktuelleBelegung.filter{it.attribute.contains(Fachattribute.MuKu) && it.attribute.contains(Fachattribute.MuKu)}.count()>0){
+            mukuSchonGeprüft=true
+        }
 
         for (f in aktuelleBelegung) {
 
+
             if (f.typ == Kursart.LF) {
                 kurssumme += 4
-                Belegung.anrechnungspflichtig.add(Anrechnung(f.id, mutableListOf(1,1,1,1)))
+                Belegung.anrechnungspflichtig.add(Anrechnung(f.id, mutableListOf(1, 1, 1, 1)))
+                if (f.attribute.contains(Fachattribute.Naturwissenschaft) || f.attribute.contains(Fachattribute.kannNawiErsetzen)) {
+                nawiSprZähler+=1
+                }
+
+                } else if (f.attribute.contains(Fachattribute.mündlichePrüfung)){
+                kurssumme += 4
+                Belegung.anrechnungspflichtig.add(Anrechnung(f.id, mutableListOf(1, 1, 1, 1)))
 
             } else if (f.typ == Kursart.BF) {
                 if (f.attribute.contains(Fachattribute.Geschichte)) {
@@ -533,24 +549,30 @@ class Belegung(val name: String) {
                     Belegung.anrechnungspflichtig.add(Anrechnung(f.id, mutableListOf(1,1,0,0)))
                     mukuSchonGeprüft = true
                 } else if (f.attribute.contains(Fachattribute.Naturwissenschaft) || f.attribute.contains(Fachattribute.kannNawiErsetzen)) {
-                    kurssumme += 4
-                    Belegung.anrechnungspflichtig.add(Anrechnung(f.id, mutableListOf(1,1,1,1)))
-                } else if (f.attribute.contains(Fachattribute.Fremdsprache)) {
+                    if (nawiSprZähler<3) {
+                        kurssumme += 4
+                        Belegung.anrechnungspflichtig.add(Anrechnung(f.id, mutableListOf(1, 1, 1, 1)))
+                        nawiSprZähler += 1
+                    }
+                    } else if (f.attribute.contains(Fachattribute.Fremdsprache)) {
                     if (f.alternativStunden) {
                         kurssumme += 2
                         Belegung.anrechnungspflichtig.add(Anrechnung(f.id, mutableListOf(1,1,0,0)))
                     } else {
-                        kurssumme += 4
-                        Belegung.anrechnungspflichtig.add(Anrechnung(f.id, mutableListOf(1,1,1,1)))
+                        if (nawiSprZähler<3) {
+                            kurssumme += 4
+                            Belegung.anrechnungspflichtig.add(Anrechnung(f.id, mutableListOf(1, 1, 1, 1)))
+                            nawiSprZähler += 1
+                        }
                     }
                 } else if (f.attribute.contains(Fachattribute.GeGe)) {
                     if (aktuelleBelegung.filter { it.name == "Gemeinschaftskunde" && it.typ == Kursart.LF }.count() > 0) {
                         kurssumme += 2
-                        Belegung.anrechnungspflichtig.add(Anrechnung(f.id, mutableListOf(1,1,0,0)))
+                        Belegung.anrechnungspflichtig.add(Anrechnung(f.id, mutableListOf(1,0,0,1)))
 
                     } else if (aktuelleBelegung.filter { it.name == "Geographie" && it.typ == Kursart.LF }.count() > 0) {
                         kurssumme += 2
-                        Belegung.anrechnungspflichtig.add(Anrechnung(f.id, mutableListOf(1,1,0,0)))
+                        Belegung.anrechnungspflichtig.add(Anrechnung(f.id, mutableListOf(0,1,1,0)))
                     } else if (aktuelleBelegung.filter { it.name == "Wirtschaft" && it.typ == Kursart.LF }.count() > 0) {
                         kurssumme += 2
                         Belegung.anrechnungspflichtig.add(Anrechnung(f.id, mutableListOf(1,0,1,0)))
@@ -563,10 +585,10 @@ class Belegung(val name: String) {
                     Belegung.anrechnungspflichtig.add(Anrechnung(f.id, mutableListOf(1,1,1,1)))
                 }
 
-            } else if (f.attribute.contains(Fachattribute.mündlichePrüfung)) { //WF in mündlicher Prüfung
+            }/* else if (f.attribute.contains(Fachattribute.mündlichePrüfung)) { //WF in mündlicher Prüfung
                 kurssumme += 4
                 Belegung.anrechnungspflichtig.add(Anrechnung(f.id, mutableListOf(1,1,1,1)))
-            }
+            }*/
         }
 
         if (kurssumme == 40) {

@@ -294,6 +294,7 @@ fun erstelleRaster(aktuelleBelegung: Belegung) {
                                 }
                                 if (zeile.anrechnungspflichtig[i]==1){
                                     klassen.add("fett")
+                                    klassen.add("blau")
                                 }
                                 classes = klassen
                             }
@@ -329,7 +330,7 @@ fun erstelleRaster(aktuelleBelegung: Belegung) {
         }
         div {
             if (Belegung.holeKurswahlKorrekt()){
-                +"Kurswahl gültig! Anrechnungspflichtige Kurse sind in der Kurswahl fett dargestellt."
+                +"Kurswahl gültig! Anrechnungspflichtige Kurse sind in der Kurswahl blau und fett dargestellt."
                 br
                 +"Richtigkeit der Kurswahl ohne Gewähr: bitte unbedingt zusammen mit dem Oberstufenberater überprüfen! "
 
