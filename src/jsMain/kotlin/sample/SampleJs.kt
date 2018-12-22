@@ -80,7 +80,7 @@ actual object Variablen {
     }
 
     fun setzeHash(){
-        window.location.hash="#id=$status|ex=$excluded"
+        window.location.hash="#id=$status;ex=$excluded"
     }
 
     public var status = ""
@@ -90,7 +90,7 @@ actual object Variablen {
 
     fun getParameterSet(input: String): HashMap<String, String> {
         var hm = hashMapOf<String, String>()
-        val parameter = input.substring(1).split("|")
+        val parameter = input.substring(1).split(";")
         for (p in parameter) {
             val teile = p.split("=")
             if (teile.size == 2) {
