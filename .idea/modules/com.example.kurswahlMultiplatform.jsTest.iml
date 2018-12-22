@@ -4,9 +4,9 @@
     <facet type="kotlin-language" name="Kotlin">
       <configuration version="3" platform="JavaScript " useProjectSettings="false" isTestModule="true" externalProjectId="kurswahlMultiplatform">
         <sourceSets>
+          <sourceSet>com.example.kurswahlMultiplatform.commonTest</sourceSet>
           <sourceSet>com.example.kurswahlMultiplatform.commonMain</sourceSet>
           <sourceSet>com.example.kurswahlMultiplatform.jsMain</sourceSet>
-          <sourceSet>com.example.kurswahlMultiplatform.commonTest</sourceSet>
         </sourceSets>
         <newMppModelJpsModuleKind>COMPILATION_AND_SOURCE_SET_HOLDER</newMppModelJpsModuleKind>
         <testOutputPath>$MODULE_DIR$/../../build/classes/kotlin/js/test/kurswahlMultiplatform_test.js</testOutputPath>
@@ -14,6 +14,8 @@
         <compilerArguments>
           <option name="outputFile" value="$MODULE_DIR$/../../build/classes/kotlin/js/test/kurswahlMultiplatform_test.js" />
           <option name="noStdlib" value="true" />
+          <option name="sourceMap" value="true" />
+          <option name="sourceMapEmbedSources" value="always" />
           <option name="metaInfo" value="true" />
           <option name="target" value="v5" />
           <option name="main" value="call" />

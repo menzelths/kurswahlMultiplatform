@@ -10,6 +10,9 @@ version '0.0.1'
 
 apply plugin: 'maven-publish'
 
+
+
+
 kotlin {
     targets {
         fromPreset(presets.jvm, 'jvm')
@@ -57,5 +60,13 @@ kotlin {
         }
         mingwTest {
         }
+    }
+}
+tasks.withType(compileKotlinJs.getClass()) {
+    kotlinOptions {
+        //moduleKind = "umd"
+        sourceMap = true
+        metaInfo = true
+        sourceMapEmbedSources = "always"
     }
 }
