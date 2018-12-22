@@ -522,7 +522,7 @@ class Belegung(val name: String) {
         if (aktuelleBelegung.filter{it.attribute.contains(Fachattribute.MuKu) && it.typ==Kursart.LF}.count()>0){
             mukuSchonGeprüft=true
         }
-        if (aktuelleBelegung.filter{it.attribute.contains(Fachattribute.MuKu) && it.attribute.contains(Fachattribute.MuKu)}.count()>0){
+        if (aktuelleBelegung.filter{it.attribute.contains(Fachattribute.MuKu) && it.attribute.contains(Fachattribute.mündlichePrüfung)}.count()>0){
             mukuSchonGeprüft=true
         }
 
