@@ -120,7 +120,8 @@ class Belegung(val name: String) {
         val mündlichKlickbar: Boolean,
         val stunden: List<Int>,
         val stundenAlternativVorhanden: Boolean,
-        val fachnameOriginal: String
+        val fachnameOriginal: String,
+        val anrechnungspflichtig:List<Int>
 
     ) : Zeile()
 
@@ -182,7 +183,7 @@ class Belegung(val name: String) {
                 var klickbarWahl = mutableSetOf<Kursart>()
                 var stunden = mutableListOf<Int>()
                 var stundenAlternativVorhanden = false
-
+                var anrechnung= mutableListOf<Int>(0,0,0,0)
                 name = f.key
                 val fachnameOriginal = f.key
                 val varianten = f.value
@@ -227,6 +228,14 @@ class Belegung(val name: String) {
                                 name = "Gemeinschaftskunde"
                             }
                         }
+
+                        if (Belegung.holeKurswahlKorrekt()){
+                            val stelle=Belegung.anrechnungspflichtig.filter{it.id==v.id}.firstOrNull()
+                            if (stelle!=null){
+                                anrechnung=stelle.stunden.toMutableList()
+                            }
+                        }
+
                     }
 
                     // falls Gemeinschaftskunde oder Geographie als LK, dann Geo/Gk zu geo bzw. gk
@@ -262,6 +271,9 @@ class Belegung(val name: String) {
                 }
 
 
+
+
+
                 text.add(
                     ZeileDarstellung(
                         name,
@@ -272,7 +284,8 @@ class Belegung(val name: String) {
                         mündlichKlickbar,
                         stunden,
                         stundenAlternativVorhanden,
-                        fachnameOriginal
+                        fachnameOriginal,
+                        anrechnung
                     )
                 )
             }
@@ -473,11 +486,11 @@ class Belegung(val name: String) {
             }
         }
         if (fehlendeFächer.size > 0) {
-            println("Folgende Fächer fehlen noch: ${fehlendeFächer.joinToString(separator = ", ")}")
+            println("Folgende Fächer fehlen noch: ${fehlendeFächer.joinToString(separator = ", ")}.")
             fehlerMeldungen.add(
                 Kommentar(
                     Kommentarart.SCHLECHT,
-                    "Folgende Fächer fehlen noch: ${fehlendeFächer.joinToString(separator = ", ")}"
+                    "Folgende Fächer fehlen noch: ${fehlendeFächer.joinToString(separator = ", ")}."
                 )
             )
         }
@@ -492,7 +505,7 @@ class Belegung(val name: String) {
         }
         println("Anzahl der gewählten Kurse: $kurssumme")
         if (kurssumme<42) {
-            fehlerMeldungen.add(Kommentar(Kommentarart.SCHLECHT, "Anzahl der gewählten Kurse: $kurssumme. Es müssen jedoch mindestens 42 Kurse gewählt werden"))
+            fehlerMeldungen.add(Kommentar(Kommentarart.SCHLECHT, "Anzahl der gewählten Kurse: $kurssumme. Es müssen jedoch mindestens 42 Kurse gewählt werden."))
         }
         if (kurssumme >=42) {
             fehlerMeldungen.add(Kommentar(Kommentarart.GUT, "Mit $kurssumme belegten Kursen ist die Bedingung von mindestens 42 belegten Kursen erfüllt."))
@@ -503,42 +516,56 @@ class Belegung(val name: String) {
     private fun testeAnrechnungspflichtigeStunden(): Boolean {
         var mukuSchonGeprüft = false
         var kurssumme = 0
+        Belegung.anrechnungspflichtig= mutableListOf()
+
         for (f in aktuelleBelegung) {
 
             if (f.typ == Kursart.LF) {
                 kurssumme += 4
+                Belegung.anrechnungspflichtig.add(Anrechnung(f.id, mutableListOf(1,1,1,1)))
 
             } else if (f.typ == Kursart.BF) {
                 if (f.attribute.contains(Fachattribute.Geschichte)) {
                     kurssumme += 4
+                    Belegung.anrechnungspflichtig.add(Anrechnung(f.id, mutableListOf(1,1,1,1)))
                 } else if (f.attribute.contains(Fachattribute.MuKu) && !mukuSchonGeprüft) {
                     kurssumme += 2
+                    Belegung.anrechnungspflichtig.add(Anrechnung(f.id, mutableListOf(1,1,0,0)))
                     mukuSchonGeprüft = true
                 } else if (f.attribute.contains(Fachattribute.Naturwissenschaft) || f.attribute.contains(Fachattribute.kannNawiErsetzen)) {
                     kurssumme += 4
+                    Belegung.anrechnungspflichtig.add(Anrechnung(f.id, mutableListOf(1,1,1,1)))
                 } else if (f.attribute.contains(Fachattribute.Fremdsprache)) {
                     if (f.alternativStunden) {
                         kurssumme += 2
+                        Belegung.anrechnungspflichtig.add(Anrechnung(f.id, mutableListOf(1,1,0,0)))
                     } else {
                         kurssumme += 4
+                        Belegung.anrechnungspflichtig.add(Anrechnung(f.id, mutableListOf(1,1,1,1)))
                     }
                 } else if (f.attribute.contains(Fachattribute.GeGe)) {
                     if (aktuelleBelegung.filter { it.name == "Gemeinschaftskunde" && it.typ == Kursart.LF }.count() > 0) {
                         kurssumme += 2
+                        Belegung.anrechnungspflichtig.add(Anrechnung(f.id, mutableListOf(1,1,0,0)))
 
                     } else if (aktuelleBelegung.filter { it.name == "Geographie" && it.typ == Kursart.LF }.count() > 0) {
                         kurssumme += 2
+                        Belegung.anrechnungspflichtig.add(Anrechnung(f.id, mutableListOf(1,1,0,0)))
                     } else if (aktuelleBelegung.filter { it.name == "Wirtschaft" && it.typ == Kursart.LF }.count() > 0) {
                         kurssumme += 2
+                        Belegung.anrechnungspflichtig.add(Anrechnung(f.id, mutableListOf(1,0,1,0)))
                     } else {
+                        Belegung.anrechnungspflichtig.add(Anrechnung(f.id, mutableListOf(1,1,1,1)))
                         kurssumme += 4
                     }
                 } else if (f.attribute.contains(Fachattribute.mündlichePrüfung)) { // andere Basisfächer als mündliche Prüfung
                     kurssumme += 4
+                    Belegung.anrechnungspflichtig.add(Anrechnung(f.id, mutableListOf(1,1,1,1)))
                 }
 
             } else if (f.attribute.contains(Fachattribute.mündlichePrüfung)) { //WF in mündlicher Prüfung
                 kurssumme += 4
+                Belegung.anrechnungspflichtig.add(Anrechnung(f.id, mutableListOf(1,1,1,1)))
             }
         }
 
@@ -564,6 +591,11 @@ class Belegung(val name: String) {
                     "Es sind mit $kurssumme mehr als 40 anrechnungspflichtige Kurse in der Belegung vorhanden."
                 )
             )
+        }
+        Belegung.anrechnungspflichtig.forEach {
+            val wert=it
+            val fachname= fächer.filter { it.id==wert.id}.first().name
+            println("$fachname ${it.stunden}")
         }
         return kurssumme <= 40
     }
@@ -792,6 +824,7 @@ class Belegung(val name: String) {
                 // 2 aus den LF aus Deutsch, Fremdsprache, Mathematik oder klassische Naturwissenschaft
                 fehlerMeldungen = mutableListOf()
                 Belegung.kurswahlKorrekt=false
+                Belegung.anrechnungspflichtig= mutableListOf()
                 var fehlerListe = mutableListOf<Boolean>()
                 fehlerListe.add(testeMehrfach())
                 fehlerListe.add(testeLeistungsfächer())
@@ -878,6 +911,9 @@ class Belegung(val name: String) {
     companion object {
 
         var kurswahlKorrekt=false
+
+        data class Anrechnung(val id:Int,val stunden:List<Int>)
+        var anrechnungspflichtig= mutableListOf<Anrechnung>()
 
         fun holeKurswahlKorrekt():Boolean {
             return kurswahlKorrekt

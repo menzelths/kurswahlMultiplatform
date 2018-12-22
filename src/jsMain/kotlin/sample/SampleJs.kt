@@ -173,6 +173,7 @@ fun erstelleAuswahl() {
 }
 
 fun erstelleRaster(aktuelleBelegung: Belegung) {
+    aktuelleBelegung.action(Belegung.Companion.Aktion.CHECK)
     val darstellung = aktuelleBelegung.holeDarstellung()
     val fächerauswahl = aktuelleBelegung.getFächer().groupBy { it.aufgabenfeld }
     val myDiv = document.create.div("panel") {
@@ -291,6 +292,9 @@ fun erstelleRaster(aktuelleBelegung: Belegung) {
                                 } else {
                                     +" "
                                 }
+                                if (zeile.anrechnungspflichtig[i]==1){
+                                    klassen.add("fett")
+                                }
                                 classes = klassen
                             }
 
@@ -325,7 +329,10 @@ fun erstelleRaster(aktuelleBelegung: Belegung) {
         }
         div {
             if (Belegung.holeKurswahlKorrekt()){
-                +"Kurswahl gültig! Aber ohne Gewähr: bitte unbedingt zusammen mit dem Oberstufenberater überprüfen! "
+                +"Kurswahl gültig! Anrechnungspflichtige Kurse sind in der Kurswahl fett dargestellt."
+                br
+                +"Richtigkeit der Kurswahl ohne Gewähr: bitte unbedingt zusammen mit dem Oberstufenberater überprüfen! "
+
                 classes=setOf("grünText","fett")
             } else {
                 +"Kurswahl ungültig!"
