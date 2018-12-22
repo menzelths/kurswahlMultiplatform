@@ -25,16 +25,29 @@ width: 100%
 
 }
 
-.rot{
+.rotText {
+color: #ff0000;
+}
 
-background-color: #ffbbbb
+.grünText {
+color:#008800;
+}
+
+.fett {
+font-weight: bold;
+}
+
+.rot{
+background-color: #ff0000;
+color: #ffffff
 }
 
 .grün{
-
+color:#000000;
 background-color: #bbffbb
 }
 
-.fett{
-font-weight: bold
+ul{
+padding-inline-start: 10px;
 }
+

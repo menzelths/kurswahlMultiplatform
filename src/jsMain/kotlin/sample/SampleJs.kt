@@ -15,7 +15,7 @@ import kotlin.dom.removeClass
 actual class Sample {
 
     actual fun checkMe(): Int {
-        window.addEventListener("hashchange", { // absichtlich falsch geschrieben
+        window.addEventListener("hashchange", {
                 event ->
             run {
                 val parameterSet = Variablen.getParameterSet(window.location.hash)
@@ -105,14 +105,19 @@ actual object Variablen {
 
 fun erstelleAuswahl() {
     val myDiv = document.create.div("panel") {
-        +"Bitte die Fächer abwählen, die den Schülerinnen und Schülern bei der Auswahl "
+        h2{
+            +"Einstellungen"
+        }
+        +"Bitte die Fächer abwählen, die den Schülerinnen und Schülern bei der Auswahl an ihrer Schule "
         span {
             +"nicht"
             classes = setOf<String>("rot")
         }
         +" angezeigt werden sollen."
         br
-        +"Danach auf OK drücken. Daraufhin werden nur noch die übrigen Fächer in der Auswahl angezeigt und der Link in der Adresszeile des Browsers kann an die Schülerinnen und Schüler weitergegeben werden. Somit sehen die Schülerinnen und Schüler beim Aufruf dieses Links nur noch die verbliebenen Fächer dieser Liste und die Pflichtfächer."
+        +"Danach auf OK drücken."
+        br
+        +"Daraufhin werden nur noch die übrigen Fächer inklusive der Pflichtfächer in der Kurswahl angezeigt und der Link in der Adresszeile des Browsers kann an die Schülerinnen und Schüler weitergegeben werden. Somit sehen die Schülerinnen und Schüler beim Aufruf dieses Links nur noch die verbliebenen Fächer dieser Liste und die Pflichtfächer."
 
         val fächer = Belegung.holeFächer()
         ul {
@@ -155,7 +160,8 @@ fun erstelleAuswahl() {
                 erstelleRaster(aktuelleBelegung)
                 visualisiereBelegung(aktuelleBelegung)
                 eventsAnhängen(aktuelleBelegung)
-
+                Variablen.status = aktuelleBelegung.serialisiere()
+                Variablen.setzeHash()
             }
         }
     }
@@ -296,20 +302,36 @@ fun erstelleRaster(aktuelleBelegung: Belegung) {
         }
         div {
             val meldungen = aktuelleBelegung.holeFehler()
-            meldungen.forEach {
-                div {
-                    if (it.kommentarart == Belegung.Kommentarart.SCHLECHT) {
-                        classes = setOf("rot")
+            ul {
+                meldungen.forEach {
+                    li {
 
-                    } else if (it.kommentarart == Belegung.Kommentarart.GUT) {
-                        classes = setOf("grün")
+                        span {
+                            if (it.kommentarart == Belegung.Kommentarart.SCHLECHT) {
+                                classes = setOf("rot")
 
-                    } else {
-                        classes = setOf()
+                            } else if (it.kommentarart == Belegung.Kommentarart.GUT) {
+                                classes = setOf("grün")
+
+                            } else {
+                                classes = setOf()
+                            }
+                            +it.text
+                        }
+
                     }
-                    +it.text
                 }
             }
+        }
+        div {
+            if (Belegung.holeKurswahlKorrekt()){
+                +"Kurswahl gültig! Aber ohne Gewähr: bitte unbedingt zusammen mit dem Oberstufenberater überprüfen! "
+                classes=setOf("grünText","fett")
+            } else {
+                +"Kurswahl ungültig!"
+                classes=setOf("rotText","fett")
+            }
+
         }
     }
 
@@ -317,6 +339,8 @@ fun erstelleRaster(aktuelleBelegung: Belegung) {
     con!!.innerHTML = ""
 
     document.getElementById("container")!!.appendChild(myDiv)
+
+
 
 
     //document.getElementById("container")!!.append {

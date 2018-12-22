@@ -10,6 +10,7 @@ expect object Platform {
 
 expect object Variablen {
     var excludedList:MutableList<Int>
+
 }
 
 
@@ -26,7 +27,7 @@ fun main() {
     fächer.add(Fach("Italienisch", Aufgabenfeld.I, listOf(5, 3, 0), listOf(Fachattribute.Fremdsprache), 7,false))
     fächer.add(Fach("Portugiesisch", Aufgabenfeld.I, listOf(5, 3, 0), listOf(Fachattribute.Fremdsprache), 8,false))
     fächer.add(Fach("Chinesisch", Aufgabenfeld.I, listOf(5, 3, 0), listOf(Fachattribute.Fremdsprache), 9,false))
-    fächer.add(Fach("Bildende Kunst", Aufgabenfeld.I, listOf(5, 2, 0), listOf(Fachattribute.MuKu), 10,false))
+    fächer.add(Fach("Bildende Kunst", Aufgabenfeld.I, listOf(5, 2, 0), listOf(Fachattribute.MuKu), 10,true))
     fächer.add(Fach("Musik", Aufgabenfeld.I, listOf(5, 2, 0), listOf(Fachattribute.MuKu), 11,true))
     fächer.add(Fach("Geschichte", Aufgabenfeld.II, listOf(5, 2, 0), listOf(Fachattribute.Geschichte), 12,true))
     fächer.add(Fach("Geographie", Aufgabenfeld.II, listOf(5, 0, 0), listOf(), 13,true))
@@ -66,12 +67,23 @@ fun main() {
     aktuelleBelegung.action(Belegung.Companion.Aktion.NEU, "Informatik", Belegung.Companion.Kursart.LF)
     aktuelleBelegung.action(Belegung.Companion.Aktion.NEU, "Geschichte", Belegung.Companion.Kursart.BF)
     aktuelleBelegung.action(Belegung.Companion.Aktion.NEU, "Religionslehre", Belegung.Companion.Kursart.BF)
-    aktuelleBelegung.action(Belegung.Companion.Aktion.TOGGLEMÜNDLICH, "Geschichte", Belegung.Companion.Kursart.BF)
     aktuelleBelegung.action(Belegung.Companion.Aktion.TOGGLEMÜNDLICH, "Religionslehre", Belegung.Companion.Kursart.BF)
     aktuelleBelegung.action(Belegung.Companion.Aktion.NEU, "Deutsch", Belegung.Companion.Kursart.BF)
+    aktuelleBelegung.action(Belegung.Companion.Aktion.TOGGLEMÜNDLICH, "Deutsch", Belegung.Companion.Kursart.BF)
+    aktuelleBelegung.action(Belegung.Companion.Aktion.NEU, "Geo/Gk", Belegung.Companion.Kursart.BF)
+    aktuelleBelegung.action(Belegung.Companion.Aktion.NEU, "Sport", Belegung.Companion.Kursart.BF)
+    aktuelleBelegung.action(Belegung.Companion.Aktion.NEU, "Physik", Belegung.Companion.Kursart.LF)
+    aktuelleBelegung.action(Belegung.Companion.Aktion.NEU, "Biologie", Belegung.Companion.Kursart.BF)
+    aktuelleBelegung.action(Belegung.Companion.Aktion.NEU, "Bildende Kunst", Belegung.Companion.Kursart.BF)
+    aktuelleBelegung.action(Belegung.Companion.Aktion.NEU, "Wahlfach Informatik", Belegung.Companion.Kursart.WF)
+    aktuelleBelegung.action(Belegung.Companion.Aktion.TOGGLESTUNDEN, "Wahlfach Informatik", Belegung.Companion.Kursart.WF)
+
+
     aktuelleBelegung.action(Belegung.Companion.Aktion.CHECK)
 
     Belegung.belegungsObjekt = aktuelleBelegung
+
+
 
     Sample().checkMe() // starte das Programm, das die Website aufbaut
 
@@ -298,10 +310,11 @@ class Belegung(val name: String) {
             it.attribute.contains(Fachattribute.Naturwissenschaft) || it.attribute.contains(Fachattribute.kannNawiErsetzen)
         }
         val naturwissenschaftersatz = aktuelleBelegung.filter { it.attribute.contains(Fachattribute.kannNawiErsetzen) }
+        val kommentarart=if (sprachen.count()>0&&naturwissenschaften.count()>0&&sprachen.count()+naturwissenschaften.count()>2) Kommentarart.GUT else Kommentarart.SCHLECHT
         println("${sprachen.count()} Sprache(n) und ${naturwissenschaften.count()} Naturwissenschaft(en) gewählt.")
         fehlerMeldungen.add(
             Kommentar(
-                Kommentarart.NEUTRAL,
+                 kommentarart,
                 "${sprachen.count()} Sprache(n) und ${naturwissenschaften.count()} Naturwissenschaft(en) gewählt."
             )
         )
@@ -347,7 +360,7 @@ class Belegung(val name: String) {
                 val anzahlLeistungsfächer = naturwissenschaften.filter { it.typ == Kursart.LF }.count()
                 if (anzahlLeistungsfächer > 0) {
                     println("Gültige Kombination für Naturwissenschaften")
-                    fehlerMeldungen.add(Kommentar(Kommentarart.GUT, "Gültige Kombination für Naturwissenschaften"))
+                    fehlerMeldungen.add(Kommentar(Kommentarart.GUT, "Gültige Kombination für Naturwissenschaften."))
                     return true
                 } else {
                     println("Bei der Ersetzung einer klassischen Naturwissenschaft durch Informatik oder NwT muss mindestens eines dieser Fächer als Leistungsfach belegt werden.")
@@ -400,7 +413,7 @@ class Belegung(val name: String) {
             fehlerMeldungen.add(
                 Kommentar(
                     Kommentarart.SCHLECHT,
-                    "Es müssen drei Leistungsfächer für die schriftliche und zwei Basisfächer für die mündliche Prüfung gewählt werden"
+                    "Es müssen drei Leistungsfächer für die schriftliche und zwei Basisfächer für die mündliche Prüfung gewählt werden."
                 )
             )
             return false
@@ -409,7 +422,7 @@ class Belegung(val name: String) {
             fehlerMeldungen.add(
                 Kommentar(
                     Kommentarart.GUT,
-                    "Es sind drei Leistungsfächer und für die mündliche Prüfung zwei Basisfächer gewählt"
+                    "Es sind für die Abiturprüfung drei Leistungsfächer und zwei mündliche Prüfungsfächer gewählt."
                 )
             )
             rueckgabe = true
@@ -421,14 +434,14 @@ class Belegung(val name: String) {
             println(
                 "Die folgenden Aufgabenfelder sind noch nicht in der Abiturprüfung abgedeckt: ${fehlendeBereiche.map { Text[it] }.joinToString(
                     separator = ","
-                )}"
+                )}."
             )
             fehlerMeldungen.add(
                 Kommentar(
                     Kommentarart.SCHLECHT,
                     "Die folgenden Aufgabenfelder sind noch nicht in der Abiturprüfung abgedeckt: ${fehlendeBereiche.map { Text[it] }.joinToString(
                         separator = ","
-                    )}"
+                    )}."
                 )
             )
             return false
@@ -478,10 +491,11 @@ class Belegung(val name: String) {
             kurssumme += if (fach.alternativStunden == false) fach.stunden.filter { it != 0 }.count() else fach.stundenAlternativ.filter { it != 0 }.count()
         }
         println("Anzahl der gewählten Kurse: $kurssumme")
-        fehlerMeldungen.add(Kommentar(Kommentarart.NEUTRAL, "Anzahl der gewählten Kurse: $kurssumme"))
-        if (kurssumme < 42) {
-            println("Es müssen mindestens 42 Kurse gewählt werden")
-            fehlerMeldungen.add(Kommentar(Kommentarart.SCHLECHT, "Es müssen mindestens 42 Kurse gewählt werden"))
+        if (kurssumme<42) {
+            fehlerMeldungen.add(Kommentar(Kommentarart.SCHLECHT, "Anzahl der gewählten Kurse: $kurssumme. Es müssen jedoch mindestens 42 Kurse gewählt werden"))
+        }
+        if (kurssumme >=42) {
+            fehlerMeldungen.add(Kommentar(Kommentarart.GUT, "Mit $kurssumme belegten Kursen ist die Bedingung von mindestens 42 belegten Kursen erfüllt."))
         }
         return kurssumme >= 42
     }
@@ -539,7 +553,7 @@ class Belegung(val name: String) {
             fehlerMeldungen.add(
                 Kommentar(
                     Kommentarart.GUT,
-                    "Es sind mit $kurssumme weniger als 40 anrechnungspflichtige Kurse in der Belegung vorhanden. Somit können noch ${40-kurssumme} Kurse zur Anrechnung gewählt werden."
+                    "Es sind mit $kurssumme weniger als 40 anrechnungspflichtige Kurse in der Belegung vorhanden. Somit können neben den anrechnungspflichtigen Kursen noch ${40-kurssumme} Kurse aus der aktuellen Auswahl angerechnet werden."
                 )
             )
 
@@ -551,7 +565,7 @@ class Belegung(val name: String) {
                 )
             )
         }
-        return kurssumme == 40
+        return kurssumme <= 40
     }
 
     private fun holeWochenStunden(): List<Int> {
@@ -598,23 +612,23 @@ class Belegung(val name: String) {
         var rückgabe = false
         if (leistungsfächer.size < 3) {
             println("Zu wenige Leistungsfächer gewählt!")
-            fehlerMeldungen.add(Kommentar(Kommentarart.SCHLECHT, "Zu wenige Leistungsfächer gewählt!"))
+            fehlerMeldungen.add(Kommentar(Kommentarart.SCHLECHT, "Zu wenige Leistungsfächer gewählt."))
         } else if (leistungsfächer.size > 3) {
             println("Zu viele Leistungsfächer gewählt!")
-            fehlerMeldungen.add(Kommentar(Kommentarart.SCHLECHT, "Zu viele Leistungsfächer gewählt!"))
+            fehlerMeldungen.add(Kommentar(Kommentarart.SCHLECHT, "Zu viele Leistungsfächer gewählt."))
         } else { // genau drei Leistungsfächer
             val lfAuswahl = leistungsfächer.groupBy { it.attribute }.keys.flatten().toSet()
 
             if ((leistungsfachBereiche.minus(lfAuswahl).size) <= 2) {
                 println("Leistungsfachkombination gültig")
-                fehlerMeldungen.add(Kommentar(Kommentarart.GUT, "Leistungsfachkombination gültig"))
+                fehlerMeldungen.add(Kommentar(Kommentarart.GUT, "Leistungsfachkombination gültig."))
                 rückgabe = true
             } else {
-                println("Leistungsfachkombination ungültig: zwei der drei Leistungsfächer müssen aus D, M, FS, Nawi sein")
+                println("Leistungsfachkombination ungültig: zwei der drei Leistungsfächer müssen aus D, M, FS, Nawi sein.")
                 fehlerMeldungen.add(
                     Kommentar(
                         Kommentarart.SCHLECHT,
-                        "Leistungsfachkombination ungültig: zwei der drei Leistungsfächer müssen aus D, M, FS, Nawi sein"
+                        "Leistungsfachkombination ungültig: zwei der drei Leistungsfächer müssen aus D, M, FS, Nawi sein."
                     )
                 )
             }
@@ -777,7 +791,7 @@ class Belegung(val name: String) {
             Aktion.CHECK -> {
                 // 2 aus den LF aus Deutsch, Fremdsprache, Mathematik oder klassische Naturwissenschaft
                 fehlerMeldungen = mutableListOf()
-
+                Belegung.kurswahlKorrekt=false
                 var fehlerListe = mutableListOf<Boolean>()
                 fehlerListe.add(testeMehrfach())
                 fehlerListe.add(testeLeistungsfächer())
@@ -786,8 +800,12 @@ class Belegung(val name: String) {
                 fehlerListe.add(testePflichtbelegungRest())
                 fehlerListe.add(testeMindestens42Kurse())
                 if (fehlerListe.filter { it == false }.count() == 0) {
-                    testeAnrechnungspflichtigeStunden()
+                    fehlerListe.add(testeAnrechnungspflichtigeStunden())
+                    if (fehlerListe.filter{it == false}.count()==0) {
+                        Belegung.kurswahlKorrekt = true
+                    }
                 }
+
             }
 
             Aktion.TOGGLEMÜNDLICH -> {
@@ -859,6 +877,11 @@ class Belegung(val name: String) {
 
     companion object {
 
+        var kurswahlKorrekt=false
+
+        fun holeKurswahlKorrekt():Boolean {
+            return kurswahlKorrekt
+        }
 
         fun holeFächer():List<Fach>{
             return fächer
