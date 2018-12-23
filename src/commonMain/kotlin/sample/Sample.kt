@@ -203,7 +203,7 @@ class Belegung(val name: String) {
                         }
                         klickbarWahl.add(v.typ)
                         stunden = if (v.alternativStunden == false) v.stunden else v.stundenAlternativ
-                        if (v.typ == Kursart.WF) {
+                        if (v.typ == Kursart.WF&&!v.stundenAlternativ.isEmpty()) {
                             stundenAlternativVorhanden = true
                         }
                         if (v.typ == Kursart.BF && v.attribute.contains(Fachattribute.spätbeginnend)) {
@@ -1011,6 +1011,10 @@ class Belegung(val name: String) {
             Fachattribute.Deutsch
         )
 
+        val wfZweiKursig=setOf(
+            "Astronomie", "Darstellende Geometrie", "Problemlösen mit CAS", "Geologie", "Literatur", "Philosophie","Psychologie"
+        )
+
         enum class Aktion { NEU, LÖSCHE, TOGGLE, CHECK, TOGGLEMÜNDLICH, TOGGLESTUNDEN }
         data class Belegfach(
             val name: String,
@@ -1061,9 +1065,14 @@ class Belegung(val name: String) {
                         }
 
                         if (art == Kursart.WF) {
-                            stundenbelegungAlternativ = mutableListOf<Int>(2, 2, 0, 0) // falls Geschichte LF
+
                             if (setOf("VK Mathematik","Wahlfach Informatik", "VK Sprache","Literatur und Theater").contains(fach.name)){
                                 mündlichMöglich=true
+                                stundenbelegungAlternativ = mutableListOf<Int>(2, 2, 0, 0)
+                            }
+                            if (wfZweiKursig.contains(fach.name)){
+                                stundenbelegung = mutableListOf(2, 2, 0, 0)
+                                stundenbelegungAlternativ = mutableListOf<Int>()
                             }
                         }
 

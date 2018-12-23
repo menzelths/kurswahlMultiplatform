@@ -79,7 +79,7 @@ actual object Variablen {
         START, WAHL
     }
 
-    val version="0.1.1_2018_12_23"
+    val version="0.1.2_2018_12_23"
     fun setzeHash(){
         window.location.hash="#id=$status;ex=$excluded"
     }
