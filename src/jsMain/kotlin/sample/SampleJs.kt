@@ -79,6 +79,7 @@ actual object Variablen {
         START, WAHL
     }
 
+    val version="0.1_2018_12_23"
     fun setzeHash(){
         window.location.hash="#id=$status;ex=$excluded"
     }
@@ -255,8 +256,10 @@ fun erstelleRaster(aktuelleBelegung: Belegung) {
                                 if (gewählt is Belegung.Companion.Kursart) {
                                     if (gewählt == Belegung.Companion.Kursart.BF) {
                                         id = zeile.fachnameOriginal + "_mBF"
+                                        klassen.add("belegt_m")
                                     } else if (gewählt == Belegung.Companion.Kursart.WF) {
                                         id = zeile.fachnameOriginal + "_mWF"
+                                        klassen.add("belegt_m")
                                     }
                                 }
 
@@ -339,7 +342,13 @@ fun erstelleRaster(aktuelleBelegung: Belegung) {
                 +"Kurswahl ungültig!"
                 classes=setOf("rotText","fett")
             }
+            br
 
+        }
+        div {
+            br
+            +"Version ${Variablen.version}"
+            classes=setOf("klein")
         }
     }
 

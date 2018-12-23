@@ -7,6 +7,10 @@ table {
 width: 100%
 }
 }
+td{
+text-align: center;
+  vertical-align: middle;
+}
 
 .klickbar{
     background-color: #ffdddd
@@ -23,6 +27,14 @@ width: 100%
 .belegt_WF{
     background-color: #ffff00
 
+}
+
+.belegt_m{
+background-color: #ffff00
+}
+
+.klein{
+font-size:xx-small
 }
 
 .rotText {
