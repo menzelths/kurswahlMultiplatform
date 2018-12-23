@@ -79,7 +79,7 @@ actual object Variablen {
         START, WAHL
     }
 
-    val version="0.1_2018_12_23"
+    val version="0.1.1_2018_12_23"
     fun setzeHash(){
         window.location.hash="#id=$status;ex=$excluded"
     }
@@ -223,9 +223,10 @@ fun erstelleRaster(aktuelleBelegung: Belegung) {
                             if (zeile.gewählt == Belegung.Companion.Kursart.LF) {
                                 klassen.add("belegt_LF")
                             }
-
+klassen.add("zentriert")
                             classes = klassen
                         }
+
                         td {
                             var klassen = mutableSetOf<String>()
                             if (zeile.klickbar.contains(Belegung.Companion.Kursart.BF)) {
@@ -245,6 +246,7 @@ fun erstelleRaster(aktuelleBelegung: Belegung) {
                                     klassen.add("belegt_WF")
                                 }
                             }
+                            klassen.add("zentriert")
                             classes = klassen
                         }
                         td {
@@ -256,16 +258,20 @@ fun erstelleRaster(aktuelleBelegung: Belegung) {
                                 if (gewählt is Belegung.Companion.Kursart) {
                                     if (gewählt == Belegung.Companion.Kursart.BF) {
                                         id = zeile.fachnameOriginal + "_mBF"
-                                        klassen.add("belegt_m")
+
                                     } else if (gewählt == Belegung.Companion.Kursart.WF) {
                                         id = zeile.fachnameOriginal + "_mWF"
-                                        klassen.add("belegt_m")
+
                                     }
                                 }
 
                             } else {
 
                             }
+                            if (zeile.mündlich){
+                                klassen.add("belegt_m")
+                            }
+                            klassen.add("zentriert")
                             classes = klassen
                         }
 
@@ -299,6 +305,7 @@ fun erstelleRaster(aktuelleBelegung: Belegung) {
                                     klassen.add("fett")
                                     klassen.add("blau")
                                 }
+                                klassen.add("zentriert")
                                 classes = klassen
                             }
 
@@ -446,6 +453,7 @@ fun visualisiereBelegung(aktuelleBelegung: Belegung) {
 
         zelle?.let {
             it.addClass("belegt_" + typ)
+
         }
         if (it.attribute.contains(Fachattribute.mündlichePrüfung)) {
             document.getElementById(id_mündlich)?.innerHTML = "X"
