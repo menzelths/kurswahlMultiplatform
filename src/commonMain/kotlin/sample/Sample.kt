@@ -217,14 +217,14 @@ class Belegung(val name: String) {
                             }
                             if (aktuelleBelegung.filter { it.name == "Gemeinschaftskunde" && it.typ == Kursart.LF }.count() > 0) {
                                 stundenAlternativVorhanden = false
-                                v.stunden = mutableListOf(2, 0, 0, 2)
+                                v.stunden = mutableListOf(0, 2, 2, 0)
                                 name = "Geographie"
                                 stunden = v.stunden
 
                             }
                             if (aktuelleBelegung.filter { it.name == "Geographie" && it.typ == Kursart.LF }.count() > 0) {
                                 stundenAlternativVorhanden = false
-                                v.stunden = mutableListOf(0, 2, 2, 0)
+                                v.stunden = mutableListOf(2, 0, 0, 2)
                                 stunden = v.stunden
                                 name = "Gemeinschaftskunde"
                             }
