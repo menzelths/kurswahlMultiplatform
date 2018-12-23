@@ -22,6 +22,7 @@ fun main() {
     fächer.add(Fach("Französisch", Aufgabenfeld.I, listOf(5, 3, 0), listOf(Fachattribute.Fremdsprache), 2,false))
     fächer.add(Fach("Latein", Aufgabenfeld.I, listOf(5, 3, 0), listOf(Fachattribute.Fremdsprache), 3,false))
     fächer.add(Fach("Griechisch", Aufgabenfeld.I, listOf(5, 3, 0), listOf(Fachattribute.Fremdsprache), 4,false))
+    fächer.add(Fach("Hebräisch", Aufgabenfeld.I, listOf(5, 3, 0), listOf(Fachattribute.Fremdsprache), 16,false))
     fächer.add(Fach("Russisch", Aufgabenfeld.I, listOf(5, 3, 0), listOf(Fachattribute.Fremdsprache), 5,false))
     fächer.add(Fach("Spanisch", Aufgabenfeld.I, listOf(5, 3, 0), listOf(Fachattribute.Fremdsprache), 6,false))
     fächer.add(Fach("Italienisch", Aufgabenfeld.I, listOf(5, 3, 0), listOf(Fachattribute.Fremdsprache), 7,false))
@@ -261,7 +262,11 @@ class Belegung(val name: String) {
                                 v.typ
                             )
                         ) {
-                            mündlichKlickbar = true
+                            if (v.typ==Kursart.BF) {
+                                mündlichKlickbar = true
+                            } else if (v.typ==Kursart.WF && v.mündlichMöglich){
+                                mündlichKlickbar=true
+                            }
                         }
                         if (v.attribute.contains(Fachattribute.mündlichePrüfung)) {
                             mündlichKlickbar = true
@@ -970,8 +975,20 @@ class Belegung(val name: String) {
             "Spanisch",
             "Italienisch",
             "Portugiesisch",
-            "Chinesisch"
+            "Chinesisch",
+            "Hebräisch"
         )
+
+        val spätbeginnend=listOf<String>(
+            "Französisch",
+            "Spanisch",
+            "Latein",
+            "Hebräisch",
+            "Griechisch"
+
+        )
+
+
         val lfOderBfOderBfMündlich = hashMapOf<String, String>("LF" to "10", "BF" to "01", "BFmündlich" to "11")
         var fehlerMeldungen = mutableListOf<Kommentar>()
         val Text = hashMapOf<Any, String>(
@@ -1003,15 +1020,18 @@ class Belegung(val name: String) {
             val stundenAlternativ: MutableList<Int>,
             var alternativStunden: Boolean,
             var attribute: MutableList<Fachattribute>,
-            val id: Int
+            val id: Int,
+            val mündlichMöglich:Boolean
         )
 
         lateinit var fächerauswahl: List<Belegfach>
 
         fun generiereFächer(listeMitFächern: List<Fach>) {
             val liste = mutableListOf<Belegfach>()
+
             for (fach in listeMitFächern) {
                 for (index in 0 until fach.stunden.size) {
+                    var mündlichMöglich=false
                     var stundenbelegung = mutableListOf<Int>()
                     var stundenbelegungAlternativ = mutableListOf<Int>()
                     if (fach.stunden.get(index) > 0) {
@@ -1025,7 +1045,7 @@ class Belegung(val name: String) {
                             else -> Kursart.WF
                         }
 
-                        if (fach.attribute.contains(Fachattribute.Fremdsprache) && art == Kursart.BF) {
+                        if (spätbeginnend.contains(fach.name) && art == Kursart.BF) {
                             stundenbelegungAlternativ = mutableListOf<Int>(4, 4, 4, 4) // spätbeginnende Fremdsprache
                             val attr2 = fach.attribute.toMutableList()
                             if (!attr2.contains(Fachattribute.spätbeginnend)) {
@@ -1042,6 +1062,9 @@ class Belegung(val name: String) {
 
                         if (art == Kursart.WF) {
                             stundenbelegungAlternativ = mutableListOf<Int>(2, 2, 0, 0) // falls Geschichte LF
+                            if (setOf("VK Mathematik","Wahlfach Informatik", "VK Sprache","Literatur und Theater").contains(fach.name)){
+                                mündlichMöglich=true
+                            }
                         }
 
                         liste.add(
@@ -1053,7 +1076,8 @@ class Belegung(val name: String) {
                                 stundenbelegungAlternativ,
                                 false,
                                 fach.attribute.toMutableList(),
-                                fach.id
+                                fach.id,
+                                mündlichMöglich
                             )
                         )
                     }
