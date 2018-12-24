@@ -370,7 +370,7 @@ class Belegung(val name: String) {
                 fehlerMeldungen.add(
                     Kommentar(
                         Kommentarart.SCHLECHT,
-                        "Es muss mindestens eine klassische Naturwissenschaft belegt werden."
+                        "Es muss mindestens eine klassische Naturwissenschaft (Biologie, Chemie, Physik) belegt werden."
                     )
                 )
                 return false
@@ -390,6 +390,14 @@ class Belegung(val name: String) {
                     )
                     return false
                 }
+            } else {
+                return true
+            }
+        } else if  (sprachen.count() >= 2 && naturwissenschaften.count() <= 2) {
+            val anzahlKlassischeNaturwissenschaften = naturwissenschaften.count() - naturwissenschaftersatz.count()
+            if (anzahlKlassischeNaturwissenschaften==0){
+                fehlerMeldungen.add(Kommentar(Kommentarart.SCHLECHT,"Es muss mindestens eine klassische Naturwissenschaft (Biologie, Chemie, Physik) belegt werden."))
+                return false
             } else {
                 return true
             }
