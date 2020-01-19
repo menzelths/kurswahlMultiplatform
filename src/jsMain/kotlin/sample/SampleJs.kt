@@ -113,7 +113,7 @@ fun erstelleHilfe() {
             +"Einführung"
         }
 
-        +"Dieses Programm ermöglicht die Kurswahl für die Oberstufe in Baden-Württemberg nach der AGVO für den Abiturjahrgang 2022."
+        +"Dieses Programm ermöglicht die Kurswahl für die Oberstufe der allgemein bildenden Gymnasien in Baden-Württemberg nach der AGVO für den Abiturjahrgang 2022."
         p {
             +"Rosé unterlegt sind die wählbaren Fächer. Hierbei steht LF für Leistungsfach, BF für Basisfach und WF für Wahlfach. Die Seminarfächer werden wie Basisfächer als BF angezeigt."
             br

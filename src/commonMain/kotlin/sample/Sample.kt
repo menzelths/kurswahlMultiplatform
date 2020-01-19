@@ -21,7 +21,7 @@ fun main() {
     var aktuelleBelegung = Belegung("Belegung")
     aktuelleBelegung.action(Belegung.Companion.Aktion.NEU, "Mathematik", Belegung.Companion.Kursart.LF)
     aktuelleBelegung.action(Belegung.Companion.Aktion.NEU, "Englisch", Belegung.Companion.Kursart.LF)
-    aktuelleBelegung.action(Belegung.Companion.Aktion.NEU, "Informatik", Belegung.Companion.Kursart.LF)
+    //aktuelleBelegung.action(Belegung.Companion.Aktion.NEU, "Informatik", Belegung.Companion.Kursart.LF)
     aktuelleBelegung.action(Belegung.Companion.Aktion.NEU, "Geschichte", Belegung.Companion.Kursart.BF)
     aktuelleBelegung.action(Belegung.Companion.Aktion.NEU, "Religionslehre", Belegung.Companion.Kursart.BF)
     aktuelleBelegung.action(Belegung.Companion.Aktion.TOGGLEMÜNDLICH, "Religionslehre", Belegung.Companion.Kursart.BF)
@@ -31,9 +31,10 @@ fun main() {
     aktuelleBelegung.action(Belegung.Companion.Aktion.NEU, "Sport", Belegung.Companion.Kursart.BF)
     aktuelleBelegung.action(Belegung.Companion.Aktion.NEU, "Physik", Belegung.Companion.Kursart.LF)
     aktuelleBelegung.action(Belegung.Companion.Aktion.NEU, "Biologie", Belegung.Companion.Kursart.BF)
+    aktuelleBelegung.action(Belegung.Companion.Aktion.NEU, "Chemie", Belegung.Companion.Kursart.BF)
     aktuelleBelegung.action(Belegung.Companion.Aktion.NEU, "Bildende Kunst", Belegung.Companion.Kursart.BF)
-    aktuelleBelegung.action(Belegung.Companion.Aktion.NEU, "Wahlfach Informatik", Belegung.Companion.Kursart.WF)
-    aktuelleBelegung.action(Belegung.Companion.Aktion.TOGGLESTUNDEN, "Wahlfach Informatik", Belegung.Companion.Kursart.WF)
+    //aktuelleBelegung.action(Belegung.Companion.Aktion.NEU, "Wahlfach Informatik", Belegung.Companion.Kursart.WF)
+    //aktuelleBelegung.action(Belegung.Companion.Aktion.TOGGLESTUNDEN, "Wahlfach Informatik", Belegung.Companion.Kursart.WF)
 
 
     aktuelleBelegung.action(Belegung.Companion.Aktion.CHECK)

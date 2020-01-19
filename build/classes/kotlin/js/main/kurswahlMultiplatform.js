@@ -115,7 +115,6 @@
     var aktuelleBelegung = new Belegung('Belegung');
     aktuelleBelegung.action_4t1mlb$(Belegung$Companion$Aktion$NEU_getInstance(), ['Mathematik', Belegung$Companion$Kursart$LF_getInstance()]);
     aktuelleBelegung.action_4t1mlb$(Belegung$Companion$Aktion$NEU_getInstance(), ['Englisch', Belegung$Companion$Kursart$LF_getInstance()]);
-    aktuelleBelegung.action_4t1mlb$(Belegung$Companion$Aktion$NEU_getInstance(), ['Informatik', Belegung$Companion$Kursart$LF_getInstance()]);
     aktuelleBelegung.action_4t1mlb$(Belegung$Companion$Aktion$NEU_getInstance(), ['Geschichte', Belegung$Companion$Kursart$BF_getInstance()]);
     aktuelleBelegung.action_4t1mlb$(Belegung$Companion$Aktion$NEU_getInstance(), ['Religionslehre', Belegung$Companion$Kursart$BF_getInstance()]);
     aktuelleBelegung.action_4t1mlb$(Belegung$Companion$Aktion$TOGGLEMÜNDLICH_getInstance(), ['Religionslehre', Belegung$Companion$Kursart$BF_getInstance()]);
@@ -125,9 +124,8 @@
     aktuelleBelegung.action_4t1mlb$(Belegung$Companion$Aktion$NEU_getInstance(), ['Sport', Belegung$Companion$Kursart$BF_getInstance()]);
     aktuelleBelegung.action_4t1mlb$(Belegung$Companion$Aktion$NEU_getInstance(), ['Physik', Belegung$Companion$Kursart$LF_getInstance()]);
     aktuelleBelegung.action_4t1mlb$(Belegung$Companion$Aktion$NEU_getInstance(), ['Biologie', Belegung$Companion$Kursart$BF_getInstance()]);
+    aktuelleBelegung.action_4t1mlb$(Belegung$Companion$Aktion$NEU_getInstance(), ['Chemie', Belegung$Companion$Kursart$BF_getInstance()]);
     aktuelleBelegung.action_4t1mlb$(Belegung$Companion$Aktion$NEU_getInstance(), ['Bildende Kunst', Belegung$Companion$Kursart$BF_getInstance()]);
-    aktuelleBelegung.action_4t1mlb$(Belegung$Companion$Aktion$NEU_getInstance(), ['Wahlfach Informatik', Belegung$Companion$Kursart$WF_getInstance()]);
-    aktuelleBelegung.action_4t1mlb$(Belegung$Companion$Aktion$TOGGLESTUNDEN_getInstance(), ['Wahlfach Informatik', Belegung$Companion$Kursart$WF_getInstance()]);
     aktuelleBelegung.action_4t1mlb$(Belegung$Companion$Aktion$CHECK_getInstance(), []);
     Belegung$Companion_getInstance().belegungsObjekt = aktuelleBelegung;
     (new Sample()).checkMe();
@@ -2669,7 +2667,7 @@
   function erstelleHilfe$lambda($receiver) {
     h2($receiver, void 0, erstelleHilfe$lambda$lambda);
     h3($receiver, void 0, erstelleHilfe$lambda$lambda_0);
-    $receiver.unaryPlus_pdl1vz$('Dieses Programm erm\xF6glicht die Kurswahl f\xFCr die Oberstufe in Baden-W\xFCrttemberg nach der AGVO f\xFCr den Abiturjahrgang 2022.');
+    $receiver.unaryPlus_pdl1vz$('Dieses Programm erm\xF6glicht die Kurswahl f\xFCr die Oberstufe der allgemein bildenden Gymnasien in Baden-W\xFCrttemberg nach der AGVO f\xFCr den Abiturjahrgang 2022.');
     p($receiver, void 0, erstelleHilfe$lambda$lambda_1);
     p($receiver, void 0, erstelleHilfe$lambda$lambda_2);
     p($receiver, void 0, erstelleHilfe$lambda$lambda_3);
