@@ -37,10 +37,10 @@ actual class Sample {
         var aktuelleBelegung = Belegung.getBelegungsobjekt()
         val parameterSet = Variablen.getParameterSet(window.location.hash)
 
-        if (parameterSet.containsKey("ansicht")) {
-            if (parameterSet.getValue("ansicht").equals("start")) {
+        if (parameterSet.containsKey("ansicht")||parameterSet.isEmpty()) {
+           // if (parameterSet.getValue("ansicht").equals("start")) {
                 erstelleAuswahl()
-            }
+           // }
         } else {
             if (parameterSet.containsKey("ex")){
                 val wert=parameterSet.getValue("ex")
@@ -79,7 +79,7 @@ actual object Variablen {
         START, WAHL
     }
 
-    val version="0.1.4_2018_12_23"
+    val version="0.1.5_2020_01_18"
     fun setzeHash(){
         window.location.hash="#id=$status;ex=$excluded"
     }
@@ -103,6 +103,104 @@ actual object Variablen {
     }
 
 }
+
+fun erstelleHilfe() {
+    val myDiv = document.create.div("panel") {
+        h2 {
+            +"Hilfe"
+        }
+        h3 {
+            +"Einführung"
+        }
+
+        +"Dieses Programm ermöglicht die Kurswahl für die Oberstufe in Baden-Württemberg nach der AGVO für den Abiturjahrgang 2022."
+        p {
+            +"Rosé unterlegt sind die wählbaren Fächer. Hierbei steht LF für Leistungsfach, BF für Basisfach und WF für Wahlfach. Die Seminarfächer werden wie Basisfächer als BF angezeigt."
+            br
+            +"Sobald ein Fach gewählt wird, wird die Wahl gelb unterlegt."
+
+            br
+            +"Die drei gewählten Leistungsfächer müssen schriftlich im Abitur geprüft werden. "
+            +"Darüber hinaus müssen zwei der belegten Basisfächer als mündliche Abiturprüfungsfächer gewählt werden: diese Wahl nimmt man durch das Setzen eines Kreuzchens rechts vom Basisfach vor, wenn dort ein rosé unterlegtes Feld zu sehen ist."
+
+        }
+        p {
+            +"Solange die Wahl ungültig ist, erscheinen unterhalb der Auswahl rote Fehlermeldungen. Sobald die Auswahl korrekt ist, sind alle Zeilen grün. "
+            br
+            +"In diesem Fall ist die Auswahl dennoch unbedingt mit dem zuständigen Oberstufenberater besprechen, da dieses Programm nicht alle Spezialfälle abbildet und keine Gewähr für die Richtigkeit des Programms übernommen wird. "
+            br
+            +"Zudem gilt: eine Schule ist nicht verpflichtet, jede gültige Belegung auch zu ermöglichen. In manchen Fällen können Kurse z. B. aufgrund zu geringer Teilnehmerzahlen nicht zustandekommen."
+        }
+        p{
+            +"Die offizielle Handreichung für den Abiturjahrgang 2022 ist übrigens der "
+            a(
+                href="https://km-bw.de/site/pbs-bw-new/get/documents/KULTUS.Dachmandant/KULTUS/KM-Homepage/Publikationen%202019/20191113%20Leitfaden_Abitur_2022.pdf"
+            ){
+                +"Abiturleitfaden 2022 des Kultusministeriums Baden-Württemberg"
+            }
+            +". Hier finden sich detaillierte Informationen zur korrekten Kurswahl."
+        }
+
+        h3 {
+            +"Gut zu wissen"
+        }
+            +"Die Adresszeile im Browser enthält stets die aktuelle Auswahl: wird die Belegung verändert, ändert sich auch die URL in der Adresszeile. Dadurch ist es möglich, Mitschülerinnen oder Mitschülern oder einem Oberstufenberater durch Übersenden dieser Adresszeile, z. B. mithilfe eines Instant Messengers oder per E-Mail, die aktuelle Auswahl zuzusenden. "
+            br
+            +"Der Empfänger sieht im Browser die übermittelte Auswahl und kann diese bei Bedarf ändern und wieder an andere Personen schicken."
+
+        h3 {
+            +"Empfohlene Reihenfolge (bzw. TL;DR)"
+        }
+        ul {
+            li {
+                +" Drei Leistungsfächer wählen (sind automatisch schriftliche Prüfungsfächer)"
+            }
+            li { +"Zwei Basisfächer wählen, die als mündliches Prüfungsfach gedacht sind (erst Basisfächer wählen, dann jeweils durch ein X dahinter als mündliches Prüfungsfach markieren)"
+            }
+            li {
+                +"Weitere Fächer wählen und dabei Anmerkungen unter der Kurswahl beachten."
+            }
+            li {
+                +"Alle Anmerkungen grün? Dann ist die Kurswahl korrekt! Bitte auf den Oberstufenberater zugehen!"
+            }
+        }
+        h3{
+            +"Fehler gefunden?"
+        }
+
+        +"Sollte dir ein Fehler im Programm aufgefallen sein, dann melde diesen entweder "
+        a(
+            href="https://github.com/menzelths/kurswahlMultiplatform/issues"
+        )
+        {
+            +"auf der Seite zu den Fehlern dieses Projekts nach deiner Anmeldung bei github"
+        }
+        +" (klicke dazu dort auf \"New Issue\") oder schreibe eine E-Mail an menzelths(Klammeraffe)gmail(Punkt)com."
+
+        p {
+
+        }
+        button {
+            text("Hab's verstanden, zurück zur Auswahl!")
+            onClickFunction = {
+                val aktuelleBelegung = Belegung.getBelegungsobjekt()
+                erstelleRaster(aktuelleBelegung)
+                visualisiereBelegung(aktuelleBelegung)
+                eventsAnhängen(aktuelleBelegung)
+                Variablen.status = aktuelleBelegung.serialisiere()
+                Variablen.setzeHash()
+            }
+        }
+    }
+
+    val con = document.getElementById("container")
+    con!!.innerHTML = ""
+
+    document.getElementById("container")!!.appendChild(myDiv)
+    println("Hilfsansicht")
+}
+
+
 
 fun erstelleAuswahl() {
     val myDiv = document.create.div("panel") {
@@ -178,7 +276,26 @@ fun erstelleRaster(aktuelleBelegung: Belegung) {
     val darstellung = aktuelleBelegung.holeDarstellung()
     val fächerauswahl = aktuelleBelegung.getFächer().groupBy { it.aufgabenfeld }
     val myDiv = document.create.div("panel") {
+        button {
+            text("Hilfe anzeigen")
+            onClickFunction = {
+                erstelleHilfe()
+            }
 
+        }
+        button {
+            text("Auswahl zurücksetzen")
+            onClickFunction = {
+                Belegung.getBelegungsobjekt().deleteBelegung()
+                val aktuelleBelegung = Belegung.getBelegungsobjekt()
+                erstelleRaster(aktuelleBelegung)
+                visualisiereBelegung(aktuelleBelegung)
+                eventsAnhängen(aktuelleBelegung)
+                Variablen.status = aktuelleBelegung.serialisiere()
+                Variablen.setzeHash()
+            }
+
+        }
         table {
 
             for (zeile in darstellung) {

@@ -1,6 +1,6 @@
 <component name="ArtifactManager">
   <artifact type="jar" name="kurswahlMultiplatform-js-0.0.1">
-    <output-path>C:\Users\menze\IdeaProjects\kurswahlMultiplatform\build\libs</output-path>
+    <output-path>C:\Users\menze\Documents\GitHub\kurswahlMultiplatform\build\libs</output-path>
     <root id="archive" name="kurswahlMultiplatform-js-0.0.1.jar">
       <element id="module-output" name="com.example.kurswahlMultiplatform.jsMain" />
     </root>

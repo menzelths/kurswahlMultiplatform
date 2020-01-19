@@ -16,51 +16,7 @@ expect object Variablen {
 
 fun main() {
 
-    val fächer: MutableList<Fach> = mutableListOf()
-    fächer.add(Fach("Deutsch", Aufgabenfeld.I, listOf(5, 3, 0), listOf(Fachattribute.Deutsch), 0,true))
-    fächer.add(Fach("Englisch", Aufgabenfeld.I, listOf(5, 3, 0), listOf(Fachattribute.Fremdsprache), 1,true))
-    fächer.add(Fach("Französisch", Aufgabenfeld.I, listOf(5, 3, 0), listOf(Fachattribute.Fremdsprache), 2,false))
-    fächer.add(Fach("Latein", Aufgabenfeld.I, listOf(5, 3, 0), listOf(Fachattribute.Fremdsprache), 3,false))
-    fächer.add(Fach("Griechisch", Aufgabenfeld.I, listOf(5, 3, 0), listOf(Fachattribute.Fremdsprache), 4,false))
-    fächer.add(Fach("Hebräisch", Aufgabenfeld.I, listOf(5, 3, 0), listOf(Fachattribute.Fremdsprache), 16,false))
-    fächer.add(Fach("Russisch", Aufgabenfeld.I, listOf(5, 3, 0), listOf(Fachattribute.Fremdsprache), 5,false))
-    fächer.add(Fach("Spanisch", Aufgabenfeld.I, listOf(5, 3, 0), listOf(Fachattribute.Fremdsprache), 6,false))
-    fächer.add(Fach("Italienisch", Aufgabenfeld.I, listOf(5, 3, 0), listOf(Fachattribute.Fremdsprache), 7,false))
-    fächer.add(Fach("Portugiesisch", Aufgabenfeld.I, listOf(5, 3, 0), listOf(Fachattribute.Fremdsprache), 8,false))
-    fächer.add(Fach("Chinesisch", Aufgabenfeld.I, listOf(5, 3, 0), listOf(Fachattribute.Fremdsprache), 9,false))
-    fächer.add(Fach("Bildende Kunst", Aufgabenfeld.I, listOf(5, 2, 0), listOf(Fachattribute.MuKu), 10,true))
-    fächer.add(Fach("Musik", Aufgabenfeld.I, listOf(5, 2, 0), listOf(Fachattribute.MuKu), 11,true))
-    fächer.add(Fach("Geschichte", Aufgabenfeld.II, listOf(5, 2, 0), listOf(Fachattribute.Geschichte), 12,true))
-    fächer.add(Fach("Geographie", Aufgabenfeld.II, listOf(5, 0, 0), listOf(), 13,true))
-    fächer.add(Fach("Gemeinschaftskunde", Aufgabenfeld.II, listOf(5, 0, 0), listOf(), 14,true))
-    fächer.add(Fach("Geo/Gk", Aufgabenfeld.II, listOf(0, 2, 0), listOf(Fachattribute.GeGe), 15,true))
-    fächer.add(Fach("Religionslehre", Aufgabenfeld.II, listOf(5, 2, 0), listOf(), 17,true))
-    fächer.add(Fach("Ethik", Aufgabenfeld.II, listOf(5, 2, 0), listOf(), 18,true))
-    fächer.add(Fach("Wirtschaft", Aufgabenfeld.II, listOf(5, 0, 0), listOf(), 19,false))
-    fächer.add(Fach("Mathematik", Aufgabenfeld.III, listOf(5, 3, 0), listOf(Fachattribute.Mathematik), 20,true))
-    fächer.add(Fach("Biologie", Aufgabenfeld.III, listOf(5, 3, 0), listOf(Fachattribute.Naturwissenschaft), 21,true))
-    fächer.add(Fach("Chemie", Aufgabenfeld.III, listOf(5, 3, 0), listOf(Fachattribute.Naturwissenschaft), 22,true))
-    fächer.add(Fach("Physik", Aufgabenfeld.III, listOf(5, 3, 0), listOf(Fachattribute.Naturwissenschaft), 23,true))
-    fächer.add(Fach("Schulversuch Informatik", Aufgabenfeld.III,listOf(5, 3, 0),listOf(Fachattribute.kannNawiErsetzen), 24,false))
-    fächer.add(Fach("Schulversuch NwT", Aufgabenfeld.III, listOf(5, 3, 0), listOf(Fachattribute.kannNawiErsetzen), 25,false))
-    fächer.add(Fach("Sport", Aufgabenfeld.Sport, listOf(5, 2, 0), listOf(), 26,true))
-    fächer.add(Fach("Literatur und Theater", Aufgabenfeld.I, listOf(0, 0, 2), listOf(Fachattribute.Orchidee), 32,false))
-    fächer.add(Fach("VK Mathematik", Aufgabenfeld.III, listOf(0, 0, 2), listOf(Fachattribute.Orchidee), 33,false))
-    fächer.add(Fach("VK Sprache", Aufgabenfeld.I, listOf(0, 0, 2), listOf(Fachattribute.Orchidee), 34,false))
-    fächer.add(Fach("Wahlfach Informatik", Aufgabenfeld.III, listOf(0, 0, 2), listOf(Fachattribute.Orchidee), 35,false))
-    fächer.add(Fach("Literatur", Aufgabenfeld.I, listOf(0, 0, 2), listOf(Fachattribute.Orchidee), 36,false))
-    fächer.add(Fach("Philosophie", Aufgabenfeld.II, listOf(0, 0, 2), listOf(Fachattribute.Orchidee), 37,false))
-    fächer.add(Fach("Psychologie", Aufgabenfeld.II, listOf(0, 0, 2), listOf(Fachattribute.Orchidee), 38,false))
-    fächer.add(Fach("Astronomie", Aufgabenfeld.III, listOf(0, 0, 2), listOf(Fachattribute.Orchidee), 39,false))
-    fächer.add(Fach("Problemlösen mit CAS", Aufgabenfeld.III, listOf(0, 0, 2), listOf(Fachattribute.Orchidee), 40,false))
-    fächer.add(Fach("Darstellende Geometrie", Aufgabenfeld.III, listOf(0, 0, 2), listOf(Fachattribute.Orchidee), 41,false))
-    fächer.add(Fach("Geologie", Aufgabenfeld.III, listOf(0, 0, 2), listOf(Fachattribute.Orchidee), 42,false))
-    fächer.add(Fach("Seminarfach I", Aufgabenfeld.I, listOf(0, 3, 0), listOf(Fachattribute.Seminarfach), 27,false))
-    fächer.add(Fach("Seminarfach II", Aufgabenfeld.II, listOf(0, 3, 0), listOf(Fachattribute.Seminarfach), 28,false))
-    fächer.add(Fach("Seminarfach III", Aufgabenfeld.III, listOf(0, 3, 0), listOf(Fachattribute.Seminarfach), 29,false))
-
-    Belegung.fächer = fächer
-    Belegung.generiereFächer(fächer)
+    Belegung.initialisiereFächer()
 
     var aktuelleBelegung = Belegung("Belegung")
     aktuelleBelegung.action(Belegung.Companion.Aktion.NEU, "Mathematik", Belegung.Companion.Kursart.LF)
@@ -165,6 +121,17 @@ class Belegung(val name: String) {
 
     public fun getBelegung(): MutableList<Belegfach> {
         return aktuelleBelegung
+    }
+
+    public fun deleteBelegung():Unit {
+
+      /*  aktuelleBelegung.filter { it.attribute.contains(Fachattribute.mündlichePrüfung) }.forEach {
+            it.attribute.remove(Fachattribute.mündlichePrüfung)
+            it.alternativStunden=false
+
+        }*/
+        aktuelleBelegung.clear()
+        Belegung.initialisiereFächer()
     }
 
     public fun holeDarstellung(): List<Zeile> {
@@ -329,11 +296,11 @@ class Belegung(val name: String) {
         }
         val naturwissenschaftersatz = aktuelleBelegung.filter { it.attribute.contains(Fachattribute.kannNawiErsetzen) }
         val kommentarart=if (sprachen.count()>0&&naturwissenschaften.count()>0&&sprachen.count()+naturwissenschaften.count()>2) Kommentarart.GUT else Kommentarart.SCHLECHT
-        println("${sprachen.count()} Sprache(n) und ${naturwissenschaften.count()} Naturwissenschaft(en) gewählt.")
+        //"${sprachen.count()} Fremdsprache${if (sprachen.count()!=1) "n" else ""} und ${naturwissenschaften.count()} Naturwissenschaft${if (naturwissenschaften.count()!=1) "en" else ""} gewählt."
         fehlerMeldungen.add(
             Kommentar(
                  kommentarart,
-                "${sprachen.count()} Sprache(n) und ${naturwissenschaften.count()} Naturwissenschaft(en) gewählt."
+                "${sprachen.count()} Fremdsprache${if (sprachen.count()!=1) "n" else ""} und ${naturwissenschaften.count()} Naturwissenschaft${if (naturwissenschaften.count()!=1) "en" else ""} gewählt."
             )
         )
 
@@ -376,10 +343,13 @@ class Belegung(val name: String) {
                 return false
             } else if (anzahlKlassischeNaturwissenschaften == 1) {
                 val anzahlLeistungsfächer = naturwissenschaften.filter { it.typ == Kursart.LF }.count()
+                /* Neue Regelung ab 2020/2021: zweite Naturwissenschaft kann auch ersetzt werden, wenn Nawi und Informatik BF sind
                 if (anzahlLeistungsfächer > 0) {
-                    println("Gültige Kombination für Naturwissenschaften")
-                    fehlerMeldungen.add(Kommentar(Kommentarart.GUT, "Gültige Kombination für Naturwissenschaften."))
-                    return true
+                */
+                println("Gültige Ersetzung der zweiten Naturwissenschaft")
+                fehlerMeldungen.add(Kommentar(Kommentarart.GUT, "Gültige Ersetzung der zweiten Naturwissenschaft."))
+                return true
+                /*
                 } else {
                     println("Bei der Ersetzung einer klassischen Naturwissenschaft durch Informatik oder NwT muss mindestens eines dieser Fächer als Leistungsfach belegt werden.")
                     fehlerMeldungen.add(
@@ -389,7 +359,7 @@ class Belegung(val name: String) {
                         )
                     )
                     return false
-                }
+                }*/
             } else {
                 return true
             }
@@ -739,20 +709,26 @@ class Belegung(val name: String) {
 
             kodierung += id + typ + alternativ
         }
-        return Kodierung.binarystring2Characterstring(kodierung)
+        println("Serialisierung: 1"+kodierung)
+        return Kodierung.binarystring2Characterstring("1"+kodierung)
     }
 
     fun deserialisiere(input: String) {
+        Belegung.initialisiereFächer()
+
         while (aktuelleBelegung.size > 0) {
             aktuelleBelegung.removeAt(0)
         }
         Belegung.fächerauswahl = mutableListOf<Belegfach>()
-        Belegung.fächer.forEach { }
+
         generiereFächer(Belegung.fächer)
 
-        val kombination = Kodierung.characterstring2Binarystring(input).cut(9)
+        val kombinationNeu = Kodierung.characterstring2Binarystring(input).drop(1)
+
+        if (!kombinationNeu.trim().equals("")){
+        val kombination=kombinationNeu.cut(9)
         for (k in kombination) {
-            println("Kombination $k")
+            println("Kombination: $k")
             val fachnummer = Kodierung.binarystring2Int(k.substring(0..5)).toInt()
 
             val typ = k.substring(6..7)
@@ -793,6 +769,7 @@ class Belegung(val name: String) {
                 belegungsObjekt.action(Aktion.TOGGLESTUNDEN, fachname, fachtyp)
             }
         }
+        }
     }
 
     private fun fachBFoderLF(fachAktuell: Belegfach): String {
@@ -826,6 +803,7 @@ class Belegung(val name: String) {
                 val name = parameter[0] as String // Name des Fachs
                 val typ = parameter[1] as Kursart // LF, BF oder WF?
                 val fach = fächerauswahl.filter { it.name == name && it.typ == typ }.firstOrNull()
+
 
                 if (!testeObFachSchonVorhanden(name)) {
                     if (fach != null) {
@@ -954,6 +932,55 @@ class Belegung(val name: String) {
 
 
     companion object {
+
+        fun initialisiereFächer(){
+            val fächer: MutableList<Fach> = mutableListOf()
+            fächer.add(Fach("Deutsch", Aufgabenfeld.I, listOf(5, 3, 0), listOf(Fachattribute.Deutsch), 0,true))
+            fächer.add(Fach("Englisch", Aufgabenfeld.I, listOf(5, 3, 0), listOf(Fachattribute.Fremdsprache), 1,true))
+            fächer.add(Fach("Französisch", Aufgabenfeld.I, listOf(5, 3, 0), listOf(Fachattribute.Fremdsprache), 2,false))
+            fächer.add(Fach("Latein", Aufgabenfeld.I, listOf(5, 3, 0), listOf(Fachattribute.Fremdsprache), 3,false))
+            fächer.add(Fach("Griechisch", Aufgabenfeld.I, listOf(5, 3, 0), listOf(Fachattribute.Fremdsprache), 4,false))
+            fächer.add(Fach("Hebräisch", Aufgabenfeld.I, listOf(5, 3, 0), listOf(Fachattribute.Fremdsprache), 16,false))
+            fächer.add(Fach("Russisch", Aufgabenfeld.I, listOf(5, 3, 0), listOf(Fachattribute.Fremdsprache), 5,false))
+            fächer.add(Fach("Spanisch", Aufgabenfeld.I, listOf(5, 3, 0), listOf(Fachattribute.Fremdsprache), 6,false))
+            fächer.add(Fach("Italienisch", Aufgabenfeld.I, listOf(5, 3, 0), listOf(Fachattribute.Fremdsprache), 7,false))
+            fächer.add(Fach("Portugiesisch", Aufgabenfeld.I, listOf(5, 3, 0), listOf(Fachattribute.Fremdsprache), 8,false))
+            fächer.add(Fach("Chinesisch", Aufgabenfeld.I, listOf(5, 3, 0), listOf(Fachattribute.Fremdsprache), 9,false))
+            fächer.add(Fach("Bildende Kunst", Aufgabenfeld.I, listOf(5, 2, 0), listOf(Fachattribute.MuKu), 10,true))
+            fächer.add(Fach("Musik", Aufgabenfeld.I, listOf(5, 2, 0), listOf(Fachattribute.MuKu), 11,true))
+            fächer.add(Fach("Geschichte", Aufgabenfeld.II, listOf(5, 2, 0), listOf(Fachattribute.Geschichte), 12,true))
+            fächer.add(Fach("Geographie", Aufgabenfeld.II, listOf(5, 0, 0), listOf(), 13,true))
+            fächer.add(Fach("Gemeinschaftskunde", Aufgabenfeld.II, listOf(5, 0, 0), listOf(), 14,true))
+            fächer.add(Fach("Geo/Gk", Aufgabenfeld.II, listOf(0, 2, 0), listOf(Fachattribute.GeGe), 15,true))
+            fächer.add(Fach("Religionslehre", Aufgabenfeld.II, listOf(5, 2, 0), listOf(), 17,true))
+            fächer.add(Fach("Ethik", Aufgabenfeld.II, listOf(5, 2, 0), listOf(), 18,true))
+            fächer.add(Fach("Wirtschaft", Aufgabenfeld.II, listOf(5, 0, 0), listOf(), 19,false))
+            fächer.add(Fach("Mathematik", Aufgabenfeld.III, listOf(5, 3, 0), listOf(Fachattribute.Mathematik), 20,true))
+            fächer.add(Fach("Biologie", Aufgabenfeld.III, listOf(5, 3, 0), listOf(Fachattribute.Naturwissenschaft), 21,true))
+            fächer.add(Fach("Chemie", Aufgabenfeld.III, listOf(5, 3, 0), listOf(Fachattribute.Naturwissenschaft), 22,true))
+            fächer.add(Fach("Physik", Aufgabenfeld.III, listOf(5, 3, 0), listOf(Fachattribute.Naturwissenschaft), 23,true))
+            fächer.add(Fach("Schulversuch Informatik", Aufgabenfeld.III,listOf(5, 3, 0),listOf(Fachattribute.kannNawiErsetzen), 24,false))
+            fächer.add(Fach("Schulversuch NwT", Aufgabenfeld.III, listOf(5, 3, 0), listOf(Fachattribute.kannNawiErsetzen), 25,false))
+            fächer.add(Fach("Sport", Aufgabenfeld.Sport, listOf(5, 2, 0), listOf(), 26,true))
+            fächer.add(Fach("Literatur und Theater", Aufgabenfeld.I, listOf(0, 0, 2), listOf(Fachattribute.Orchidee), 32,false))
+            fächer.add(Fach("VK Mathematik", Aufgabenfeld.III, listOf(0, 0, 2), listOf(Fachattribute.Orchidee), 33,false))
+            fächer.add(Fach("VK Sprache", Aufgabenfeld.I, listOf(0, 0, 2), listOf(Fachattribute.Orchidee), 34,false))
+            fächer.add(Fach("Wahlfach Informatik", Aufgabenfeld.III, listOf(0, 0, 2), listOf(Fachattribute.Orchidee), 35,false))
+            fächer.add(Fach("Literatur", Aufgabenfeld.I, listOf(0, 0, 2), listOf(Fachattribute.Orchidee), 36,false))
+            fächer.add(Fach("Philosophie", Aufgabenfeld.II, listOf(0, 0, 2), listOf(Fachattribute.Orchidee), 37,false))
+            fächer.add(Fach("Psychologie", Aufgabenfeld.II, listOf(0, 0, 2), listOf(Fachattribute.Orchidee), 38,false))
+            fächer.add(Fach("Astronomie", Aufgabenfeld.III, listOf(0, 0, 2), listOf(Fachattribute.Orchidee), 39,false))
+            fächer.add(Fach("Problemlösen mit CAS", Aufgabenfeld.III, listOf(0, 0, 2), listOf(Fachattribute.Orchidee), 40,false))
+            fächer.add(Fach("Darstellende Geometrie", Aufgabenfeld.III, listOf(0, 0, 2), listOf(Fachattribute.Orchidee), 41,false))
+            fächer.add(Fach("Geologie", Aufgabenfeld.III, listOf(0, 0, 2), listOf(Fachattribute.Orchidee), 42,false))
+            fächer.add(Fach("Seminarfach I", Aufgabenfeld.I, listOf(0, 3, 0), listOf(Fachattribute.Seminarfach), 27,false))
+            fächer.add(Fach("Seminarfach II", Aufgabenfeld.II, listOf(0, 3, 0), listOf(Fachattribute.Seminarfach), 28,false))
+            fächer.add(Fach("Seminarfach III", Aufgabenfeld.III, listOf(0, 3, 0), listOf(Fachattribute.Seminarfach), 29,false))
+
+            Belegung.fächer = fächer
+            generiereFächer(fächer)
+
+        }
 
         var kurswahlKorrekt=false
 
