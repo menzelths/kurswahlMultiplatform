@@ -2497,7 +2497,7 @@
   };
   function Variablen() {
     Variablen_instance = this;
-    this.version = '0.1.5_2020_01_18';
+    this.version = '0.1.5_2020_01_23';
     this.status = '';
     this.excluded = '';
     this.excludedList = ArrayList_init();
@@ -2587,13 +2587,15 @@
     $receiver.unaryPlus_pdl1vz$('Sobald ein Fach gew\xE4hlt wird, wird die Wahl gelb unterlegt.');
     get_br($receiver);
     $receiver.unaryPlus_pdl1vz$('Die drei gew\xE4hlten Leistungsf\xE4cher m\xFCssen schriftlich im Abitur gepr\xFCft werden. ');
-    $receiver.unaryPlus_pdl1vz$('Dar\xFCber hinaus m\xFCssen zwei der belegten Basisf\xE4cher als m\xFCndliche Abiturpr\xFCfungsf\xE4cher gew\xE4hlt werden: diese Wahl nimmt man durch das Setzen eines Kreuzchens rechts vom Basisfach vor, wenn dort ein ros\xE9 unterlegtes Feld zu sehen ist.');
+    $receiver.unaryPlus_pdl1vz$('Dar\xFCber hinaus m\xFCssen zwei der weiteren belegten F\xE4cher (das k\xF6nnen Basisf\xE4cher oder bestimmte Wahlf\xE4cher sein) als m\xFCndliche Abiturpr\xFCfungsf\xE4cher gew\xE4hlt werden: diese Wahl nimmt man durch das Setzen eines Kreuzchens rechts dieser F\xE4cher vor, wenn dort ein ros\xE9 unterlegtes Feld zu sehen ist.');
     return Unit;
   }
   function erstelleHilfe$lambda$lambda_2($receiver) {
     $receiver.unaryPlus_pdl1vz$('Solange die Wahl ung\xFCltig ist, erscheinen unterhalb der Auswahl rote Fehlermeldungen. Sobald die Auswahl korrekt ist, sind alle Zeilen gr\xFCn. ');
     get_br($receiver);
     $receiver.unaryPlus_pdl1vz$('In diesem Fall ist die Auswahl dennoch unbedingt mit dem zust\xE4ndigen Oberstufenberater besprechen, da dieses Programm nicht alle Spezialf\xE4lle abbildet und keine Gew\xE4hr f\xFCr die Richtigkeit des Programms \xFCbernommen wird. ');
+    get_br($receiver);
+    $receiver.unaryPlus_pdl1vz$('Die bei einer korrekten Auswahl blauen Kurse stellen eine m\xF6gliche Anrechnung der Pflichtf\xE4cher dar, es kann aber noch andere Anrechnungsm\xF6glichkeiten geben. Hier kann der Oberstufenberater weiterhelfen.');
     get_br($receiver);
     $receiver.unaryPlus_pdl1vz$('Zudem gilt: eine Schule ist nicht verpflichtet, jede g\xFCltige Belegung auch zu erm\xF6glichen. In manchen F\xE4llen k\xF6nnen Kurse z. B. aufgrund zu geringer Teilnehmerzahlen nicht zustandekommen.');
     return Unit;
@@ -2621,11 +2623,11 @@
     return Unit;
   }
   function erstelleHilfe$lambda$lambda$lambda_1($receiver) {
-    $receiver.unaryPlus_pdl1vz$('Zwei Basisf\xE4cher w\xE4hlen, die als m\xFCndliches Pr\xFCfungsfach gedacht sind (erst Basisf\xE4cher w\xE4hlen, dann jeweils durch ein X dahinter als m\xFCndliches Pr\xFCfungsfach markieren)');
+    $receiver.unaryPlus_pdl1vz$('Zwei weitere F\xE4cher (das k\xF6nnen Basis- oder bestimmte Wahlf\xE4cher sein) w\xE4hlen, die als m\xFCndliches Pr\xFCfungsfach gedacht sind (erst diese F\xE4cher w\xE4hlen, dann jeweils durch ein X dahinter als m\xFCndliches Pr\xFCfungsfach markieren)');
     return Unit;
   }
   function erstelleHilfe$lambda$lambda$lambda_2($receiver) {
-    $receiver.unaryPlus_pdl1vz$('Weitere F\xE4cher w\xE4hlen und dabei Anmerkungen unter der Kurswahl beachten.');
+    $receiver.unaryPlus_pdl1vz$('Weitere F\xE4cher w\xE4hlen und dabei die Anmerkungen unter der Kurswahl beachten.');
     return Unit;
   }
   function erstelleHilfe$lambda$lambda$lambda_3($receiver) {
@@ -3043,7 +3045,7 @@
   }
   function erstelleRaster$lambda$lambda_4($receiver) {
     get_br($receiver);
-    $receiver.unaryPlus_pdl1vz$('Version 0.1.5_2020_01_18');
+    $receiver.unaryPlus_pdl1vz$('Version 0.1.5_2020_01_23');
     set_classes($receiver, setOf_0('klein'));
     return Unit;
   }

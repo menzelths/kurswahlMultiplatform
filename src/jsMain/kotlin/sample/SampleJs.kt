@@ -79,7 +79,7 @@ actual object Variablen {
         START, WAHL
     }
 
-    val version="0.1.5_2020_01_18"
+    val version="0.1.5_2020_01_23"
     fun setzeHash(){
         window.location.hash="#id=$status;ex=$excluded"
     }
@@ -121,13 +121,15 @@ fun erstelleHilfe() {
 
             br
             +"Die drei gewählten Leistungsfächer müssen schriftlich im Abitur geprüft werden. "
-            +"Darüber hinaus müssen zwei der belegten Basisfächer als mündliche Abiturprüfungsfächer gewählt werden: diese Wahl nimmt man durch das Setzen eines Kreuzchens rechts vom Basisfach vor, wenn dort ein rosé unterlegtes Feld zu sehen ist."
+            +"Darüber hinaus müssen zwei der weiteren belegten Fächer (das können Basisfächer oder bestimmte Wahlfächer sein) als mündliche Abiturprüfungsfächer gewählt werden: diese Wahl nimmt man durch das Setzen eines Kreuzchens rechts dieser Fächer vor, wenn dort ein rosé unterlegtes Feld zu sehen ist."
 
         }
         p {
             +"Solange die Wahl ungültig ist, erscheinen unterhalb der Auswahl rote Fehlermeldungen. Sobald die Auswahl korrekt ist, sind alle Zeilen grün. "
             br
             +"In diesem Fall ist die Auswahl dennoch unbedingt mit dem zuständigen Oberstufenberater besprechen, da dieses Programm nicht alle Spezialfälle abbildet und keine Gewähr für die Richtigkeit des Programms übernommen wird. "
+            br
+            +"Die bei einer korrekten Auswahl blauen Kurse stellen eine mögliche Anrechnung der Pflichtfächer dar, es kann aber noch andere Anrechnungsmöglichkeiten geben. Hier kann der Oberstufenberater weiterhelfen."
             br
             +"Zudem gilt: eine Schule ist nicht verpflichtet, jede gültige Belegung auch zu ermöglichen. In manchen Fällen können Kurse z. B. aufgrund zu geringer Teilnehmerzahlen nicht zustandekommen."
         }
@@ -155,10 +157,10 @@ fun erstelleHilfe() {
             li {
                 +" Drei Leistungsfächer wählen (sind automatisch schriftliche Prüfungsfächer)"
             }
-            li { +"Zwei Basisfächer wählen, die als mündliches Prüfungsfach gedacht sind (erst Basisfächer wählen, dann jeweils durch ein X dahinter als mündliches Prüfungsfach markieren)"
+            li { +"Zwei weitere Fächer (das können Basis- oder bestimmte Wahlfächer sein) wählen, die als mündliches Prüfungsfach gedacht sind (erst diese Fächer wählen, dann jeweils durch ein X dahinter als mündliches Prüfungsfach markieren)"
             }
             li {
-                +"Weitere Fächer wählen und dabei Anmerkungen unter der Kurswahl beachten."
+                +"Weitere Fächer wählen und dabei die Anmerkungen unter der Kurswahl beachten."
             }
             li {
                 +"Alle Anmerkungen grün? Dann ist die Kurswahl korrekt! Bitte auf den Oberstufenberater zugehen!"
