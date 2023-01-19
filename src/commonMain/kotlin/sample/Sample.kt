@@ -544,6 +544,9 @@ class Belegung(val name: String) {
         var nawiSprZähler = 0
         var nawiZähler = 0
         var fsZähler = 0
+        var reliZähler=0
+
+
         Belegung.anrechnungspflichtig = mutableListOf()
 
         if (aktuelleBelegung.filter { it.attribute.contains(Fachattribute.MuKu) && it.typ == Kursart.LF }.count() > 0) {
@@ -599,6 +602,18 @@ class Belegung(val name: String) {
 
                     kurssumme += 4
                     Belegung.anrechnungspflichtig.add(Anrechnung(f.id, mutableListOf(1, 1, 1, 1)))
+                } else if (f.attribute.contains(Fachattribute.Sport)) {
+                    kurssumme += 4
+                    Belegung.anrechnungspflichtig.add(Anrechnung(f.id, mutableListOf(1, 1, 1, 1)))
+                } else if (f.attribute.contains(Fachattribute.ReliEthik)){
+                    val leistungsfachEthikReli= aktuelleBelegung.filter { it.attribute.contains(Fachattribute.ReliEthik) &&it.typ==Kursart.LF}
+                    if (leistungsfachEthikReli.isEmpty()){ // weder Ethik noch Reli Leistungsfach
+                        if (reliZähler==0){
+                            kurssumme += 4
+                            Belegung.anrechnungspflichtig.add(Anrechnung(f.id, mutableListOf(1, 1, 1, 1)))
+                            reliZähler +=1
+                        }
+                    }
                 } else if (f.attribute.contains(Fachattribute.MuKu) && !mukuSchonGeprüft) {
                     kurssumme += 2
                     Belegung.anrechnungspflichtig.add(Anrechnung(f.id, mutableListOf(1, 1, 0, 0)))
@@ -1115,8 +1130,8 @@ class Belegung(val name: String) {
             fächer.add(Fach("Geographie", Aufgabenfeld.II, listOf(5, 2, 0), listOf(Fachattribute.Geo), 13, true))
             fächer.add(Fach("Gemeinschaftskunde", Aufgabenfeld.II, listOf(5, 2, 0), listOf(Fachattribute.Gk), 14, true))
             //fächer.add(Fach("Geo/Gk", Aufgabenfeld.II, listOf(0, 2, 0), listOf(Fachattribute.GeGe), 15,true))
-            fächer.add(Fach("Religionslehre", Aufgabenfeld.II, listOf(5, 2, 0), listOf(), 17, true))
-            fächer.add(Fach("Ethik", Aufgabenfeld.II, listOf(5, 2, 0), listOf(), 18, true))
+            fächer.add(Fach("Religionslehre", Aufgabenfeld.II, listOf(5, 2, 0), listOf(Fachattribute.ReliEthik), 17, true))
+            fächer.add(Fach("Ethik", Aufgabenfeld.II, listOf(5, 2, 0), listOf(Fachattribute.ReliEthik), 18, true))
             fächer.add(Fach("Wirtschaft", Aufgabenfeld.II, listOf(5, 0, 0), listOf(), 19, false))
             fächer.add(
                 Fach(
@@ -1178,7 +1193,7 @@ class Belegung(val name: String) {
                     false
                 )
             )
-            fächer.add(Fach("Sport", Aufgabenfeld.Sport, listOf(5, 2, 0), listOf(), 26, true))
+            fächer.add(Fach("Sport", Aufgabenfeld.Sport, listOf(5, 2, 0), listOf(Fachattribute.Sport), 26, true))
             fächer.add(
                 Fach(
                     "Literatur und Theater",
@@ -1443,7 +1458,7 @@ class Belegung(val name: String) {
 
 enum class Aufgabenfeld { I, II, III, Sport, Seminarfach }
 
-enum class Fachattribute { Naturwissenschaft, NawiFe, Deutsch, Fremdsprache, Mathematik, kannNawiErsetzen, Seminarfach, GeGe, Geschichte, MuKu, muendlichePruefung, spaetbeginnend, Orchidee, Geo, Gk }
+enum class Fachattribute { Naturwissenschaft, NawiFe, Deutsch, Fremdsprache, Mathematik, kannNawiErsetzen, Seminarfach, GeGe, Geschichte, MuKu, muendlichePruefung, spaetbeginnend, Orchidee, Geo, Gk, ReliEthik, Sport }
 
 
 val anrechnungspflichtigeKurse = listOf<Fachattribute>(

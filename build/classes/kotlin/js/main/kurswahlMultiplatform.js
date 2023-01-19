@@ -1051,6 +1051,7 @@
     var nawiSprZähler = 0;
     var nawiZähler = 0;
     var fsZähler = 0;
+    var reliZähler = 0;
     Belegung$Companion_getInstance().anrechnungspflichtig = ArrayList_init();
     var $receiver = this.aktuelleBelegung_0;
     var destination = ArrayList_init();
@@ -1125,6 +1126,29 @@
           println('Anrechnung Geschichte:  Fach: ' + f.name + ', ' + (f.alternativStunden ? f.stundenAlternativ : f.stunden) + ', ' + anzahlKurse);
           kurssumme = kurssumme + 4 | 0;
           Belegung$Companion_getInstance().anrechnungspflichtig.add_11rb$(new Belegung$Companion$Anrechnung(f.id, mutableListOf([1, 1, 1, 1])));
+        }
+         else if (f.attribute.contains_11rb$(Fachattribute$Sport_getInstance())) {
+          kurssumme = kurssumme + 4 | 0;
+          Belegung$Companion_getInstance().anrechnungspflichtig.add_11rb$(new Belegung$Companion$Anrechnung(f.id, mutableListOf([1, 1, 1, 1])));
+        }
+         else if (f.attribute.contains_11rb$(Fachattribute$ReliEthik_getInstance())) {
+          var $receiver_3 = this.aktuelleBelegung_0;
+          var destination_3 = ArrayList_init();
+          var tmp$_5;
+          tmp$_5 = $receiver_3.iterator();
+          while (tmp$_5.hasNext()) {
+            var element_3 = tmp$_5.next();
+            if (element_3.attribute.contains_11rb$(Fachattribute$ReliEthik_getInstance()) && element_3.typ === Belegung$Companion$Kursart$LF_getInstance())
+              destination_3.add_11rb$(element_3);
+          }
+          var leistungsfachEthikReli = destination_3;
+          if (leistungsfachEthikReli.isEmpty()) {
+            if (reliZähler === 0) {
+              kurssumme = kurssumme + 4 | 0;
+              Belegung$Companion_getInstance().anrechnungspflichtig.add_11rb$(new Belegung$Companion$Anrechnung(f.id, mutableListOf([1, 1, 1, 1])));
+              reliZähler = reliZähler + 1 | 0;
+            }
+          }
         }
          else if (f.attribute.contains_11rb$(Fachattribute$MuKu_getInstance()) && !mukuSchonGeprüft) {
           kurssumme = kurssumme + 2 | 0;
@@ -1205,22 +1229,22 @@
      else if (kurssumme > 40) {
       Belegung$Companion_getInstance().fehlerMeldungen.add_11rb$(new Belegung$Kommentar(Belegung$Kommentarart$SCHLECHT_getInstance(), 'Es sind mit ' + kurssumme + ' mehr als 40 anrechnungspflichtige Kurse in der Belegung vorhanden.'));
     }
-    var tmp$_5;
-    tmp$_5 = Belegung$Companion_getInstance().anrechnungspflichtig.iterator();
-    while (tmp$_5.hasNext()) {
-      var element_3 = tmp$_5.next();
-      var wert = element_3;
-      var $receiver_3 = Belegung$Companion_getInstance().fächer;
-      var destination_3 = ArrayList_init();
-      var tmp$_6;
-      tmp$_6 = $receiver_3.iterator();
-      while (tmp$_6.hasNext()) {
-        var element_4 = tmp$_6.next();
-        if (element_4.id === wert.id)
-          destination_3.add_11rb$(element_4);
+    var tmp$_6;
+    tmp$_6 = Belegung$Companion_getInstance().anrechnungspflichtig.iterator();
+    while (tmp$_6.hasNext()) {
+      var element_4 = tmp$_6.next();
+      var wert = element_4;
+      var $receiver_4 = Belegung$Companion_getInstance().fächer;
+      var destination_4 = ArrayList_init();
+      var tmp$_7;
+      tmp$_7 = $receiver_4.iterator();
+      while (tmp$_7.hasNext()) {
+        var element_5 = tmp$_7.next();
+        if (element_5.id === wert.id)
+          destination_4.add_11rb$(element_5);
       }
-      var fachname = first(destination_3).name;
-      println(fachname + ' ' + element_3.stunden);
+      var fachname = first(destination_4).name;
+      println(fachname + ' ' + element_4.stunden);
     }
     return kurssumme <= 40;
   };
@@ -1800,8 +1824,8 @@
     fächer.add_11rb$(new Fach('Geschichte', Aufgabenfeld$II_getInstance(), listOf([5, 2, 0]), listOf_0(Fachattribute$Geschichte_getInstance()), 12, true));
     fächer.add_11rb$(new Fach('Geographie', Aufgabenfeld$II_getInstance(), listOf([5, 2, 0]), listOf_0(Fachattribute$Geo_getInstance()), 13, true));
     fächer.add_11rb$(new Fach('Gemeinschaftskunde', Aufgabenfeld$II_getInstance(), listOf([5, 2, 0]), listOf_0(Fachattribute$Gk_getInstance()), 14, true));
-    fächer.add_11rb$(new Fach('Religionslehre', Aufgabenfeld$II_getInstance(), listOf([5, 2, 0]), emptyList(), 17, true));
-    fächer.add_11rb$(new Fach('Ethik', Aufgabenfeld$II_getInstance(), listOf([5, 2, 0]), emptyList(), 18, true));
+    fächer.add_11rb$(new Fach('Religionslehre', Aufgabenfeld$II_getInstance(), listOf([5, 2, 0]), listOf_0(Fachattribute$ReliEthik_getInstance()), 17, true));
+    fächer.add_11rb$(new Fach('Ethik', Aufgabenfeld$II_getInstance(), listOf([5, 2, 0]), listOf_0(Fachattribute$ReliEthik_getInstance()), 18, true));
     fächer.add_11rb$(new Fach('Wirtschaft', Aufgabenfeld$II_getInstance(), listOf([5, 0, 0]), emptyList(), 19, false));
     fächer.add_11rb$(new Fach('Mathematik', Aufgabenfeld$III_getInstance(), listOf([5, 3, 0]), listOf_0(Fachattribute$Mathematik_getInstance()), 20, true));
     fächer.add_11rb$(new Fach('Biologie', Aufgabenfeld$III_getInstance(), listOf([5, 3, 0]), listOf_0(Fachattribute$Naturwissenschaft_getInstance()), 21, true));
@@ -1809,7 +1833,7 @@
     fächer.add_11rb$(new Fach('Physik', Aufgabenfeld$III_getInstance(), listOf([5, 3, 0]), listOf_0(Fachattribute$Naturwissenschaft_getInstance()), 23, true));
     fächer.add_11rb$(new Fach('Schulversuch Informatik', Aufgabenfeld$III_getInstance(), listOf([5, 3, 0]), listOf_0(Fachattribute$kannNawiErsetzen_getInstance()), 24, false));
     fächer.add_11rb$(new Fach('Schulversuch NwT', Aufgabenfeld$III_getInstance(), listOf([5, 3, 0]), listOf_0(Fachattribute$kannNawiErsetzen_getInstance()), 25, false));
-    fächer.add_11rb$(new Fach('Sport', Aufgabenfeld$Sport_getInstance(), listOf([5, 2, 0]), emptyList(), 26, true));
+    fächer.add_11rb$(new Fach('Sport', Aufgabenfeld$Sport_getInstance(), listOf([5, 2, 0]), listOf_0(Fachattribute$Sport_getInstance()), 26, true));
     fächer.add_11rb$(new Fach('Literatur und Theater', Aufgabenfeld$I_getInstance(), listOf([0, 0, 2]), listOf_0(Fachattribute$Orchidee_getInstance()), 32, false));
     fächer.add_11rb$(new Fach('VK Mathematik', Aufgabenfeld$III_getInstance(), listOf([0, 0, 2]), listOf_0(Fachattribute$Orchidee_getInstance()), 33, false));
     fächer.add_11rb$(new Fach('VK Sprache', Aufgabenfeld$I_getInstance(), listOf([0, 0, 2]), listOf_0(Fachattribute$Orchidee_getInstance()), 34, false));
@@ -2242,6 +2266,8 @@
     Fachattribute$Orchidee_instance = new Fachattribute('Orchidee', 12);
     Fachattribute$Geo_instance = new Fachattribute('Geo', 13);
     Fachattribute$Gk_instance = new Fachattribute('Gk', 14);
+    Fachattribute$ReliEthik_instance = new Fachattribute('ReliEthik', 15);
+    Fachattribute$Sport_instance = new Fachattribute('Sport', 16);
   }
   var Fachattribute$Naturwissenschaft_instance;
   function Fachattribute$Naturwissenschaft_getInstance() {
@@ -2318,13 +2344,23 @@
     Fachattribute_initFields();
     return Fachattribute$Gk_instance;
   }
+  var Fachattribute$ReliEthik_instance;
+  function Fachattribute$ReliEthik_getInstance() {
+    Fachattribute_initFields();
+    return Fachattribute$ReliEthik_instance;
+  }
+  var Fachattribute$Sport_instance;
+  function Fachattribute$Sport_getInstance() {
+    Fachattribute_initFields();
+    return Fachattribute$Sport_instance;
+  }
   Fachattribute.$metadata$ = {
     kind: Kind_CLASS,
     simpleName: 'Fachattribute',
     interfaces: [Enum]
   };
   function Fachattribute$values() {
-    return [Fachattribute$Naturwissenschaft_getInstance(), Fachattribute$NawiFe_getInstance(), Fachattribute$Deutsch_getInstance(), Fachattribute$Fremdsprache_getInstance(), Fachattribute$Mathematik_getInstance(), Fachattribute$kannNawiErsetzen_getInstance(), Fachattribute$Seminarfach_getInstance(), Fachattribute$GeGe_getInstance(), Fachattribute$Geschichte_getInstance(), Fachattribute$MuKu_getInstance(), Fachattribute$muendlichePruefung_getInstance(), Fachattribute$spaetbeginnend_getInstance(), Fachattribute$Orchidee_getInstance(), Fachattribute$Geo_getInstance(), Fachattribute$Gk_getInstance()];
+    return [Fachattribute$Naturwissenschaft_getInstance(), Fachattribute$NawiFe_getInstance(), Fachattribute$Deutsch_getInstance(), Fachattribute$Fremdsprache_getInstance(), Fachattribute$Mathematik_getInstance(), Fachattribute$kannNawiErsetzen_getInstance(), Fachattribute$Seminarfach_getInstance(), Fachattribute$GeGe_getInstance(), Fachattribute$Geschichte_getInstance(), Fachattribute$MuKu_getInstance(), Fachattribute$muendlichePruefung_getInstance(), Fachattribute$spaetbeginnend_getInstance(), Fachattribute$Orchidee_getInstance(), Fachattribute$Geo_getInstance(), Fachattribute$Gk_getInstance(), Fachattribute$ReliEthik_getInstance(), Fachattribute$Sport_getInstance()];
   }
   Fachattribute.values = Fachattribute$values;
   function Fachattribute$valueOf(name) {
@@ -2359,6 +2395,10 @@
         return Fachattribute$Geo_getInstance();
       case 'Gk':
         return Fachattribute$Gk_getInstance();
+      case 'ReliEthik':
+        return Fachattribute$ReliEthik_getInstance();
+      case 'Sport':
+        return Fachattribute$Sport_getInstance();
       default:throwISE('No enum constant sample.Fachattribute.' + name);
     }
   }
@@ -2529,6 +2569,20 @@
       if (parameterSet.containsKey_11rb$('id') && !equals(getValue(parameterSet, 'id'), Variablen_getInstance().status)) {
         var aktuelleBelegung = Belegung$Companion_getInstance().getBelegungsobjekt();
         aktuelleBelegung.deserialisiere_61zpoe$(getValue(parameterSet, 'id'));
+        var $receiver = aktuelleBelegung.getBelegung();
+        var destination = ArrayList_init();
+        var tmp$;
+        tmp$ = $receiver.iterator();
+        while (tmp$.hasNext()) {
+          var element = tmp$.next();
+          if (equals(element.name, 'Wirtschaft') && element.typ === Belegung$Companion$Kursart$LF_getInstance())
+            destination.add_11rb$(element);
+        }
+        var leistungsfachWirtschaft = firstOrNull(destination);
+        if (leistungsfachWirtschaft != null) {
+          aktuelleBelegung.action_4t1mlb$(Belegung$Companion$Aktion$TOGGLE_getInstance(), ['Wirtschaft', Belegung$Companion$Kursart$LF_getInstance()]);
+          aktuelleBelegung.action_4t1mlb$(Belegung$Companion$Aktion$TOGGLE_getInstance(), ['Wirtschaft', Belegung$Companion$Kursart$LF_getInstance()]);
+        }
         Variablen_getInstance().status = getValue(parameterSet, 'id');
         erstelleRaster(aktuelleBelegung);
         visualisiereBelegung(aktuelleBelegung);
@@ -3385,6 +3439,12 @@
   });
   Object.defineProperty(Fachattribute, 'Gk', {
     get: Fachattribute$Gk_getInstance
+  });
+  Object.defineProperty(Fachattribute, 'ReliEthik', {
+    get: Fachattribute$ReliEthik_getInstance
+  });
+  Object.defineProperty(Fachattribute, 'Sport', {
+    get: Fachattribute$Sport_getInstance
   });
   package$sample.Fachattribute = Fachattribute;
   Object.defineProperty(package$sample, 'anrechnungspflichtigeKurse', {

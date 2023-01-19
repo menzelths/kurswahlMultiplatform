@@ -20,6 +20,12 @@ actual class Sample {
                 if (parameterSet.containsKey("id") && !parameterSet.getValue("id").equals(Variablen.status)) {
                     val aktuelleBelegung = Belegung.getBelegungsobjekt()
                     aktuelleBelegung.deserialisiere(parameterSet.getValue("id"))
+                    val leistungsfachWirtschaft=aktuelleBelegung.getBelegung().filter{it.name=="Wirtschaft"&&it.typ==Belegung.Companion.Kursart.LF}.firstOrNull()
+                    if (leistungsfachWirtschaft!=null){
+                        aktuelleBelegung.action(Belegung.Companion.Aktion.TOGGLE, "Wirtschaft", Belegung.Companion.Kursart.LF)
+                        aktuelleBelegung.action(Belegung.Companion.Aktion.TOGGLE, "Wirtschaft", Belegung.Companion.Kursart.LF)
+
+                    }
                     Variablen.status = parameterSet.getValue("id")
                     erstelleRaster(aktuelleBelegung)
                     visualisiereBelegung(aktuelleBelegung)
