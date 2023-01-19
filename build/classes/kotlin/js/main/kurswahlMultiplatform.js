@@ -69,9 +69,9 @@
   var h3 = $module$kotlinx_html_js.kotlinx.html.h3_agelx2$;
   var get_br = $module$kotlinx_html_js.kotlinx.html.get_br_6s7ubj$;
   var p = $module$kotlinx_html_js.kotlinx.html.p_8pggrc$;
-  var a = $module$kotlinx_html_js.kotlinx.html.a_gu26kr$;
   var li = $module$kotlinx_html_js.kotlinx.html.li_yzv5uh$;
   var ul = $module$kotlinx_html_js.kotlinx.html.ul_pzlyaf$;
+  var a = $module$kotlinx_html_js.kotlinx.html.a_gu26kr$;
   var set_onClickFunction = $module$kotlinx_html_js.kotlinx.html.js.set_onClickFunction_pszlq2$;
   var button = $module$kotlinx_html_js.kotlinx.html.button_i4xb7r$;
   var div = $module$kotlinx_html_js.kotlinx.html.js.div_wkomt5$;
@@ -2586,7 +2586,7 @@
   };
   function Variablen() {
     Variablen_instance = this;
-    this.version = '0.1.5_2020_01_23';
+    this.version = '0.1.6_2023_01_19';
     this.status = '';
     this.excluded = '';
     this.excludedList = ArrayList_init();
@@ -2689,59 +2689,49 @@
     $receiver.unaryPlus_pdl1vz$('Zudem gilt: eine Schule ist nicht verpflichtet, jede g\xFCltige Belegung auch zu erm\xF6glichen. In manchen F\xE4llen k\xF6nnen Kurse z. B. aufgrund zu geringer Teilnehmerzahlen nicht zustandekommen.');
     return Unit;
   }
-  function erstelleHilfe$lambda$lambda$lambda($receiver) {
-    $receiver.unaryPlus_pdl1vz$('Abiturleitfaden 2022 des Kultusministeriums Baden-W\xFCrttemberg');
-    return Unit;
-  }
   function erstelleHilfe$lambda$lambda_3($receiver) {
-    $receiver.unaryPlus_pdl1vz$('Die offizielle Handreichung f\xFCr den Abiturjahrgang 2022 ist \xFCbrigens der ');
-    a($receiver, 'https://km-bw.de/site/pbs-bw-new/get/documents/KULTUS.Dachmandant/KULTUS/KM-Homepage/Publikationen%202019/20191113%20Leitfaden_Abitur_2022.pdf', void 0, void 0, erstelleHilfe$lambda$lambda$lambda);
-    $receiver.unaryPlus_pdl1vz$('. Hier finden sich detaillierte Informationen zur korrekten Kurswahl.');
-    return Unit;
-  }
-  function erstelleHilfe$lambda$lambda_4($receiver) {
     $receiver.unaryPlus_pdl1vz$('Gut zu wissen');
     return Unit;
   }
-  function erstelleHilfe$lambda$lambda_5($receiver) {
+  function erstelleHilfe$lambda$lambda_4($receiver) {
     $receiver.unaryPlus_pdl1vz$('Empfohlene Reihenfolge (bzw. TL;DR)');
     return Unit;
   }
-  function erstelleHilfe$lambda$lambda$lambda_0($receiver) {
+  function erstelleHilfe$lambda$lambda$lambda($receiver) {
     $receiver.unaryPlus_pdl1vz$(' Drei Leistungsf\xE4cher w\xE4hlen (sind automatisch schriftliche Pr\xFCfungsf\xE4cher)');
     return Unit;
   }
-  function erstelleHilfe$lambda$lambda$lambda_1($receiver) {
+  function erstelleHilfe$lambda$lambda$lambda_0($receiver) {
     $receiver.unaryPlus_pdl1vz$('Zwei weitere F\xE4cher (das k\xF6nnen Basis- oder bestimmte Wahlf\xE4cher sein) w\xE4hlen, die als m\xFCndliches Pr\xFCfungsfach gedacht sind (erst diese F\xE4cher w\xE4hlen, dann jeweils durch ein X dahinter als m\xFCndliches Pr\xFCfungsfach markieren)');
     return Unit;
   }
-  function erstelleHilfe$lambda$lambda$lambda_2($receiver) {
+  function erstelleHilfe$lambda$lambda$lambda_1($receiver) {
     $receiver.unaryPlus_pdl1vz$('Weitere F\xE4cher w\xE4hlen und dabei die Anmerkungen unter der Kurswahl beachten.');
     return Unit;
   }
-  function erstelleHilfe$lambda$lambda$lambda_3($receiver) {
+  function erstelleHilfe$lambda$lambda$lambda_2($receiver) {
     $receiver.unaryPlus_pdl1vz$('Alle Anmerkungen gr\xFCn? Dann ist die Kurswahl korrekt! Bitte auf den Oberstufenberater zugehen!');
     return Unit;
   }
-  function erstelleHilfe$lambda$lambda_6($receiver) {
+  function erstelleHilfe$lambda$lambda_5($receiver) {
+    li($receiver, void 0, erstelleHilfe$lambda$lambda$lambda);
     li($receiver, void 0, erstelleHilfe$lambda$lambda$lambda_0);
     li($receiver, void 0, erstelleHilfe$lambda$lambda$lambda_1);
     li($receiver, void 0, erstelleHilfe$lambda$lambda$lambda_2);
-    li($receiver, void 0, erstelleHilfe$lambda$lambda$lambda_3);
     return Unit;
   }
-  function erstelleHilfe$lambda$lambda_7($receiver) {
+  function erstelleHilfe$lambda$lambda_6($receiver) {
     $receiver.unaryPlus_pdl1vz$('Fehler gefunden?');
     return Unit;
   }
-  function erstelleHilfe$lambda$lambda_8($receiver) {
+  function erstelleHilfe$lambda$lambda_7($receiver) {
     $receiver.unaryPlus_pdl1vz$('auf der Seite zu den Fehlern dieses Projekts nach deiner Anmeldung bei github');
     return Unit;
   }
-  function erstelleHilfe$lambda$lambda_9($receiver) {
+  function erstelleHilfe$lambda$lambda_8($receiver) {
     return Unit;
   }
-  function erstelleHilfe$lambda$lambda$lambda_4(it) {
+  function erstelleHilfe$lambda$lambda$lambda_3(it) {
     var aktuelleBelegung = Belegung$Companion_getInstance().getBelegungsobjekt();
     erstelleRaster(aktuelleBelegung);
     visualisiereBelegung(aktuelleBelegung);
@@ -2750,30 +2740,29 @@
     Variablen_getInstance().setzeHash();
     return Unit;
   }
-  function erstelleHilfe$lambda$lambda_10($receiver) {
+  function erstelleHilfe$lambda$lambda_9($receiver) {
     $receiver.text_61zpoe$("Hab's verstanden, zur\xFCck zur Auswahl!");
-    set_onClickFunction($receiver, erstelleHilfe$lambda$lambda$lambda_4);
+    set_onClickFunction($receiver, erstelleHilfe$lambda$lambda$lambda_3);
     return Unit;
   }
   function erstelleHilfe$lambda($receiver) {
     h2($receiver, void 0, erstelleHilfe$lambda$lambda);
     h3($receiver, void 0, erstelleHilfe$lambda$lambda_0);
-    $receiver.unaryPlus_pdl1vz$('Dieses Programm erm\xF6glicht die Kurswahl f\xFCr die Oberstufe der allgemein bildenden Gymnasien in Baden-W\xFCrttemberg nach der AGVO f\xFCr den Abiturjahrgang 2022.');
+    $receiver.unaryPlus_pdl1vz$('Dieses Programm erm\xF6glicht die Kurswahl f\xFCr die Oberstufe der allgemein bildenden Gymnasien in Baden-W\xFCrttemberg nach der AGVO ab dem Abiturjahrgang 2025.');
     p($receiver, void 0, erstelleHilfe$lambda$lambda_1);
     p($receiver, void 0, erstelleHilfe$lambda$lambda_2);
-    p($receiver, void 0, erstelleHilfe$lambda$lambda_3);
-    h3($receiver, void 0, erstelleHilfe$lambda$lambda_4);
+    h3($receiver, void 0, erstelleHilfe$lambda$lambda_3);
     $receiver.unaryPlus_pdl1vz$('Die Adresszeile im Browser enth\xE4lt stets die aktuelle Auswahl: wird die Belegung ver\xE4ndert, \xE4ndert sich auch die URL in der Adresszeile. Dadurch ist es m\xF6glich, Mitsch\xFClerinnen oder Mitsch\xFClern oder einem Oberstufenberater durch \xDCbersenden dieser Adresszeile, z. B. mithilfe eines Instant Messengers oder per E-Mail, die aktuelle Auswahl zuzusenden. ');
     get_br($receiver);
     $receiver.unaryPlus_pdl1vz$('Der Empf\xE4nger sieht im Browser die \xFCbermittelte Auswahl und kann diese bei Bedarf \xE4ndern und wieder an andere Personen schicken.');
-    h3($receiver, void 0, erstelleHilfe$lambda$lambda_5);
-    ul($receiver, void 0, erstelleHilfe$lambda$lambda_6);
-    h3($receiver, void 0, erstelleHilfe$lambda$lambda_7);
+    h3($receiver, void 0, erstelleHilfe$lambda$lambda_4);
+    ul($receiver, void 0, erstelleHilfe$lambda$lambda_5);
+    h3($receiver, void 0, erstelleHilfe$lambda$lambda_6);
     $receiver.unaryPlus_pdl1vz$('Sollte dir ein Fehler im Programm aufgefallen sein, dann melde diesen entweder ');
-    a($receiver, 'https://github.com/menzelths/kurswahlMultiplatform/issues', void 0, void 0, erstelleHilfe$lambda$lambda_8);
+    a($receiver, 'https://github.com/menzelths/kurswahlMultiplatform/issues', void 0, void 0, erstelleHilfe$lambda$lambda_7);
     $receiver.unaryPlus_pdl1vz$(' (klicke dazu dort auf "New Issue") oder schreibe eine E-Mail an menzelths(Klammeraffe)gmail(Punkt)com.');
-    p($receiver, void 0, erstelleHilfe$lambda$lambda_9);
-    button($receiver, void 0, void 0, void 0, void 0, void 0, erstelleHilfe$lambda$lambda_10);
+    p($receiver, void 0, erstelleHilfe$lambda$lambda_8);
+    button($receiver, void 0, void 0, void 0, void 0, void 0, erstelleHilfe$lambda$lambda_9);
     return Unit;
   }
   function erstelleHilfe() {
@@ -3134,7 +3123,7 @@
   }
   function erstelleRaster$lambda$lambda_4($receiver) {
     get_br($receiver);
-    $receiver.unaryPlus_pdl1vz$('Version 0.1.5_2020_01_23');
+    $receiver.unaryPlus_pdl1vz$('Version 0.1.6_2023_01_19');
     set_classes($receiver, setOf_0('klein'));
     return Unit;
   }

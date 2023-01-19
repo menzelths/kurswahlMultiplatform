@@ -76,7 +76,7 @@ actual object Variablen {
         START, WAHL
     }
 
-    val version="0.1.5_2020_01_23"
+    val version="0.1.6_2023_01_19"
     fun setzeHash(){
         window.location.hash="#id=$status;ex=$excluded"
     }
@@ -110,7 +110,7 @@ fun erstelleHilfe() {
             +"Einführung"
         }
 
-        +"Dieses Programm ermöglicht die Kurswahl für die Oberstufe der allgemein bildenden Gymnasien in Baden-Württemberg nach der AGVO für den Abiturjahrgang 2022."
+        +"Dieses Programm ermöglicht die Kurswahl für die Oberstufe der allgemein bildenden Gymnasien in Baden-Württemberg nach der AGVO ab dem Abiturjahrgang 2025."
         p {
             +"Rosé unterlegt sind die wählbaren Fächer. Hierbei steht LF für Leistungsfach, BF für Basisfach und WF für Wahlfach. Die Seminarfächer werden wie Basisfächer als BF angezeigt."
             br
@@ -130,15 +130,7 @@ fun erstelleHilfe() {
             br
             +"Zudem gilt: eine Schule ist nicht verpflichtet, jede gültige Belegung auch zu ermöglichen. In manchen Fällen können Kurse z. B. aufgrund zu geringer Teilnehmerzahlen nicht zustandekommen."
         }
-        p{
-            +"Die offizielle Handreichung für den Abiturjahrgang 2022 ist übrigens der "
-            a(
-                href="https://km-bw.de/site/pbs-bw-new/get/documents/KULTUS.Dachmandant/KULTUS/KM-Homepage/Publikationen%202019/20191113%20Leitfaden_Abitur_2022.pdf"
-            ){
-                +"Abiturleitfaden 2022 des Kultusministeriums Baden-Württemberg"
-            }
-            +". Hier finden sich detaillierte Informationen zur korrekten Kurswahl."
-        }
+
 
         h3 {
             +"Gut zu wissen"
