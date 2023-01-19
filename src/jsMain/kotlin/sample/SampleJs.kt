@@ -5,11 +5,8 @@ import kotlinx.html.*
 import kotlinx.html.js.*
 import kotlin.browser.document
 import kotlin.browser.window
-import jquery.*
 import org.w3c.dom.*
-import org.w3c.dom.events.EventListener
 import kotlin.dom.addClass
-import kotlin.dom.removeClass
 
 
 actual class Sample {
@@ -559,12 +556,12 @@ fun visualisiereBelegung(aktuelleBelegung: Belegung) {
             it.name + "_m" + if (it.typ == Belegung.Companion.Kursart.BF) "BF" else if (it.typ == Belegung.Companion.Kursart.WF) "WF" else ""
         val typ = it.typ
         val zelle = document.getElementById(id)
-        if (aktuelleBelegung.getBelegung().filter { it.attribute.contains(Fachattribute.mündlichePrüfung) }.count() < 2) {
+        if (aktuelleBelegung.getBelegung().filter { it.attribute.contains(Fachattribute.muendlichePruefung) }.count() < 2) {
             if (it.typ == Belegung.Companion.Kursart.BF || it.typ == Belegung.Companion.Kursart.WF) {
                 document.getElementById(id_mündlich)?.addClass("klickbar")
             }
         } else {
-            if (it.attribute.contains(Fachattribute.mündlichePrüfung)) {
+            if (it.attribute.contains(Fachattribute.muendlichePruefung)) {
                 document.getElementById(id_mündlich)?.addClass("klickbar")
 
             }
@@ -574,7 +571,7 @@ fun visualisiereBelegung(aktuelleBelegung: Belegung) {
             it.addClass("belegt_" + typ)
 
         }
-        if (it.attribute.contains(Fachattribute.mündlichePrüfung)) {
+        if (it.attribute.contains(Fachattribute.muendlichePruefung)) {
             document.getElementById(id_mündlich)?.innerHTML = "X"
 
         } else {
