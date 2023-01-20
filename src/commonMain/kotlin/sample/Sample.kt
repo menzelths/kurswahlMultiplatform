@@ -602,9 +602,6 @@ class Belegung(val name: String) {
 
                     kurssumme += 4
                     Belegung.anrechnungspflichtig.add(Anrechnung(f.id, mutableListOf(1, 1, 1, 1)))
-                } else if (f.attribute.contains(Fachattribute.Sport)) {
-                    kurssumme += 4
-                    Belegung.anrechnungspflichtig.add(Anrechnung(f.id, mutableListOf(1, 1, 1, 1)))
                 } else if (f.attribute.contains(Fachattribute.ReliEthik)){
                     val leistungsfachEthikReli= aktuelleBelegung.filter { it.attribute.contains(Fachattribute.ReliEthik) &&it.typ==Kursart.LF}
                     if (leistungsfachEthikReli.isEmpty()){ // weder Ethik noch Reli Leistungsfach

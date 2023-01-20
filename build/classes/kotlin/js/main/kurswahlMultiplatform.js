@@ -1127,10 +1127,6 @@
           kurssumme = kurssumme + 4 | 0;
           Belegung$Companion_getInstance().anrechnungspflichtig.add_11rb$(new Belegung$Companion$Anrechnung(f.id, mutableListOf([1, 1, 1, 1])));
         }
-         else if (f.attribute.contains_11rb$(Fachattribute$Sport_getInstance())) {
-          kurssumme = kurssumme + 4 | 0;
-          Belegung$Companion_getInstance().anrechnungspflichtig.add_11rb$(new Belegung$Companion$Anrechnung(f.id, mutableListOf([1, 1, 1, 1])));
-        }
          else if (f.attribute.contains_11rb$(Fachattribute$ReliEthik_getInstance())) {
           var $receiver_3 = this.aktuelleBelegung_0;
           var destination_3 = ArrayList_init();
