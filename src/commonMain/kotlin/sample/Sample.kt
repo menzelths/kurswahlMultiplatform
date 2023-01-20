@@ -617,18 +617,19 @@ class Belegung(val name: String) {
                     mukuSchonGeprüft = true
                 } else if (f.attribute.contains(Fachattribute.Naturwissenschaft) || f.attribute.contains(Fachattribute.kannNawiErsetzen)) {
 
-                    if (nawiSprZähler < 3 && nawiZähler < 2 && fsZähler < 2) {
+                    if (nawiSprZähler < 3 && nawiZähler < 2 && fsZähler <= 2) {
                         kurssumme += 4
                         Belegung.anrechnungspflichtig.add(Anrechnung(f.id, mutableListOf(1, 1, 1, 1)))
                         nawiSprZähler += 1
                         nawiZähler += 1
                     }
+
                 } else if (f.attribute.contains(Fachattribute.Fremdsprache)) {
                     if (f.alternativStunden) {
                         kurssumme += 2
                         Belegung.anrechnungspflichtig.add(Anrechnung(f.id, mutableListOf(1, 1, 0, 0)))
                     } else {
-                        if (nawiSprZähler < 3 && nawiZähler < 2 && fsZähler < 2) {
+                        if (nawiSprZähler < 3 && nawiZähler <= 2 && fsZähler < 2) {
                             kurssumme += 4
                             Belegung.anrechnungspflichtig.add(Anrechnung(f.id, mutableListOf(1, 1, 1, 1)))
                             nawiSprZähler += 1

@@ -1152,7 +1152,7 @@
           mukuSchonGeprüft = true;
         }
          else if (f.attribute.contains_11rb$(Fachattribute$Naturwissenschaft_getInstance()) || f.attribute.contains_11rb$(Fachattribute$kannNawiErsetzen_getInstance())) {
-          if (nawiSprZähler < 3 && nawiZähler < 2 && fsZähler < 2) {
+          if (nawiSprZähler < 3 && nawiZähler < 2 && fsZähler <= 2) {
             kurssumme = kurssumme + 4 | 0;
             Belegung$Companion_getInstance().anrechnungspflichtig.add_11rb$(new Belegung$Companion$Anrechnung(f.id, mutableListOf([1, 1, 1, 1])));
             nawiSprZähler = nawiSprZähler + 1 | 0;
@@ -1165,7 +1165,7 @@
             Belegung$Companion_getInstance().anrechnungspflichtig.add_11rb$(new Belegung$Companion$Anrechnung(f.id, mutableListOf([1, 1, 0, 0])));
           }
            else {
-            if (nawiSprZähler < 3 && nawiZähler < 2 && fsZähler < 2) {
+            if (nawiSprZähler < 3 && nawiZähler <= 2 && fsZähler < 2) {
               kurssumme = kurssumme + 4 | 0;
               Belegung$Companion_getInstance().anrechnungspflichtig.add_11rb$(new Belegung$Companion$Anrechnung(f.id, mutableListOf([1, 1, 1, 1])));
               nawiSprZähler = nawiSprZähler + 1 | 0;
