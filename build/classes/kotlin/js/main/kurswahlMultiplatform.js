@@ -53,6 +53,9 @@
   var LinkedHashMap_init = Kotlin.kotlin.collections.LinkedHashMap_init_q3lmfv$;
   var collectionSizeOrDefault = Kotlin.kotlin.collections.collectionSizeOrDefault_ba2ldo$;
   var ArrayList_init_0 = Kotlin.kotlin.collections.ArrayList_init_ww73n8$;
+  var sortWith = Kotlin.kotlin.collections.sortWith_nqfjgj$;
+  var wrapFunction = Kotlin.wrapFunction;
+  var Comparator = Kotlin.kotlin.Comparator;
   var trim = Kotlin.kotlin.text.trim_gw00vp$;
   var emptyList = Kotlin.kotlin.collections.emptyList_287e2$;
   var checkIndexOverflow = Kotlin.kotlin.collections.checkIndexOverflow_za3lpa$;
@@ -111,6 +114,22 @@
   Fachattribute.prototype.constructor = Fachattribute;
   Variablen$Ansichten.prototype = Object.create(Enum.prototype);
   Variablen$Ansichten.prototype.constructor = Variablen$Ansichten;
+  function Comparator$ObjectLiteral(closure$comparison) {
+    this.closure$comparison = closure$comparison;
+  }
+  Comparator$ObjectLiteral.prototype.compare = function (a, b) {
+    return this.closure$comparison(a, b);
+  };
+  Comparator$ObjectLiteral.$metadata$ = {kind: Kind_CLASS, interfaces: [Comparator]};
+  var compareBy$lambda = wrapFunction(function () {
+    var compareValues = Kotlin.kotlin.comparisons.compareValues_s00gnj$;
+    return function (closure$selector) {
+      return function (a, b) {
+        var selector = closure$selector;
+        return compareValues(selector(a), selector(b));
+      };
+    };
+  });
   function main() {
     Belegung$Companion_getInstance().initialisiereFächer();
     var aktuelleBelegung = new Belegung('Belegung');
@@ -1044,6 +1063,9 @@
     }
     return kurssumme >= 42;
   };
+  function Belegung$testeAnrechnungspflichtigeStunden$lambda(it) {
+    return it.typ;
+  }
   Belegung.prototype.testeAnrechnungspflichtigeStunden_0 = function () {
     var tmp$;
     var mukuSchonGeprüft = false;
@@ -1077,15 +1099,19 @@
     if (destination_0.size > 0) {
       mukuSchonGeprüft = true;
     }
+    var $receiver_1 = this.aktuelleBelegung_0;
+    if ($receiver_1.size > 1) {
+      sortWith($receiver_1, new Comparator$ObjectLiteral(compareBy$lambda(Belegung$testeAnrechnungspflichtigeStunden$lambda)));
+    }
     tmp$ = this.aktuelleBelegung_0.iterator();
     while (tmp$.hasNext()) {
       var f = tmp$.next();
       var tmp$_2;
       if (f.alternativStunden) {
-        var $receiver_1 = f.stundenAlternativ;
+        var $receiver_2 = f.stundenAlternativ;
         var destination_1 = ArrayList_init();
         var tmp$_3;
-        tmp$_3 = $receiver_1.iterator();
+        tmp$_3 = $receiver_2.iterator();
         while (tmp$_3.hasNext()) {
           var element_1 = tmp$_3.next();
           if (element_1 !== 0)
@@ -1094,10 +1120,10 @@
         tmp$_2 = destination_1.size;
       }
        else {
-        var $receiver_2 = f.stunden;
+        var $receiver_3 = f.stunden;
         var destination_2 = ArrayList_init();
         var tmp$_4;
-        tmp$_4 = $receiver_2.iterator();
+        tmp$_4 = $receiver_3.iterator();
         while (tmp$_4.hasNext()) {
           var element_2 = tmp$_4.next();
           if (element_2 !== 0)
@@ -1128,10 +1154,10 @@
           Belegung$Companion_getInstance().anrechnungspflichtig.add_11rb$(new Belegung$Companion$Anrechnung(f.id, mutableListOf([1, 1, 1, 1])));
         }
          else if (f.attribute.contains_11rb$(Fachattribute$ReliEthik_getInstance())) {
-          var $receiver_3 = this.aktuelleBelegung_0;
+          var $receiver_4 = this.aktuelleBelegung_0;
           var destination_3 = ArrayList_init();
           var tmp$_5;
-          tmp$_5 = $receiver_3.iterator();
+          tmp$_5 = $receiver_4.iterator();
           while (tmp$_5.hasNext()) {
             var element_3 = tmp$_5.next();
             if (element_3.attribute.contains_11rb$(Fachattribute$ReliEthik_getInstance()) && element_3.typ === Belegung$Companion$Kursart$LF_getInstance())
@@ -1234,10 +1260,10 @@
     while (tmp$_6.hasNext()) {
       var element_4 = tmp$_6.next();
       var wert = element_4;
-      var $receiver_4 = Belegung$Companion_getInstance().fächer;
+      var $receiver_5 = Belegung$Companion_getInstance().fächer;
       var destination_4 = ArrayList_init();
       var tmp$_7;
-      tmp$_7 = $receiver_4.iterator();
+      tmp$_7 = $receiver_5.iterator();
       while (tmp$_7.hasNext()) {
         var element_5 = tmp$_7.next();
         if (element_5.id === wert.id)

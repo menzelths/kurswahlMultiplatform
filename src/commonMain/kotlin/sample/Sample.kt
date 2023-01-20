@@ -557,6 +557,9 @@ class Belegung(val name: String) {
             mukuSchonGeprüft = true
         }
 
+        aktuelleBelegung.sortBy { it.typ}
+
+
         for (f in aktuelleBelegung) {
             val anzahlKurse = if (f.alternativStunden) f.stundenAlternativ.filter { it != 0 }
                 .count() else f.stunden.filter { it != 0 }.count()
