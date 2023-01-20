@@ -681,10 +681,10 @@ class Belegung(val name: String) {
 
                 }
 
-            }/* else if (f.attribute.contains(Fachattribute.mündlichePrüfung)) { //WF in mündlicher Prüfung
+            } else if (f.attribute.contains(Fachattribute.muendlichePruefung)) { //WF in mündlicher Prüfung
                 kurssumme += 4
                 Belegung.anrechnungspflichtig.add(Anrechnung(f.id, mutableListOf(1,1,1,1)))
-            }*/
+            }
         }
 
         if (kurssumme == 40) {

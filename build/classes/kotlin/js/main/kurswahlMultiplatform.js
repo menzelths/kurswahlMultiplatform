@@ -1219,6 +1219,10 @@
           println('Anrechnung Sonstige:  Fach: ' + f.name + ', ' + (f.alternativStunden ? f.stundenAlternativ : f.stunden) + ', ' + anzahlKurse);
         }
       }
+       else if (f.attribute.contains_11rb$(Fachattribute$muendlichePruefung_getInstance())) {
+        kurssumme = kurssumme + 4 | 0;
+        Belegung$Companion_getInstance().anrechnungspflichtig.add_11rb$(new Belegung$Companion$Anrechnung(f.id, mutableListOf([1, 1, 1, 1])));
+      }
     }
     if (kurssumme === 40) {
       Belegung$Companion_getInstance().fehlerMeldungen.add_11rb$(new Belegung$Kommentar(Belegung$Kommentarart$GUT_getInstance(), 'Es sind genau 40 anrechnungspflichtige Kurse in der Belegung vorhanden.'));
