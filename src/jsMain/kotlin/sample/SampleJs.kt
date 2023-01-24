@@ -441,7 +441,8 @@ klassen.add("zentriert")
 
                             } else if (it.kommentarart == Belegung.Kommentarart.GUT) {
                                 classes = setOf("grün")
-
+                            } else if (it.kommentarart == Belegung.Kommentarart.HINWEIS) {
+                                classes = setOf("hinweis")
                             } else {
                                 classes = setOf()
                             }

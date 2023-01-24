@@ -29,6 +29,11 @@ text-align: center;
 
 }
 
+.hinweis {
+    color: #000000;
+    background-color:#ffff00;
+}
+
 .belegt_m{
 background-color: #ffff00
 }

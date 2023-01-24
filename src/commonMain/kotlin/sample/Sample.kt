@@ -61,7 +61,7 @@ class Belegung(val name: String) {
     ) : Zeile()
 
     enum class Kommentarart {
-        GUT, SCHLECHT, NEUTRAL
+        GUT, SCHLECHT, NEUTRAL, HINWEIS
     }
 
     data class Summe(
@@ -719,6 +719,19 @@ class Belegung(val name: String) {
         return kurssumme <= 40
     }
 
+    private fun testeWirtschaftAlsLeistungsfach(): Boolean {
+        if (aktuelleBelegung.filter { it.name=="Wirtschaft" && it.typ==Kursart.LF}.count()>0){
+            fehlerMeldungen.add(
+                Kommentar(
+                    Kommentarart.HINWEIS,
+                    "Mit Wirtschaft als Leistungsfach kann in Geographie und Gemeinschaftskunde freiwillig jeweils auch das zweite Kurshalbjahr in J1 belegt und angerechnet werden. Diese Funktion wird von diesem Programm zur Zeit nicht unterstützt."
+                )
+            )
+            return true
+        }
+        return false
+    }
+
     private fun holeWochenStunden(): List<Int> {
         var stundensumme = mutableListOf<Int>(0, 0, 0, 0)
         var zeilenStunden = mutableListOf<Int>()
@@ -957,6 +970,7 @@ class Belegung(val name: String) {
                 Belegung.kurswahlKorrekt = false
                 Belegung.anrechnungspflichtig = mutableListOf()
                 var fehlerListe = mutableListOf<Boolean>()
+                testeWirtschaftAlsLeistungsfach()
                 fehlerListe.add(testeMehrfach())
                 fehlerListe.add(testeLeistungsfächer())
                 fehlerListe.add(testeBereichsabdeckungPrüfung())
